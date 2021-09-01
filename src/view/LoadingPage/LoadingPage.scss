@@ -1,0 +1,44 @@
+.title{
+    color:var(--color-font-light-pink);
+    font-size: 50px;
+    font-weight: bold;
+    position: absolute;
+    top:40%;
+    animation: moveUpward 1s 1s ease forwards;
+}
+
+.buttonList{
+    display: flex;
+    flex-direction: column;
+    animation: appear 0.5s 2s ease forwards;
+    visibility:hidden;
+    .button{
+        background-color: var(--color-button-pink);
+        color:white;
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        padding:10px 100px 10px 100px;
+        border:none;
+        border-radius: 6px;
+    }
+}
+
+@keyframes moveUpward {
+    from{
+        top:40%;
+    } 
+    to{
+        top:10%;
+    }
+}
+
+@keyframes appear {
+    from{
+        opacity: 0;
+    } 
+    to{
+        visibility:visible;
+        opacity: 1;
+    }
+}

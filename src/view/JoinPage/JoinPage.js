@@ -1,10 +1,14 @@
 import React from 'react'
+import TopBar from '../../shared/menu/TopBar'
 
-const JoinPage = () => {
+const JoinPage = ({history}) => {
     return (
-        <div>
-            JoinPage입니다!
-        </div>
+        <>
+            <TopBar title="회원가입" history={history}/>
+            <div style={{marginTop:'var(--margin-bottom-topbar)'}}>
+                JoinPage입니다!
+            </div>
+        </>
     )
 }
 
