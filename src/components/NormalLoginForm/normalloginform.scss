@@ -67,3 +67,10 @@
         bottom: 1rem;
     }
 }
+
+.ant-input-affix-wrapper::before{
+    display:none;
+}
+.ant-input-affix-wrapper{
+    border:none;
+}

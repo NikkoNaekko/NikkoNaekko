@@ -1,9 +1,12 @@
+@import '~antd/dist/antd.css';
 :root{
     --color-font-light-pink: rgb(243, 186, 214);
     --color-font-dark-pink : rgb(233, 59, 129);
     --color-button-pink: rgb(255, 174, 201);
     --color-button-gray:  rgb(224, 224, 224);
     --color-div-light-pink : rgba(243, 186, 214, 0.5);
+
+    --margin-bottom-topbar : 61px;
 }
 
 body {

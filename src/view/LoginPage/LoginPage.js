@@ -1,14 +1,18 @@
+import TopBar from '../../shared/menu/TopBar'
 import React from 'react';
 import NormalLoginForm from '../../components/NormalLoginForm/NormalLoginForm';
 
-const LoginPage = () => {
+const LoginPage = ({history}) => {
     return (
-        <div className="login">
-            <div className="container">
-                <div>header</div>
-                <NormalLoginForm/>
+        <>
+            <TopBar title="로그인" history={history}/>
+            <div className="login">
+                <div className="container">
+                    <div>header</div>
+                    <NormalLoginForm/>
+                </div>
             </div>
-        </div>
+        </>
     )
 }
 
