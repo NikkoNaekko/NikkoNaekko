@@ -6,7 +6,7 @@ const LoginPage = ({history}) => {
     return (
         <>
             <TopBar title="로그인" history={history}/>
-            <div className="login" style={{marginTop:'var(--margin-bottom-topbar)'}}>
+            <div className="login">
                 <div className="container">
                     <div>header</div>
                     <NormalLoginForm/>
