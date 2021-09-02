@@ -1,15 +1,19 @@
-import React from 'react'
 import TopBar from '../../shared/menu/TopBar'
+import React from 'react';
+import NormalLoginForm from '../../components/NormalLoginForm/NormalLoginForm';
 
 const LoginPage = ({history}) => {
     return (
         <>
             <TopBar title="로그인" history={history}/>
-            <div style={{marginTop:'var(--margin-bottom-topbar)'}}>
-                LoginPage입니다
+            <div className="login" style={{marginTop:'var(--margin-bottom-topbar)'}}>
+                <div className="container">
+                    <div>header</div>
+                    <NormalLoginForm/>
+                </div>
             </div>
         </>
     )
 }
 
-export default LoginPage
+export default LoginPage;
