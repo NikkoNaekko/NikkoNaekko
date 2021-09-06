@@ -38,7 +38,7 @@ export const clothesInformation = {
             "purchased": 0,
             "uploadDt": new Date(2020, 9, 5),
             "imgSrc": [
-                "https://firebasestorage.googleapis.com/v0/b/nikkoneakkoclothesstoreage.appspot.com/o/clothes%2F(%EA%BE%B8%EC%95%88%EA%BE%B8)%5B%EC%8B%9C%ED%8B%B0%EB%B8%8C%EB%9D%BC%EC%A6%88%5D%EB%8D%94%EB%B8%94%20%EC%A7%80%ED%8D%BC%20%ED%9B%84%EB%93%9C%20%EC%A7%91%EC%97%85(1).jpg?alt=media&token=525e6580-759c-491b-bfc4-0822a1d195c1",
+                "https://firebasestorage.googleapis.com/v0/b/nikkoneakkoclothesstoreage.appspot.com/o/clothes%2F(%EA%BE%B8%EC%95%88%EA%BE%B8)%5B%EC%8B%9C%ED%8B%B0%EB%B8%8C%EB%9D%BC%EC%A6%88%5D%EB%8D%94%EB%B8%94%20%EC%A7%80%ED%8D%BC%20%ED%9B%84%EB%93%9C%20%EC%A7%91%EC%97%85(1).jpg?alt=media&token=7cb95cba-e75c-48be-8faa-c8a4ea9f948f",
                 "https://firebasestorage.googleapis.com/v0/b/nikkoneakkoclothesstoreage.appspot.com/o/clothes%2F(%EA%BE%B8%EC%95%88%EA%BE%B8)%5B%EC%8B%9C%ED%8B%B0%EB%B8%8C%EB%9D%BC%EC%A6%88%5D%EB%8D%94%EB%B8%94%20%EC%A7%80%ED%8D%BC%20%ED%9B%84%EB%93%9C%20%EC%A7%91%EC%97%85(2).jpg?alt=media&token=47faa201-0dc0-4c44-911b-f07dde776eda",
                 "https://firebasestorage.googleapis.com/v0/b/nikkoneakkoclothesstoreage.appspot.com/o/clothes%2F(%EA%BE%B8%EC%95%88%EA%BE%B8)%5B%EC%8B%9C%ED%8B%B0%EB%B8%8C%EB%9D%BC%EC%A6%88%5D%EB%8D%94%EB%B8%94%20%EC%A7%80%ED%8D%BC%20%ED%9B%84%EB%93%9C%20%EC%A7%91%EC%97%85(3).jpg?alt=media&token=47b70b8b-c09e-4709-8655-f99d75cf32b7"
             ],
@@ -202,7 +202,7 @@ export const clothesInformation = {
             "name": "EU 핀턱 카라벨트 미니원피스",
             "price": 21800,
             "brand": '럽앤썸',
-            "liked": 0,
+            "liked": 3,
             "purchased": 0,
             "uploadDt": new Date(2021, 10, 1),
             "imgSrc": [
@@ -232,7 +232,7 @@ export const clothesInformation = {
             "name": "차르르 뮤트 카라 셔츠 블라우스",
             "price": 19700,
             "brand": '유라타임',
-            "liked": 0,
+            "liked": 5,
             "purchased": 0,
             "uploadDt": new Date(2021, 5, 18),
             "imgSrc": [
