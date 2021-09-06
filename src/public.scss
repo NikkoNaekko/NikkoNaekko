@@ -1,5 +1,5 @@
 // @import '~antd/dist/antd.css';
-:root {
+:root{
     --color-font-light-pink: rgb(243, 186, 214);
     --color-font-dark-pink: rgb(233, 59, 129);
     --color-button-pink: rgb(255, 174, 201);
@@ -15,10 +15,10 @@ body {
     padding: 0;
 }
 
-.container {
-    width: 100%;
-    height: 100vh;
-    padding: 0 1.4rem;
+.container{
+    // width:100%;
+    height:100vh;
+    padding: 80px 1.4rem;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -36,4 +36,12 @@ body {
         visibility: visible;
         opacity: 1;
     }
+    // overflow: scroll;
+}
+
+.join .container {
+    // height: calc(100vh - 61px);
+    height: 100vh;
+    position: sticky;
+    bottom: 0;
 }

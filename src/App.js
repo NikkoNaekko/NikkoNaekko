@@ -10,6 +10,8 @@ import LoadingPage from './view/LoadingPage/LoadingPage';
 import JoinPage from './view/JoinPage/JoinPage';
 import LoginPage from './view/LoginPage/LoginPage';
 import DetailPage from './view/DetailPage/DetailPage';
+import RecommendPage from './view/RecommendPage/RecommendPage'
+import RecommendResultPage from './view/RecommendResultPage/RecommendResultPage'
 
 const App = () => {
   return (
@@ -20,6 +22,8 @@ const App = () => {
         <Route path="/detail/:id" component={DetailPage}/>
         <Route path="/join" component={JoinPage}/>
         <Route path="/login" component={LoginPage}/>
+        <Route path="/recommend" component={RecommendPage}/>
+        <Route path="/recommendResult" component={RecommendResultPage}/>
       </ConnectedRouter>
     </>
   );
