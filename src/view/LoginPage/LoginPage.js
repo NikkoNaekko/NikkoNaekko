@@ -8,7 +8,6 @@ const LoginPage = ({history}) => {
             <TopBar title="로그인" history={history}/>
             <div className="login">
                 <div className="container">
-                    <div>header</div>
                     <NormalLoginForm/>
                 </div>
             </div>

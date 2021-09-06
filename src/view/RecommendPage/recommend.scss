@@ -1,0 +1,87 @@
+.recommend {
+
+    .container {
+        width: 100%;
+        height: initial;
+
+        .wrapper {
+            width: 100%;
+            height: calc(100vh - 170px);
+            overflow: scroll;
+            -ms-overflow-style: none;
+
+            &::-webkit-scrollbar{ 
+                display:none; 
+            }
+
+            .recommendTitle {
+                width: 100%;
+                // background-color: red;
+    
+                .titleIcon {
+    
+                    svg {
+                        color: var(--color-font-dark-pink);
+                        font-size: 40px;
+                    }
+                }
+    
+                .titleHead {
+                    font-size: 16px;
+                    font-weight: bold;
+                }
+    
+                .titleDesc {
+                    padding-bottom: 20px;
+                    font-size: 14px;
+                }
+            }
+    
+            .recommendContent {
+                // background-color: blue;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-around;
+    
+                .contnetBox {
+    
+                    .contentThumb {
+                        width: 130px;
+                        height: 130px;
+                        position: relative;
+    
+                            .contentImage {
+                                display: block;
+                                width: 100%;
+                                height: 100%;
+                                object-fit: cover;
+                                position: absolute;
+                                border-radius: 15px;
+                            }
+    
+                            .contentLiked {
+                                position: absolute;
+                                right: 10px;
+                                bottom: 0;
+    
+                                svg {
+                                    color: #fff;
+                                    cursor: pointer;
+    
+                                    &:hover {
+                                        color: var(--color-font-dark-pink);
+                                    }
+                                }
+                            }
+                    }
+        
+                    .contentTitle {
+                        text-align: center;
+                        margin: 8px 0 16px 0;
+                    }
+                }
+            }
+        }
+        
+    }
+}

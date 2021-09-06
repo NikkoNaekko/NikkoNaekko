@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Input, Button } from 'antd';
 import './normalloginform.scss';
-import '../../shared/button.scss'
+import '../../shared/button/button.scss'
 
 const NormalLoginForm = () => {
 

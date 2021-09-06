@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Input, Select, Button } from 'antd';
 import './registrationform.scss';
-import '../../shared/button.scss'
+import '../../shared/button/button.scss'
 
 const { Option } = Select;
 const formItemLayout = {
