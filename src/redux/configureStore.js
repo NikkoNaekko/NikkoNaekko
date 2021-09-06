@@ -4,12 +4,14 @@ import { createBrowserHistory } from "history";
 import { connectRouter } from "connected-react-router";
 
 import User from "./moduels/user";
+import Items from "./moduels/items";
 
 export const history = createBrowserHistory();
 
 // rootReducer 만들기
 const rootReducer = combineReducers({
     user: User,
+    items: Items,
     router: connectRouter(history),
 });
 

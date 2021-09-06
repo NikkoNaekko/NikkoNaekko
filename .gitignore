@@ -1,5 +1,9 @@
 # dependencies
 /node_modules
+<<<<<<< HEAD
 package-lock.json
+=======
+package-lock
+>>>>>>> origin/Front
 # production
 /build
