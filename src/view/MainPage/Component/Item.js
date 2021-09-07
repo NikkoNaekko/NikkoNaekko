@@ -25,7 +25,7 @@ const Item = ({item, isVertical, isHorizen}) => {
                     <p className="font">{truncatedString}</p>
                     <p style={{color:'red'}}>{item.price}원</p>
                     <div className="likedDiv">
-                        <LikeButton/> 
+                        <LikeButton itemID={item.id}/> 
                         <span style={{marginLeft:'10px'}}>{item.liked}</span>
                     </div>
                 </div>
@@ -44,7 +44,7 @@ const Item = ({item, isVertical, isHorizen}) => {
                     <p className="font">{truncatedString}</p>
                     <p style={{color:'red'}}>{item.price}원</p>
                     <div className="likedDiv">
-                        <LikeButton/> 
+                        <LikeButton itemID={item.id}/> 
                         <span style={{marginLeft:'10px'}}>{item.liked}</span>
                     </div>
                 </div>
