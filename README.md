@@ -18,4 +18,5 @@
 - 2021.09.02 Na [ Loading 페이지 및 메뉴바 구현완료 ]
 - 2021.09.02 Ryu [ Login / Join 페이지 및 버튼 구현 완료 ]
 - 2021.09.06 Ryu [ Recommend / RecommentResult 페이지 뷰 구현 완료 ]
-- 2021.09.06 Na [ MainPage 구현 ]
+- 2021.09.06 Na [ MainPage 요즘 뜨는 상품 / 신상품 섹션 구현 ]
+- 2021.09.07 Na [ MainPage 즐겨찾기 섹션 구현 ]

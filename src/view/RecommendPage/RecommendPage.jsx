@@ -1,19 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Favorite from '@material-ui/icons/Favorite';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 import Button from '../../shared/button/Button';
 import './recommend.scss'
 import { clothesInformation } from '../../data/data';
+const moodCollection = [
+    '꾸안꾸', '미니멀', '스트릿', '아메카지', '오피스룩', '캐주얼'
+]
+
 
 const RecommendPage = () => {
-
-    console.log(clothesInformation.clothes);
-    const minimalClothes = clothesInformation.clothes.filter((c) => c === "mood"
-    );
-    console.log(minimalClothes);
-    // const index = Math.random() * minimalClothes.length;
-
+    const { clothes } = clothesInformation;
     const [ isDisabled, setIsDisabled ] = useState(true);
+    const [selectedItem, setSelectedItem] = useState([]);
+
+    useEffect(() => {
+        for(let i = 0; i < moodCollection.length; i++){
+            const clothesAry = clothes.filter((c) => c.mood === moodCollection[i]);
+            const index = Math.floor(Math.random() * clothesAry.length);
+            setSelectedItem((prevState) => 
+                [...prevState, clothesAry[index]] 
+            )
+            console.log(selectedItem);
+        }
+    }, [])
 
     return (
         <div className="recommend">
@@ -26,15 +36,15 @@ const RecommendPage = () => {
                     </div>
 
                     <div className="recommendContent">
-                        {/* {modeInformation.map((info) => (
+                        {selectedItem.map((info) => (
                             <div className="contentBox" key={info.id}>
                                 <div className="contentThumb">
-                                    <img src={info.imgSrc} alt={info.mood} className="contentImage"/>
+                                    <img src={info.imgSrc[0]} alt={info.mood} className="contentImage"/>
                                     <div className="contentLiked"><FavoriteBorder/></div>
                                 </div>
                                 <div className="contentTitle">{info.mood}</div>
                             </div>
-                        ))} */}
+                        ))}
                     </div>
                 </div>
                 
