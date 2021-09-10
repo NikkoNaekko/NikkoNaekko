@@ -1,16 +1,27 @@
-// import { createAction, handleActions } from 'redux-actions';
-// import { produce } from 'immer';
+import axios from "axios";
+import { createAction, handleActions } from 'redux-actions';
+import { produce } from 'immer';
 
 //action
-const LOAD = "items/LOAD";
-const INCREASE_LIKES = "items/INCREASE_LIKES";
-const DECREASE_LIKES = "items/DECREASE_LIKES";
+const ADD_MODE = "items/ADD_MODE";
+const DELETE_MODE = "items/DELETE_MODE";
+const ADD_SELECTEMOOD = "items/ADD_SELECTEMOOD";
+const RESET_LIKEDMOOD = "items/RESET_LIKEDMOOD";
+const RESET_SELECTEDMOOD = "items/RESET_SELECTEDMOOD";
+
+
+//action creators
+const addMood = createAction(ADD_MODE, (mood) => ({mood}));
+const deleteMood = createAction(DELETE_MODE, (mood) => ({mood}));
+const addSelectedMood = createAction(ADD_SELECTEMOOD, (mood) => ({mood}));
+const resetLikedMood = createAction(RESET_LIKEDMOOD, () => ({}));
+const resetSelectiedMood = createAction(RESET_SELECTEDMOOD, () => ({}));
 
 //init
 const initialState = {
     id : "1",
     liked : 0,
-    name : "rjk",
+    name : "",
     imgSrc : [],
     mood : "",
     // price : 0,
@@ -18,33 +29,58 @@ const initialState = {
     // purchased : 0,
     // explain: "",
     // registrationDt : "",
+    likedMood : [],
+    selectedMood : [],
 }
+/**
+ * items : [ item, item, item ...]
+ * 
+ * item = {
+ *  id: '',
+ *  name: '',
+ *  price: 0,
+ *  brand: '',
+ *  liked: 0,
+ *  purchased: 0,
+ *  explain: '',
+ *  registrationDt: new Date(),
+ *  imgSrc: ['https://~','https://~','https://~'],
+ *  mood: '',
+ * }
+ */
 
-//actoin creator
-export const loadItems = () => {
-    return { type: LOAD }
-}
+// reducer
+export default handleActions({
+    [ADD_MODE] : (state, action) => produce(state, (draft) => {
+        const newLikedMood = [ ...state.likedMood, action.payload.mood ];
+        draft.likedMood = newLikedMood;
+    }),
+    [DELETE_MODE] : (state, action) => produce(state, (draft) => {
+        const moodList = state.likedMood.filter((m) => {
+            return m !== action.payload.mood;
+        })
+        draft.likedMood = moodList;
+    }),
+    [ADD_SELECTEMOOD] : (state, action) => produce(state, (draft) => {
+        const newSelectedMood = [ ...state.selectedMood, action.payload.mood ];
+        draft.selectedMood = newSelectedMood;
+    }),
+    [RESET_LIKEDMOOD] : (state, action) => produce(state, (draft) => {
+        draft.likedMood = [];
+    }),
+    [RESET_SELECTEDMOOD] : (state, action) => produce(state, (draft) => {
+        draft.selectedMood = [];
+    }),
+}, initialState);
 
-export const increaseLikes = () => {
-    return { type: INCREASE_LIKES }
-}
 
-export const decreaseLikes = () => {
-    return { type: DECREASE_LIKES }
-}
+//action creator export
+const actionCreators = {
+    addMood,
+    deleteMood,
+    addSelectedMood,
+    resetLikedMood,
+    resetSelectiedMood
+};
 
-
-//reducer
-export default function reducer( state = initialState, action ) {
-    switch(action.type) {
-        case "LOAD" : {
-            return state;
-        }
-        case "INCREASE_LIKES" : 
-            return { ...state, liked : state.liked + 1 }
-        case "DECREASE_LIKES" : 
-            return { ...state, liked : state.liked + -1 }
-        default : 
-            return state;
-    }
-}
+export { actionCreators };

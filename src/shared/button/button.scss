@@ -17,16 +17,34 @@
     &:active {
         background-color: var(--color-font-dark-pink);
     }
+
+    &.btn_pink {
+        background-color: var(--color-button-pink);
+    }
+
+    &.btn_gray {
+        background-color: var(--color-button-gray);
+        cursor: not-allowed;
+    }
 }
 
 
-// ---- LikeButton -----
-.iconButton{
-    cursor:pointer;
+// LikeButton 
+.likeButton{
+    cursor: pointer;
     transition: transform 500ms ease;
     font-size: 30px;
     
     &:hover{
         transform: scale(1.2);
     }
+}
+
+.red {
+  color:red;
+  opacity: 0.8;
+}
+
+.transparent {
+    color: transparent;
 }
