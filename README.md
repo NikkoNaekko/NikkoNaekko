@@ -12,6 +12,8 @@
 
 # 에러 사항
 
+- 2021.09.08 Na [ DetailPage에 들어가면 스크롤이 자동으로 밑으로 가는 문제 ] 2021.09.10 Na [ DetailPage에 들어가면 스크롤이 자동으로 밑으로 가는 문제 해결 ]
+
 # 수정 사항
 
 - 2021.09.01 Na [ 리액트 초기 설정 완료 ]
@@ -20,3 +22,4 @@
 - 2021.09.06 Ryu [ Recommend / RecommentResult 페이지 뷰 구현 완료 ]
 - 2021.09.06 Na [ MainPage 요즘 뜨는 상품 / 신상품 섹션 구현 ]
 - 2021.09.07 Na [ MainPage 즐겨찾기 섹션 구현 ]
+- 2021.09.10 Na [ MainPage DetailPage 구현 ]

@@ -1,0 +1,67 @@
+.carouselImg{
+    width:100vw;
+    height:300px;
+}
+
+// ----- ItemInformation -----
+
+.detailBorder{
+    margin:20px;
+
+    .font{
+        font-size: 20px;
+    }
+    .gray{
+        color:var(--color-font-gray);
+    }
+    .red{
+        color:red;
+    }
+    .detailBorderHorizen{
+        display: flex;
+        justify-content: space-between;
+        .icons{
+            display: flex;
+            .liked{
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                margin-right: 5px;
+            }
+            .purchased{
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+        .price{
+        }
+    }
+}
+
+// ----- ItemInformation -----
+.descriptionBorder{
+    text-align: center;
+}
+
+
+// ----- PopularProductbanner -----
+
+.banner{
+    position: absolute;
+    top:20px;
+    left:20px;
+    z-index: 1;
+
+    .font{
+        padding:5px 20px 5px 20px;
+        font-weight: 600;
+        color:white;
+        background-color: rgba(127, 127, 127, 0.65)
+    }
+    .bold{
+        font-weight: 800;
+    }
+}

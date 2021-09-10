@@ -5,11 +5,8 @@ import BookMark from './Sections/BookMark'
 import NewProduct from './Sections/NewProduct'
 import PopularProduct from './Sections/PopularProduct'
 import Header from './Header/Header'
-import { useSelector } from 'react-redux'
 
 const MainPage = ({history}) => {
-
-    const likedItems = useSelector(state => state.user.likedItems);
 
     return (
         <>

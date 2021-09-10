@@ -31,8 +31,8 @@ const LikeButton = ({itemID}) => {
         <>
             <div className="icons-list">
                 {isChecked ?  
-                <HeartFilled className="likeButton red" onClick={onClick}/> :
-                <HeartOutlined className="likeButton" onClick={onClick}/>}
+                <HeartFilled className="iconButton" style={{color:'red'}} onClick={onClick}/> :
+                <HeartOutlined className="iconButton" onClick={onClick}/>}
             </div>
         </> 
     )

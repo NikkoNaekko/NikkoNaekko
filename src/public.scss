@@ -2,6 +2,7 @@
 :root{
     --color-font-light-pink: rgb(243, 186, 214);
     --color-font-dark-pink: rgb(233, 59, 129);
+    --color-font-gray: rgb(114, 114, 114);
     --color-button-pink: rgb(255, 174, 201);
     --color-button-gray: rgb(224, 224, 224);
     --color-div-light-pink: rgba(243, 186, 214, 0.5);
@@ -36,7 +37,6 @@ body {
         visibility: visible;
         opacity: 1;
     }
-    // overflow: scroll;
 }
 
 .join .container {
