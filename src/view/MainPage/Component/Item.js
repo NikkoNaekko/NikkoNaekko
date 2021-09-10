@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import LikeButton from '../../../shared/LikeButton';
+import PriceList from '../../../shared/PriceList';
 
 const Item = ({item, isVertical, isHorizen}) => {
     let truncatedString = '';
@@ -23,9 +24,10 @@ const Item = ({item, isVertical, isHorizen}) => {
                 <div style={{width:'120px'}}>
                     <p className="font">[{item.brand}]</p>
                     <p className="font">{truncatedString}</p>
-                    <p style={{color:'red'}}>{item.price}원</p>
+                    <p style={{color:'red'}}><PriceList price={item.price}/></p>
+                    {/* <p >{item.price}원</p> */}
                     <div className="likedDiv">
-                        <LikeButton/> 
+                        <LikeButton itemID={item.id}/> 
                         <span style={{marginLeft:'10px'}}>{item.liked}</span>
                     </div>
                 </div>
@@ -42,9 +44,9 @@ const Item = ({item, isVertical, isHorizen}) => {
                 <div style={{width:'120px'}}>
                     <p className="font">[{item.brand}]</p>
                     <p className="font">{truncatedString}</p>
-                    <p style={{color:'red'}}>{item.price}원</p>
+                    <p style={{color:'red'}}><PriceList price={item.price}/></p>
                     <div className="likedDiv">
-                        <LikeButton/> 
+                        <LikeButton itemID={item.id}/> 
                         <span style={{marginLeft:'10px'}}>{item.liked}</span>
                     </div>
                 </div>

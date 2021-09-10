@@ -1,6 +1,6 @@
 .btn {
     width: 90%;
-    padding: 1rem 0;
+    padding: 0.6rem 0;
     position: fixed;
     bottom: 1.6rem;
     border: none;
@@ -29,16 +29,17 @@
 }
 
 
-// ---- LikeButton 
+// LikeButton 
 .likeButton{
     cursor: pointer;
     transition: transform 500ms ease;
     font-size: 30px;
-
+    
     &:hover{
         transform: scale(1.2);
     }
 }
+
 .red {
   color:red;
   opacity: 0.8;

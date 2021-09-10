@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import './MainPage.scss'
 import TopBar from '../../shared/menu/TopBar'
 import BookMark from './Sections/BookMark'
@@ -7,6 +7,7 @@ import PopularProduct from './Sections/PopularProduct'
 import Header from './Header/Header'
 
 const MainPage = ({history}) => {
+
     return (
         <>
             <TopBar title="니꼬내꼬" history={history} rightMenu/>

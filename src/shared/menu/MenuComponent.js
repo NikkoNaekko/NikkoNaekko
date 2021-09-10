@@ -32,8 +32,8 @@ const MenuComponent = ({history}) => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
             >
-                <MenuItem onClick={() => history.push('./join')}>회원가입</MenuItem>
-                <MenuItem onClick={() => history.push('./login')}>로그인</MenuItem>
+                <MenuItem onClick={() => history.push('/join')}>회원가입</MenuItem>
+                <MenuItem onClick={() => history.push('/login')}>로그인</MenuItem>
             </Menu>
         </div>
     )

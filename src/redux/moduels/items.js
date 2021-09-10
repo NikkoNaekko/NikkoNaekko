@@ -6,13 +6,16 @@ import { produce } from 'immer';
 const ADD_MODE = "items/ADD_MODE";
 const DELETE_MODE = "items/DELETE_MODE";
 const ADD_SELECTEMOOD = "items/ADD_SELECTEMOOD";
-const RESET_RECOMMEND = "items/RESET_RECOMMEND";
+const RESET_LIKEDMOOD = "items/RESET_LIKEDMOOD";
+const RESET_SELECTEDMOOD = "items/RESET_SELECTEDMOOD";
+
 
 //action creators
 const addMood = createAction(ADD_MODE, (mood) => ({mood}));
 const deleteMood = createAction(DELETE_MODE, (mood) => ({mood}));
 const addSelectedMood = createAction(ADD_SELECTEMOOD, (mood) => ({mood}));
-const resetRecommend = createAction(RESET_RECOMMEND, () => ({}));
+const resetLikedMood = createAction(RESET_LIKEDMOOD, () => ({}));
+const resetSelectiedMood = createAction(RESET_SELECTEDMOOD, () => ({}));
 
 //init
 const initialState = {
@@ -62,8 +65,10 @@ export default handleActions({
         const newSelectedMood = [ ...state.selectedMood, action.payload.mood ];
         draft.selectedMood = newSelectedMood;
     }),
-    [RESET_RECOMMEND] : (state, action) => produce(state, (draft) => {
+    [RESET_LIKEDMOOD] : (state, action) => produce(state, (draft) => {
         draft.likedMood = [];
+    }),
+    [RESET_SELECTEDMOOD] : (state, action) => produce(state, (draft) => {
         draft.selectedMood = [];
     }),
 }, initialState);
@@ -74,7 +79,8 @@ const actionCreators = {
     addMood,
     deleteMood,
     addSelectedMood,
-    resetRecommend,
+    resetLikedMood,
+    resetSelectiedMood
 };
 
 export { actionCreators };

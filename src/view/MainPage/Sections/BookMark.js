@@ -1,9 +1,10 @@
 import React from 'react'
+import VerticalItemList from '../Component/VerticalItemList'
 
 const BookMark = () => {
     return (
-        <div className="bookMarkBorder">
-            
+        <div style={{marginTop:'40px'}}>
+            <VerticalItemList isBookMark/>
         </div>
     )
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import './public.scss';
+import 'antd/dist/antd.css';
 
 import { Route } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";

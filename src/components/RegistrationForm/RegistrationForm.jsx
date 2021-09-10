@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Input, Select, Button } from 'antd';
+import { Form, Input, Select } from 'antd';
 import './registrationform.scss';
 import '../../shared/button/button.scss'
 
@@ -65,20 +65,21 @@ const RegistrationForm = () => {
       onFinish={onFinish}
       scrollToFirstError
     >
-
+    <label htmlFor="name" className="formLabel"><span style={{color:'red'}}>*</span> 아이디</label>
     <Form.Item
         name="name"
         rules={[
           {
-              required: true,
-              message: 'Please input your nickname!',
-              whitespace: true,
+            required: true,
+            message: 'Please input your nickname!',
+            whitespace: true,
           },
         ]}
     >
-        <Input prefix={"* 닉네임"} placeholder="닉네임을 입력해주세요"/>
+        <Input placeholder="닉네임을 입력해주세요"/>
       </Form.Item>
 
+      <label htmlFor="userId" className="formLabel"><span style={{color:'red'}}>*</span> 이메일</label>
       <Form.Item
         name="userId"
         rules={[
@@ -92,9 +93,9 @@ const RegistrationForm = () => {
           },
         ]}
       >
-        <Input prefix={"* 이메일"} placeholder="이메일 형식으로 입력해주세요"/>
+        <Input placeholder="이메일 형식으로 입력해주세요"/>
       </Form.Item>
-
+      <label htmlFor="password" className="formLabel"><span style={{color:'red'}}>*</span> 비밀번호</label>
       <Form.Item
         name="password"
         rules={[
@@ -104,9 +105,10 @@ const RegistrationForm = () => {
           },
         ]}
       >
-        <Input.Password prefix={"* 비밀번호"} placeholder="6자리 이상을 입력해주세요"/>
+        <Input.Password placeholder="6자리 이상을 입력해주세요"/>
       </Form.Item>
 
+      <label htmlFor="confirm" className="formLabel"><span style={{color:'red'}}>*</span> 비밀번호 확인</label>
       <Form.Item
         name="confirm"
         dependencies={['password']}
@@ -127,14 +129,12 @@ const RegistrationForm = () => {
           }),
         ]}
       >
-        <Input.Password prefix={"* 비밀번호 확인"} placeholder="비밀번호를 한 번 더 입력해주세요"/>
+        <Input.Password placeholder="비밀번호를 한 번 더 입력해주세요"/>
       </Form.Item>
 
-      <Form.Item {...tailFormItemLayout} className="button">
-        <Button type="primary" htmlType="submit" className="btn">
+        <button htmlType="submit" className="btn">
           회원가입
-        </Button>
-      </Form.Item>
+        </button>
     </Form>
   );
 };

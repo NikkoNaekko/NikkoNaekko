@@ -26,7 +26,8 @@ const RecommendPage = ({history}) => {
     }, [likedMood])
 
     useEffect(() => {
-        dispatch(itemsAction.resetRecommend());
+        dispatch(itemsAction.resetLikedMood());
+        dispatch(itemsAction.resetSelectiedMood());
         for(let i = 0; i < moodCollection.length; i++){
             const clothesAry = clothes.filter((c) => c.mood === moodCollection[i]);
             const index = Math.floor(Math.random() * clothesAry.length);
