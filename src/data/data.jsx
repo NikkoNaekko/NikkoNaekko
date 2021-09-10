@@ -5,7 +5,7 @@ export const clothesInformation = {
             "price": 72700,
             "brand": 'NickNicole',
             "liked": 0,
-            "purchased": 0,
+            "purchased": 100,
             "uploadDt": new Date(2021, 7, 14),
             "imgSrc": [
                 "https://firebasestorage.googleapis.com/v0/b/nikkoneakkoclothesstoreage.appspot.com/o/clothes%2F(%EA%BE%B8%EC%95%88%EA%BE%B8)%5BNickNicole%5D%EB%A7%81%ED%81%B4%20%ED%81%AC%EB%A1%AD%20%EB%B8%94%EB%9D%BC%EC%9A%B0%EC%8A%A4(1).jpg?alt=media&token=dc1b40b5-23ad-4cd1-b8c1-270f5eb66a59",

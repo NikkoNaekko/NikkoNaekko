@@ -8,7 +8,6 @@ const JoinPage = ({history}) => {
         <TopBar title="회원가입" history={history}/>
             <div className="join">
                 <div className="container">
-                    {/* <div>header</div> */}
                     <RegistrationForm/>
                 </div>
             </div>

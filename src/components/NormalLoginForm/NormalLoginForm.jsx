@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Button } from 'antd';
+import { Form, Input } from 'antd';
 import './normalloginform.scss';
 import '../../shared/button/button.scss'
 
@@ -18,6 +18,7 @@ const NormalLoginForm = () => {
         }}
         onFinish={onFinish}
     >
+      <label htmlFor="name" className="formLabel"><span style={{color:'red'}}>*</span>아이디</label>
       <Form.Item
         name="userId"
         rules={[
@@ -31,9 +32,10 @@ const NormalLoginForm = () => {
           },
         ]}
       >
-        <Input prefix={"* 아이디"} placeholder="이메일 형식으로 입력해주세요" />
+        <Input placeholder="이메일 형식으로 입력해주세요" />
       </Form.Item>
       
+      <label htmlFor="name" className="formLabel"><span style={{color:'red'}}>*</span>비밀번호</label>
       <Form.Item
         name="password"
         rules={[
@@ -43,14 +45,12 @@ const NormalLoginForm = () => {
           },
         ]}
        >
-        <Input prefix={"* 비밀번호"} type="password" placeholder="6자 이상을 입력해주세요" />
+        <Input type="password" placeholder="6자 이상을 입력해주세요" />
       </Form.Item>
 
-      <Form.Item className="button">
-        <Button type="primary" htmlType="submit" className="login-form-button btn">
+        <button htmlType="submit" className="btn">
           로그인
-        </Button>
-      </Form.Item>
+        </button>
     </Form>
   );
 };
