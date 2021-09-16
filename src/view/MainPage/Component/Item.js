@@ -24,7 +24,7 @@ const Item = ({item, isVertical, isHorizen}) => {
                 <div style={{width:'120px'}}>
                     <p className="font">[{item.brand}]</p>
                     <p className="font">{truncatedString}</p>
-                    <p style={{color:'red'}}><PriceList price={item.price}/></p>
+                    <p style={{color:'red'}}><PriceList price={item.price} title={"main"}/></p>
                     {/* <p >{item.price}원</p> */}
                     <div className="likedDiv">
                         <LikeButton itemID={item.id}/> 

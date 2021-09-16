@@ -25,3 +25,4 @@
 - 2021.09.07 Na [ MainPage 즐겨찾기 섹션 구현 ]
 - 2021.09.10 Na [ MainPage DetailPage 구현 ]
 - 2021.09.10 Ryu [ Recommend / RecommendResult 페이지 구현 ]
+- 2021.09.16 Ryu [ Cart 페이지 구현 ]

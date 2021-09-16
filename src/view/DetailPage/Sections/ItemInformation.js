@@ -1,8 +1,9 @@
-import React from 'react'
+import React from 'react';
 import LikeButton from '../../../shared/LikeButton';
 import '../DetailPage.scss'
 import PriceList from '../../../shared/PriceList';
-import CartButton from '../../../shared/CartButton'
+import CartButton from '../../../shared/CartButton';
+
 const ItemInformation = ({item}) => {
     return (
         <>

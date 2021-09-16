@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
+import PriceList from '../PriceList';
 import './button.scss';
 
-const Button = ({name, isDisabled, title, history}) => {
+const Button = ({name, isDisabled, title, history, count}) => {
 
     if( title === "recommend" ) {
         return (
@@ -22,6 +23,15 @@ const Button = ({name, isDisabled, title, history}) => {
             </button>
         )
 
+    } else if( title === "cart" ) {
+        return (
+            <button 
+                className="btn"
+                onClick={() => history.push('/main')}
+            >총 {count}개 | <PriceList price={20000}/> 구매하기
+            </button>
+        )
+
     } else {
         return (
             <button 
@@ -35,7 +45,10 @@ const Button = ({name, isDisabled, title, history}) => {
 }
 
 Button.defaultProps = {
+    name: "",
+    title: "",
     isDisabled : true,
+    count: 0,
 }
 
 export default withRouter(Button);

@@ -34,6 +34,7 @@ const MenuComponent = ({history}) => {
             >
                 <MenuItem onClick={() => history.push('/join')}>회원가입</MenuItem>
                 <MenuItem onClick={() => history.push('/login')}>로그인</MenuItem>
+                <MenuItem onClick={() => history.push('/cart')}>장바구니</MenuItem>
             </Menu>
         </div>
     )
