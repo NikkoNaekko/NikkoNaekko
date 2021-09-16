@@ -5,6 +5,7 @@
     --color-font-gray: rgb(114, 114, 114);
     --color-button-pink: rgb(255, 174, 201);
     --color-button-gray: rgb(224, 224, 224);
+    --color-div-gray : rgb(242,242,242);
     --color-div-light-pink: rgba(243, 186, 214, 0.5);
 
     --margin-bottom-topbar: 61px;
@@ -39,6 +40,16 @@ body {
     }
 }
 
+@keyframes disAppear {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        visibility: hidden;
+        opacity: 0;
+    }
+}
 .join .container {
     // height: calc(100vh - 61px);
     height: 100vh;

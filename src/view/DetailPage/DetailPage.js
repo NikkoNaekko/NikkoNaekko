@@ -28,12 +28,11 @@ const DetailPage = (props) => {
                 <Carousel autoplay style={{marginTop:'81px'}}>
                     {item.imgSrc.map((img,index) => {
                         return <img key={index} src={img} className="carouselImg"/>
-                        
                     })}
                 </Carousel>
             </div>
             <ItemInformation item={item}/>
-            <ItemDescription/>
+            <ItemDescription className="Section2"/>
         </>
     )
 }
