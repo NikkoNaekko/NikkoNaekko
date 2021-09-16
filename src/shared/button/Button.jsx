@@ -1,9 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { withRouter } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import PriceList from '../PriceList';
 import './button.scss';
 
 const Button = ({name, isDisabled, title, history, count}) => {
+
+    const cartItem = useSelector(state => state.cart.cartItem);
+
+    const totalPrice = cartItem.reduce((acc, cur) => {
+        return acc+parseInt(cur.price);
+    }, 0)
 
     if( title === "recommend" ) {
         return (
@@ -28,7 +35,7 @@ const Button = ({name, isDisabled, title, history, count}) => {
             <button 
                 className="btn"
                 onClick={() => history.push('/main')}
-            >총 {count}개 | <PriceList price={20000}/> 구매하기
+            >총 {count}개 | <PriceList price={totalPrice}/> 구매하기
             </button>
         )
 

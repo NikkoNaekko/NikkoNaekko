@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './cartpage.scss';
 import { Checkbox } from 'antd';
 import TopBar from '../../shared/menu/TopBar';
@@ -8,6 +8,7 @@ import CartItemList from './sections/CartItemList';
 import CartTotal from './sections/CartTotal';
 
 const CartPage = (props) => {
+
     return (
         <div className="cart">
             <div className="container">

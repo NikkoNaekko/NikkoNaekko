@@ -13,7 +13,7 @@
     cursor: pointer;
     z-index: 999;
 
-    &:hover,
+    &:focus,
     &:active {
         background-color: var(--color-font-dark-pink);
     }
@@ -29,17 +29,23 @@
 }
 
 
-// LikeButton 
-.likeButton{
+// iconButton 
+.iconButton{
     cursor: pointer;
-    transition: transform 500ms ease;
     font-size: 30px;
-    
-    &:hover{
+    animation: flash 0.4s ease forwards;
+}
+@keyframes flash {
+    0%{
+        transform: scale(1);
+    } 
+    50%{
         transform: scale(1.2);
     }
+    100%{
+        transform: scale(1);
+    }
 }
-
 .red {
   color:red;
   opacity: 0.8;

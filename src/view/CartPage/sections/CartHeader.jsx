@@ -8,7 +8,6 @@ const CartHeader = () => {
     const cartItem = useSelector(state => state.cart.cartItem);
     const checkItemList = useSelector(state => state.cart.checkItemList);
     const itemId = useSelector(state => state.cart.itemId);
-    const isCheckedAll = useSelector(state => state.cart.isCheckedAll);
 
     const handleIsChecked = () => {
         if( isChecked === true ) {

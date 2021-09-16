@@ -53,8 +53,8 @@ const LikeButton = ({item, title, itemID}) => {
     return(
         <div className="icons-list">
             {isChecked 
-                ? <HeartFilled className="likeButton red" onClick={handleLike}/> 
-                : <HeartOutlined className={ title === "recommendResult" ? "likeButton transparent" : "likeButton" } onClick={handleLike}/>
+                ? <HeartFilled className="iconButton red" onClick={handleLike}/> 
+                : <HeartOutlined className={ title === "recommendResult" ? "iconButton transparent" : "iconButton" } onClick={handleLike}/>
             }
         </div>
     )
