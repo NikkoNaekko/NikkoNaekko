@@ -13,6 +13,7 @@ import LoginPage from './view/LoginPage/LoginPage';
 import DetailPage from './view/DetailPage/DetailPage';
 import RecommendPage from './view/RecommendPage/RecommendPage'
 import RecommendResultPage from './view/RecommendResultPage/RecommendResultPage'
+import CartPage from './view/CartPage/CartPage';
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
         <Route path="/login" component={LoginPage}/>
         <Route path="/recommend" component={RecommendPage}/>
         <Route path="/recommendResult" component={RecommendResultPage}/>
+        <Route path="/cart" component={CartPage}/>
       </ConnectedRouter>
     </>
   );
