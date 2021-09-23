@@ -3,6 +3,8 @@ import { createAction, handleActions } from 'redux-actions';
 import { produce } from 'immer';
 
 //action
+const LOAD_ALL_DATA = "load_all_data"
+const LOAD_ONE_DATA = "load_add_data"
 const ADD_MODE = "items/ADD_MODE";
 const DELETE_MODE = "items/DELETE_MODE";
 const ADD_SELECTEMOOD = "items/ADD_SELECTEMOOD";
@@ -11,6 +13,8 @@ const RESET_SELECTEDMOOD = "items/RESET_SELECTEDMOOD";
 
 
 //action creators
+const loadAllData = createAction(LOAD_ALL_DATA, (data) => ({data}));
+const loadOneData = createAction(LOAD_ONE_DATA, (data) => ({data}));
 const addMood = createAction(ADD_MODE, (mood) => ({mood}));
 const deleteMood = createAction(DELETE_MODE, (mood) => ({mood}));
 const addSelectedMood = createAction(ADD_SELECTEMOOD, (mood) => ({mood}));
@@ -20,6 +24,7 @@ const resetSelectiedMood = createAction(RESET_SELECTEDMOOD, () => ({}));
 //init
 const initialState = {
     items:[],
+    selectedItems:{},
     likedMood : [],
     selectedMood : [],
 }
@@ -40,8 +45,40 @@ const initialState = {
  * }
  */
 
+//middleware
+const loadAllClothesDataOnDB = () => {
+    return function (dispatch, getState, { history }) {
+        axios.get("http://localhost:3000/posts")
+        .then(data => {
+            console.log(data.data);
+            dispatch(loadAllData(data.data));
+        })
+        .catch(error => {
+            console.log('데이터를 받아오지 못했습니다!', error);
+        })
+    }
+}
+
+const loadOneClothesDataOnDB = (itemId) => {
+    return function (dispatch, getState, { history }) {
+        axios.get(`http://localhost:3000/posts/${itemId}`)
+        .then(data => {
+            console.log(data.data);
+            dispatch(loadOneData(data.data));
+        })
+        .catch(error => {
+            console.log('데이터를 받아오지 못했습니다!', error);
+        })
+    }
+}
 // reducer
 export default handleActions({
+    [LOAD_ALL_DATA] : (state, action) => produce(state, (draft) => {
+        draft.items = [...action.payload.data];
+    }),
+    [LOAD_ONE_DATA] : (state, action) => produce(state, (draft) => {
+        draft.selectedItems = action.payload.data;
+    }),
     [ADD_MODE] : (state, action) => produce(state, (draft) => {
         const newLikedMood = [ ...state.likedMood, action.payload.mood ];
         draft.likedMood = newLikedMood;
@@ -71,7 +108,9 @@ const actionCreators = {
     deleteMood,
     addSelectedMood,
     resetLikedMood,
-    resetSelectiedMood
+    resetSelectiedMood,
+    loadAllClothesDataOnDB,
+    loadOneClothesDataOnDB
 };
 
 export { actionCreators };
