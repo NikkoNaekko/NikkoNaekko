@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {clothesInformation} from '../../../data/data'
+import { actionCreators as itemsAction } from '../../../redux/moduels/items';
 import Item from './Item';
 
 
 const VerticalItemList = ({isBookMark, isNewProduct}) => {
+    const dispatch = useDispatch();
+    const items = useSelector(state => state.items.items)
     const likedItemsID = useSelector(state => state.user.likedItems);
     const {clothes} = clothesInformation;
-    const Clothes = clothes.sort((a,b) => b.uploadDt.getTime() - a.uploadDt.getTime())
     const [likedItems, setLikedItems] = useState([]);
     useEffect(() => {
         if(isBookMark){
@@ -19,18 +21,21 @@ const VerticalItemList = ({isBookMark, isNewProduct}) => {
                 )
             })
         }
+        else{
+            dispatch(itemsAction.loadAllClothesDataOnDB());
+        }
     }, [likedItemsID])
     return (
         <div className="vericalItemList">
             {
-                isBookMark && likedItems &&
+                isBookMark && likedItems.length > 0 &&
                 likedItems.map(item => {
                     return <Item item={item[0]} key={item.id} isVertical/>
                 })
             }
             {
                 isNewProduct &&
-                Clothes.map(item => {
+                items.map(item => {
                     return <Item item={item} key={item.id} isVertical/>
                 })
             }

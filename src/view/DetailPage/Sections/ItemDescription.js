@@ -1,16 +1,20 @@
 import React, {useEffect} from 'react'
-import { clothes } from '../../../data/data';
+// import { clothes } from '../../../data/data';
+import { useSelector } from 'react-redux';
 
 const ItemDescription = () => {
-    const {clothesData} = clothes;
-    let str = clothesData[31].product_explain;
+    // const {clothesData} = clothes;
+    const item = useSelector(state => state.items.selectedItems);
+
+    let str = item.explain;
     let br = '<br>'
     useEffect(() => {
-       
-        str = lineUp(str,br);
-        document.querySelector('.description').innerHTML = str;
+       if(item.explain){
+           str = lineUp(str,br);
+           document.querySelector('.description').innerHTML = str;
+       }
         
-    }, [])
+    }, [item])
     return (
         <div className="descriptionBorder">
             <p className="description"></p>
