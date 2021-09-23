@@ -9,15 +9,13 @@ const TopBar = ({title, history, rightMenu}) => {
     const [searching, setSearching] = useState(false);
 
     const onSearch = (e) => {
-        const title = document.querySelector(".topBarTitle");
         const input = document.querySelector(".searchInput");
+        
         if(searching){
             setSearching(false);
-            title.style.animation = 'appear 0.5s ease forwards';
             input.style.animation = "inputDisAppear 0.5s ease forwards";
         } else {
             setSearching(true);
-            title.style.animation = 'disAppear 0.5s ease forwards';
             input.style.animation = "inputAppear 0.5s ease forwards";
         }
     }
@@ -35,7 +33,7 @@ const TopBar = ({title, history, rightMenu}) => {
                     {
                         rightMenu?
                         <div className="topBarRightMenu">
-                            <div>
+                            <div className="area">
                                 <input className="searchInput" placeholder="상품명을 입력하세요"/>
                                 <SearchIcon className="searchIcon" onClick={onSearch}/>
                             </div>
