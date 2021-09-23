@@ -19,16 +19,7 @@ const resetSelectiedMood = createAction(RESET_SELECTEDMOOD, () => ({}));
 
 //init
 const initialState = {
-    id : "1",
-    liked : 0,
-    name : "",
-    imgSrc : [],
-    mood : "",
-    // price : 0,
-    // brand : "",
-    // purchased : 0,
-    // explain: "",
-    // registrationDt : "",
+    items:[],
     likedMood : [],
     selectedMood : [],
 }

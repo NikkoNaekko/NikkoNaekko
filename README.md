@@ -27,3 +27,4 @@
 - 2021.09.10 Ryu [ Recommend / RecommendResult 페이지 구현 ]
 - 2021.09.13 Na [ DetailPage ItemDescription & 좋아요 버튼 애니메이션 구현 ]
 - 2021.09.16 Ryu [ Cart 페이지 구현 ]
+- 2021.09.23 Na [ 옷 정보를 data.json에 저장 ] 특이사항 - port번호를 3000 -> 8080으로 수정( 이유 : json-server가 포트 3000번을 이용하기 때문 )
