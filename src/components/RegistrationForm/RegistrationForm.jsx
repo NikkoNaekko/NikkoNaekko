@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Form, Input, Select } from 'antd';
 import './registrationform.scss';
-import '../../shared/button/button.scss'
+import '../../shared/button/button.scss';
+import { useDispatch } from 'react-redux';
+import { actionCreators as userAcions } from '../../redux/moduels/user';
 
 const { Option } = Select;
 const formItemLayout = {
@@ -36,7 +38,16 @@ const tailFormItemLayout = {
 };
 
 const RegistrationForm = () => {
+  const dispatch = useDispatch();
+  const [id, setId] = useState('');
+  const [pwd, setPwd] = useState('');
+  const [pwd_check, setPwdCheck] = useState('');
+  const [name, setName] = useState('');
   const [form] = Form.useForm();
+
+  const signUp = () => {
+    dispatch(userAcions.signUpDB(id, pwd, name));
+  }
 
   const onFinish = (values) => {
     console.log('Received values of form: ', values);
@@ -76,7 +87,7 @@ const RegistrationForm = () => {
           },
         ]}
     >
-        <Input placeholder="닉네임을 입력해주세요"/>
+        <Input placeholder="닉네임을 입력해주세요" onChange={(e)=> setName(e.target.value)}/>
       </Form.Item>
 
       <label htmlFor="userId" className="formLabel"><span style={{color:'red'}}>*</span> 이메일</label>
@@ -93,7 +104,7 @@ const RegistrationForm = () => {
           },
         ]}
       >
-        <Input placeholder="이메일 형식으로 입력해주세요"/>
+        <Input placeholder="이메일 형식으로 입력해주세요" onChange={(e)=> setId(e.target.value)}/>
       </Form.Item>
       <label htmlFor="password" className="formLabel"><span style={{color:'red'}}>*</span> 비밀번호</label>
       <Form.Item
@@ -105,7 +116,7 @@ const RegistrationForm = () => {
           },
         ]}
       >
-        <Input.Password placeholder="6자리 이상을 입력해주세요"/>
+        <Input.Password placeholder="6자리 이상을 입력해주세요" onChange={(e)=> setPwd(e.target.value)}/>
       </Form.Item>
 
       <label htmlFor="confirm" className="formLabel"><span style={{color:'red'}}>*</span> 비밀번호 확인</label>
@@ -129,10 +140,10 @@ const RegistrationForm = () => {
           }),
         ]}
       >
-        <Input.Password placeholder="비밀번호를 한 번 더 입력해주세요"/>
+        <Input.Password placeholder="비밀번호를 한 번 더 입력해주세요" onChange={(e)=> setPwdCheck(e.target.value)} />
       </Form.Item>
 
-        <button htmlType="submit" className="btn">
+        <button htmlType="submit" className="btn" onClick={signUp}>
           회원가입
         </button>
     </Form>
