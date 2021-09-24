@@ -3,16 +3,17 @@ import { useSelector, useDispatch } from 'react-redux';
 import { CloseOutlined } from '@ant-design/icons';
 import PriceList from '../../../shared/PriceList';
 import { actionCreators as cartAction } from '../../../redux/moduels/cart';
-import { clothesInformation } from '../../../data/data';
 
 const CartItem = ({info}) => {
     const dispatch = useDispatch();
-    const { clothes } = clothesInformation;
     const isCheckedAll = useSelector(state => state.cart.isCheckedAll);
-    const cartItem = useSelector(state => state.cart.cartItem);
-    const itemId = useSelector(state => state.cart.itemId);
     const [ isChecked, setIsChecked ] = useState(false);
     const id = info.id;
+    const productName = info.name;
+
+    const truncate = (str, n) => {
+        return str?.length > n ? str.substr(0, n-1) + "..." : str;
+    }
 
     const handleIsChecked = () => {
         if( isChecked === true ) {
@@ -45,7 +46,7 @@ const CartItem = ({info}) => {
                 <div className="cartContentInfo">
                     <div className="cartItemTitle">
                         <div className="cartItemBrand">[{info.brand}] </div>
-                        <div className="cartItemname">{info.name}</div>
+                        <div className="cartItemname">{truncate(productName, 16)}</div>
                     </div>
                     <div className="cartItemPrice">
                         <PriceList price={info.price}/>

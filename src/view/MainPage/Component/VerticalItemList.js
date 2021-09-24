@@ -15,7 +15,7 @@ const VerticalItemList = ({isBookMark, isNewProduct}) => {
         if(isBookMark){
             setLikedItems([]);
             likedItemsID.map(clothesToFind => {
-                const likedItemsObject = clothes.filter(item => item.id === clothesToFind);
+                const likedItemsObject = items.filter(item => item.id === clothesToFind);
                 setLikedItems(prevState => 
                     [...prevState, likedItemsObject]
                 )
