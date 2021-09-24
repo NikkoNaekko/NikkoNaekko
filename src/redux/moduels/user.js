@@ -17,12 +17,41 @@ const disLike = createAction(DISLIKE, (itemID) =>({itemID}));
 const initialState = {
     uid:'',
     id : '',
+    password: '',
     name : '',
+    token: '',
     likedItems: [],
+    isFirst: false,
 }
 
 
 //middle ware
+const signUpDB = (id, pwd, name) => {
+    return function (dispatch, getState, { history }) {
+        axios({
+            method: "post",
+            url: "http://localhost:3000/users",
+            data: {
+                uid: '',
+                id: id,
+                password: pwd,
+                name: name,
+                token: "",
+                likedItems: [],
+                isFirst: true,
+            }
+        })
+        .then((res) => {
+            console.log('회원 정보가 추가되었습니다.');
+            history.push('/main');
+        })
+        .catch(error => {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            console.log('회원가입 실패', errorCode, errorMessage);
+        })
+    }
+}
 
 
 // reducer
@@ -45,6 +74,7 @@ const actionCreators = {
     logIn,
     Like,
     disLike,
+    signUpDB
 };
 
 export { actionCreators };
