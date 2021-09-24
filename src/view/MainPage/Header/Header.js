@@ -1,5 +1,5 @@
 import React from 'react'
-import { HeartFilled, LikeFilled, StarFilled } from '@ant-design/icons';
+import { HeartFilled, LikeFilled, StarFilled, SearchOutlined } from '@ant-design/icons';
 
 const Header = ({title}) => {
 
@@ -24,6 +24,14 @@ const Header = ({title}) => {
             <div>
                 <StarFilled style={{fontSize:'30px', color:'rgb(255, 204, 0)'}}/>
                 <span className="headerTitle"> 신상품</span>
+            </div>
+        )
+    }
+    else if(title == "Search"){
+        return(
+            <div>
+                <SearchOutlined style={{fontSize:'30px', color:'rgb(55, 116, 230)'}}/>
+                <span className="headerTitle">검색 결과</span>
             </div>
         )
     }

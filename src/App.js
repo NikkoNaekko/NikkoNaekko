@@ -14,6 +14,7 @@ import DetailPage from './view/DetailPage/DetailPage';
 import RecommendPage from './view/RecommendPage/RecommendPage'
 import RecommendResultPage from './view/RecommendResultPage/RecommendResultPage'
 import CartPage from './view/CartPage/CartPage';
+import SearchPage from './view/SearchPage/SearchPage';
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
         <Route path="/recommend" component={RecommendPage}/>
         <Route path="/recommendResult" component={RecommendResultPage}/>
         <Route path="/cart" component={CartPage}/>
+        <Route path="/search/:name" component={SearchPage}/>
       </ConnectedRouter>
     </>
   );

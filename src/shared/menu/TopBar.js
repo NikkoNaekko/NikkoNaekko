@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useRef} from 'react'
 import './TopBar.scss'
 import MenuComponent from './MenuComponent'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
@@ -7,13 +7,16 @@ import SearchIcon from '@material-ui/icons/Search';
 const TopBar = ({title, history, rightMenu}) => {
 
     const [searching, setSearching] = useState(false);
-
+    const inputRef = useRef();
     const onSearch = (e) => {
         const input = document.querySelector(".searchInput");
         
         if(searching){
             setSearching(false);
             input.style.animation = "inputDisAppear 0.5s ease forwards";
+            if(inputRef.current.value){
+                history.push(`/search/${inputRef.current.value}`)
+            }
         } else {
             setSearching(true);
             input.style.animation = "inputAppear 0.5s ease forwards";
@@ -34,7 +37,7 @@ const TopBar = ({title, history, rightMenu}) => {
                         rightMenu?
                         <div className="topBarRightMenu">
                             <div className="area">
-                                <input className="searchInput" placeholder="상품명을 입력하세요"/>
+                                <input className="searchInput" ref={inputRef} placeholder="상품명을 입력하세요"/>
                                 <SearchIcon className="searchIcon" onClick={onSearch}/>
                             </div>
                             <MenuComponent history={history}/>

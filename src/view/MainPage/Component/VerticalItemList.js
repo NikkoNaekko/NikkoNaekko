@@ -5,7 +5,7 @@ import { actionCreators as itemsAction } from '../../../redux/moduels/items';
 import Item from './Item';
 
 
-const VerticalItemList = ({isBookMark, isNewProduct}) => {
+const VerticalItemList = ({isBookMark, isNewProduct, isSearchProduct}) => {
     const dispatch = useDispatch();
     const items = useSelector(state => state.items.items)
     const likedItemsID = useSelector(state => state.user.likedItems);
@@ -34,7 +34,7 @@ const VerticalItemList = ({isBookMark, isNewProduct}) => {
                 })
             }
             {
-                isNewProduct &&
+                (isNewProduct || isSearchProduct) &&
                 items.map(item => {
                     return <Item item={item} key={item.id} isVertical/>
                 })
@@ -47,6 +47,7 @@ const VerticalItemList = ({isBookMark, isNewProduct}) => {
 VerticalItemList.defaultProps = {
     isBookMark:null,
     isNewProduct:null,
+    isSearchProduct:null,
 }
 
 
