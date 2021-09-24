@@ -18,6 +18,7 @@
 
 
 
+
 # 수정 사항
 
 - 2021.09.01 Na [ 리액트 초기 설정 완료 ]
@@ -34,3 +35,4 @@
 - 2021.09.17 Ryu [ 검색바 애니메이션 구현 ]
 - 2021.09.23 Na [ 옷 정보를 data.json에 저장 ] 특이사항 - port번호를 3000 -> 8080으로 수정( 이유 : json-server가 포트 3000번을 이용하기 때문 )
 - 2021.09.23 Na [ dummy api 를 사용해 detail page와 MainPage의 newProduct 섹션 구현 완료 ]
+- 2021.09.24 Ryu [ dummy api 를 사용해 JoinPage의 signUp 기능 구현 완료 ]
