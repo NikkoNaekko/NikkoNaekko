@@ -10,17 +10,18 @@ const LikeButton = ({item, title, itemID}) => {
     const dispatch = useDispatch();
     const likedItems = useSelector(state => state.user.likedItems);
 
+
     useEffect(() => {
         if(likedItems.includes(itemID)){
             setIsChecked(true)
         } else {
             setIsChecked(false)
         }
-    }, [likedItems])
+    }, [likedItems, itemID])
 
     const handleLike = () => {
         if( title === "recommend" ) {
-            const mood = item.mood;;
+            const mood = item.mood;
 
             if(!isChecked) { //유저가 좋아하면
                 dispatch(itemsAction.addMood(mood));
