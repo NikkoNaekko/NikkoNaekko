@@ -1,15 +1,20 @@
-import React from 'react'
-import {clothesInformation} from '../../../data/data'
+import React, {useEffect} from 'react'
+import { useSelector ,useDispatch } from 'react-redux';
+import { actionCreators as itemsAction} from '../../../redux/moduels/items';
 import Item from './Item';
 
 const HorizenItemList = () => {
-    const {clothes} = clothesInformation;
-    const sortedClothes = clothes.sort((a,b) => b.liked - a.liked);
+    const dispatch = useDispatch();
+    const popluarItems = useSelector(state => state.items.popluarItems);
+    
+    useEffect(() => {
+        dispatch(itemsAction.loadPopularClothesDataOnDB());
+    }, [])
 
     return (
         <div className="HorizenItemList">
             {
-                sortedClothes.map(item => {
+                popluarItems && popluarItems.map(item => {
                     return <Item item={item} key={item.id} isHorizen/>
                 })
             }

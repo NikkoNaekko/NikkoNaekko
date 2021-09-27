@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import {clothesInformation} from '../../../data/data'
 import { actionCreators as itemsAction } from '../../../redux/moduels/items';
 import Item from './Item';
 
@@ -9,7 +8,6 @@ const VerticalItemList = ({isBookMark, isNewProduct, isSearchProduct}) => {
     const dispatch = useDispatch();
     const items = useSelector(state => state.items.items)
     const likedItemsID = useSelector(state => state.user.likedItems);
-    const {clothes} = clothesInformation;
     const [likedItems, setLikedItems] = useState([]);
     
     useEffect(() => {

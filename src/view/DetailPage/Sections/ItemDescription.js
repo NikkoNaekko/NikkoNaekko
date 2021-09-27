@@ -1,13 +1,11 @@
 import React, {useEffect} from 'react'
-// import { clothes } from '../../../data/data';
 import { useSelector } from 'react-redux';
 
 const ItemDescription = () => {
-    // const {clothesData} = clothes;
     const item = useSelector(state => state.items.selectedItems);
 
     let str = item.explain;
-    let br = '<br>'
+    const br = '<br>'
     useEffect(() => {
        if(item.explain){
            str = lineUp(str,br);
