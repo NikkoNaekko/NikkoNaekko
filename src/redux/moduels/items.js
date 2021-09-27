@@ -92,11 +92,11 @@ const loadPopularClothesDataOnDB = () => {
     return function (dispatch, getState, { history }) {
         axios.get('http://localhost:3000/posts?_sort=liked&_order=desc&_limit=10')
         .then(data => {
-            console.log(data.data);
+            // console.log(data.data);
             dispatch(loadPopularData(data.data));
         })
         .catch(error => {
-            console.log('에서 데이터를 받아오지 못했습니다!', error);
+            console.log('데이터를 받아오지 못했습니다!', error);
         })
     }
 }

@@ -5,7 +5,6 @@ import PriceList from '../../../shared/PriceList';
 import CartButton from '../../../shared/CartButton';
 
 const ItemInformation = ({item}) => {
-    console.log("item.id: ", item.id);
     return (
         <>
             <div className='detailBorder'>

@@ -11,7 +11,7 @@ const VerticalItemList = ({isBookMark, isNewProduct, isSearchProduct}) => {
     const [likedItems, setLikedItems] = useState([]);
     
     useEffect(() => {
-        if(isNewProduct){
+        if(isNewProduct && items.length === 0){
             dispatch(itemsAction.loadAllClothesDataOnDB());
         }
     }, [])
