@@ -2,13 +2,22 @@
     width:100vw;
     height:300px;
 }
-
+#detailPage{
+    // overflow-y: hidden;
+    &::-webkit-scrollbar{
+        display: none;
+    }
+}
 // ----- ItemInformation -----
-
+.fixedArea {
+    position: sticky;
+    top: 0;
+    overflow: hidden;
+    z-index: 1;
+    background: #fff;
+}
 .detailBorder{
     margin:20px;
-    animation: appear 0.5s 0.5s ease forwards;
-    visibility:hidden;
 
     .font{
         font-size: 20px;
@@ -52,8 +61,6 @@
     padding:20px;
     font-size: 20px;
     color:var(--color-font-gray);
-    animation: appear 1s 0.5s ease forwards;
-    visibility:hidden;
 }
 
 

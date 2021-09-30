@@ -41,3 +41,4 @@
 - 2021.09.24 Na [ 웹 성능 최적화 및 Detail Page문제 해결 ]
 - 2021.09.27 Na [ dummy api 를 사용해 MainPage PopularProduct 섹션 구현 완료 ]
 - 2021.09.27 Na [ 웹 성능 최적화 (외부 api 반복 수신 제거) ]
+- 2021.09.30 Na [ detailPage UI 변경 (스크롤 추가)]
