@@ -7,6 +7,7 @@ import Item from './Item';
 const VerticalItemList = ({isBookMark, isNewProduct, isSearchProduct}) => {
     const dispatch = useDispatch();
     const items = useSelector(state => state.items.items)
+    const searchedItems = useSelector(state => state.items.searchedItems)
     const likedItemsID = useSelector(state => state.user.likedItems);
     const [likedItems, setLikedItems] = useState([]);
     
@@ -36,8 +37,14 @@ const VerticalItemList = ({isBookMark, isNewProduct, isSearchProduct}) => {
                 })
             }
             {
-                (isNewProduct || isSearchProduct) &&
+                isNewProduct &&
                 items.map(item => {
+                    return <Item item={item} key={item.id} isVertical/>
+                })
+            }
+            {
+                isSearchProduct && searchedItems.length > 0 &&
+                searchedItems.map(item => {
                     return <Item item={item} key={item.id} isVertical/>
                 })
             }
