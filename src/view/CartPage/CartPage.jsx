@@ -1,6 +1,5 @@
 import React from 'react';
 import './cartpage.scss';
-import { Checkbox } from 'antd';
 import TopBar from '../../shared/menu/TopBar';
 import Button from '../../shared/button/Button';
 import CartHeader from './sections/CartHeader';

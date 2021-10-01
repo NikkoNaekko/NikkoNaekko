@@ -15,6 +15,7 @@
 - 2021.09.24 Na [ DetailPage에서 likeButton이 제대로 동작하지 않은 문제 & MainPage에서 axios.get 함수가 여러 번 호출되 성능을 떨어뜨리는 문제 ]
 - 2021.09.24 Na [ DetailPage에서 likeButton이 제대로 동작하지 않은 문제 해결 & MainPage에서 axios.get 함수가 여러 번 호출되 성능을 떨어뜨리는 문제 해결]
 - 2021.09.24 Ryu [ TopBar 로고를 클릭해도 mainPage로 돌아가지 않는 문제 & 2021.09.24 Ryu TopBar 로고를 클릭해도 mainPage로 돌아가지 않는 문제 해결 ]
+- 2021.09.28 Ryu [ RecommentResult에서 취향을 선택하지 않아도 버튼이 활성화되는 문제 & RecommentResult에서 취향을 선택하지 않아도 버튼이 활성화되는 문제 해결 ]
 
 # 수정 사항
 
@@ -36,3 +37,4 @@
 - 2021.09.24 Ryu [ dummy api 를 사용해 JoinPage의 signUp 기능 구현 완료 ]
 - 2021.09.24 Na [ 웹 성능 최적화 및 Detail Page문제 해결 ]
 - 2021.09.27 Na [ dummy api 를 사용해 MainPage PopularProduct 섹션 구현 완료 ]
+- 2021.10.01 Ryu [ dummy api와 user module의 likedItems값 동일화 기능 구현 완료 ]
