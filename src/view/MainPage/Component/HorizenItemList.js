@@ -8,7 +8,9 @@ const HorizenItemList = () => {
     const popluarItems = useSelector(state => state.items.popluarItems);
     
     useEffect(() => {
-        dispatch(itemsAction.loadPopularClothesDataOnDB());
+        if(popluarItems.length === 0){
+            dispatch(itemsAction.loadPopularClothesDataOnDB());
+        }
     }, [])
 
     return (

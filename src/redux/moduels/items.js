@@ -5,6 +5,7 @@ import { produce } from 'immer';
 //action
 const LOAD_ALL_DATA = "load_all_data";
 const LOAD_ONE_DATA = "load_add_data";
+const LOAD_SEARCHED_DATA = "load_searched_data";
 const LOAD_POPULAR_DATA = "load_popular_data";
 const ADD_MODE = "items/ADD_MODE";
 const DELETE_MODE = "items/DELETE_MODE";
@@ -16,6 +17,7 @@ const RESET_SELECTEDMOOD = "items/RESET_SELECTEDMOOD";
 //action creators
 const loadAllData = createAction(LOAD_ALL_DATA, (data) => ({data}));
 const loadOneData = createAction(LOAD_ONE_DATA, (data) => ({data}));
+const loadSearchData = createAction(LOAD_SEARCHED_DATA, (data) => ({data}));
 const loadPopularData = createAction(LOAD_POPULAR_DATA, (data) => ({data}));
 const addMood = createAction(ADD_MODE, (mood) => ({mood}));
 const deleteMood = createAction(DELETE_MODE, (mood) => ({mood}));
@@ -27,6 +29,7 @@ const resetSelectiedMood = createAction(RESET_SELECTEDMOOD, () => ({}));
 const initialState = {
     items:[],
     selectedItems:{},
+    searchedItems:[],
     popluarItems:[],
     likedMood : [],
     selectedMood : [],
@@ -80,7 +83,7 @@ const loadSearchedClothesDataOnDB = (itemName) => {
         axios.get(`http://localhost:3000/posts?name=${itemName}`)
         .then(data => {
             // console.log(data.data);
-            dispatch(loadAllData(data.data));
+            dispatch(loadSearchData(data.data));
         })
         .catch(error => {
             console.log('데이터를 받아오지 못했습니다!', error);
@@ -92,11 +95,11 @@ const loadPopularClothesDataOnDB = () => {
     return function (dispatch, getState, { history }) {
         axios.get('http://localhost:3000/posts?_sort=liked&_order=desc&_limit=10')
         .then(data => {
-            console.log(data.data);
+            // console.log(data.data);
             dispatch(loadPopularData(data.data));
         })
         .catch(error => {
-            console.log('에서 데이터를 받아오지 못했습니다!', error);
+            console.log('데이터를 받아오지 못했습니다!', error);
         })
     }
 }
@@ -109,6 +112,9 @@ export default handleActions({
     }),
     [LOAD_ONE_DATA] : (state, action) => produce(state, (draft) => {
         draft.selectedItems = action.payload.data;
+    }),
+    [LOAD_SEARCHED_DATA] : (state, action) => produce(state, (draft) => {
+        draft.searchedItems = [...action.payload.data];
     }),
     [LOAD_POPULAR_DATA] : (state, action) => produce(state, (draft) => {
         draft.popluarItems = [...action.payload.data];

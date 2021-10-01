@@ -8,7 +8,6 @@ import { actionCreators } from '../../redux/moduels/items';
 
 const SearchPage = (props) => {
     const dispatch = useDispatch();
-    const searchedItems = useSelector(state => state.items.items)
     const searchName = props.match.params.name;
     useEffect(() => {
         dispatch(actionCreators.loadSearchedClothesDataOnDB(searchName))
