@@ -18,6 +18,7 @@
             color:var(--color-font-dark-pink);
             font-size: 24px;
             font-weight: bold;
+            z-index: 900;
         }
         .hover{
             &:active{
@@ -65,6 +66,7 @@
                     font-size: 40px;
                     position: absolute;
                     right: 4px;
+                    z-index: 902;
                 }
             }   
         }
@@ -85,6 +87,7 @@
         width: 100%;
         opacity: 1;
         visibility: visible;
+        z-index: 901;
     }
 }
 @keyframes inputDisAppear{
@@ -97,5 +100,6 @@
         width: 0;
         opacity: 0;
         visibility: hidden;
+        z-index: 900;
     }
 }

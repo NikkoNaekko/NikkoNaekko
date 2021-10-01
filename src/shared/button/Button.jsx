@@ -24,7 +24,7 @@ const Button = ({name, isDisabled, title, history, count}) => {
     } else if( title === "recommendResult" ) {
         return (
             <button 
-                className="btn"
+                className={ isDisabled ? `btn btn_gray` : `btn btn_pink` } 
                 onClick={() => history.push('/main')}
             >{name}
             </button>
