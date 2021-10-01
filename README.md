@@ -37,4 +37,8 @@
 - 2021.09.24 Ryu [ dummy api 를 사용해 JoinPage의 signUp 기능 구현 완료 ]
 - 2021.09.24 Na [ 웹 성능 최적화 및 Detail Page문제 해결 ]
 - 2021.09.27 Na [ dummy api 를 사용해 MainPage PopularProduct 섹션 구현 완료 ]
+- 2021.09.27 Na [ 웹 성능 최적화 (외부 api 반복 수신 제거) ]
+- 2021.09.29 Ryu [ RecommentResult 페이지 이미지 출력개수 증가 ]
+- 2021.09.30 Na [ detailPage UI 변경 (스크롤 추가)]
+- 2021.09.30 Na [ redux items.searchItems 추가 ]
 - 2021.10.01 Ryu [ dummy api와 user module의 likedItems값 동일화 기능 구현 완료 ]
