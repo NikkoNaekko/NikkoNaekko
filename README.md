@@ -43,3 +43,4 @@
 - 2021.09.27 Na [ 웹 성능 최적화 (외부 api 반복 수신 제거) ]
 - 2021.09.30 Na [ detailPage UI 변경 (스크롤 추가)]
 - 2021.09.30 Na [ redux items.searchItems 추가 ]
+- 2021.10.01 Na [ cartPage 구현 완료 및 cart redux 개선 ]

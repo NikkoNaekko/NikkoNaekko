@@ -16,7 +16,7 @@ const CartButton = ({itemID}) => {
         } else {
             setIsChecked(false)
         }
-    }, [cart])
+    }, [cart, itemID])
 
     const onClick = () => {
         if(isChecked){      // 장바구니에서 뺀다

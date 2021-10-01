@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import PriceList from '../PriceList';
 import './button.scss';
 
-const Button = ({name, isDisabled, title, history, count}) => {
+const Button = ({name, isDisabled, title, history}) => {
 
     const cartItem = useSelector(state => state.cart.cartItem);
 
@@ -35,7 +35,7 @@ const Button = ({name, isDisabled, title, history, count}) => {
             <button 
                 className="btn"
                 onClick={() => history.push('/main')}
-            >총 {count}개 | <PriceList price={totalPrice}/> 구매하기
+            >총 {cartItem.length}개 | <PriceList price={totalPrice}/> 구매하기
             </button>
         )
 
@@ -55,7 +55,6 @@ Button.defaultProps = {
     name: "",
     title: "",
     isDisabled : true,
-    count: 0,
 }
 
 export default withRouter(Button);

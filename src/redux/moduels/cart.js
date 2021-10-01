@@ -5,6 +5,7 @@ import { produce } from 'immer';
 // actions
 const PUTINCART = "PUTINCART"
 const TACKINGOUTTOCART = "TACKINGOUTTOCART"
+const LOAD_CARTITEM = "load_cartitem"
 const ADD_CARTITEM = "cart/ADD_CARTITEM"
 const DELETE_CARTITEM = "cart/DELETE_CARTITEM"
 const DELETE_CHECKEDITEM = "cart/DELETE_CHECKEDITEM"
@@ -16,6 +17,7 @@ const CHECK_ALL = "cart/CHECK_ALL"
 // action creators
 const putInInCart = createAction(PUTINCART, (itemID) => ({itemID}));
 const tackingOutToCart = createAction(TACKINGOUTTOCART, (itemID) => ({itemID}));
+const loadCartitem = createAction(LOAD_CARTITEM, (items) => ({items}));
 const addCartItem = createAction(ADD_CARTITEM, (item) => ({item}));
 const deleteCartItem = createAction(DELETE_CARTITEM, (itemID) => ({itemID}));
 const deleteCheckedItem = createAction(DELETE_CHECKEDITEM);
@@ -36,7 +38,21 @@ const initialState = {
 
 
 //middle ware
-
+const loadCartItemDB = () => {
+    return function (dispatch, getState, { history }) {
+        let url = "http://localhost:3000/posts?";
+        getState().cart.itemId.map(id => {
+            url += "id=" + id + "&"
+        })
+        axios.get(url)
+        .then(data => {
+            dispatch(loadCartitem(data.data))
+        })
+        .catch(error => {
+            console.log("장바구니 데이터를 받아오지 못했습니다.", error);
+        })
+    }
+}
 
 // reducer
 export default handleActions({
@@ -47,28 +63,27 @@ export default handleActions({
         const cartAry = draft.itemId.filter(value => value !== action.payload.itemID)
         draft.itemId = [...cartAry]
     }),
+    [LOAD_CARTITEM] : (state, action) => produce(state, (draft) => {
+        draft.cartItem = [];
+        draft.checkItemList = [];
+        action.payload.items.map(item => {
+            draft.cartItem = [...draft.cartItem, item]
+        })
+    }),
     [ADD_CARTITEM] : (state, action) => produce(state, (draft) => {
         draft.cartItem = [...state.cartItem, action.payload.item];
     }),
     [DELETE_CARTITEM] : (state, action) => produce(state, (draft) => {
         // item의 'X' 아이콘을 눌러 삭제하는 경우
-        const newCartItem = draft.cartItem.filter((item)=> item.id !== action.payload.itemID)
-        const newItemId = draft.itemId.filter(value => value !== action.payload.itemID);
-        const newCheckItemList = draft.checkItemList.filter(value => value !== action.payload.itemID);
-        draft.cartItem = [...newCartItem];
-        draft.itemId = [...newItemId];
-        draft.checkItemList = [...newCheckItemList];
+        draft.cartItem = draft.cartItem.filter((item)=> item.id !== action.payload.itemID);
+        draft.itemId = draft.itemId.filter(value => value !== action.payload.itemID);
+        draft.checkItemList = draft.checkItemList.filter(value => value !== action.payload.itemID);
     }),
     [DELETE_CHECKEDITEM] : (state, action) => produce(state, (draft) => {
         ///선택삭제버튼을 눌러 삭제하는 경우
-        for( let i = 0; i < draft.checkItemList; i++ ) {
-            const newCartItem = draft.cartItem.filter((item)=> item.id !== state.checkItemList[i])
-            const newItemId = draft.itemId.filter(value => value !== state.checkItemList[i]);
-            const newCheckItemList = draft.checkItemList.filter(value => value !== state.checkItemList[i])
-            draft.cartItem = [...newCartItem];
-            draft.itemId = [...newItemId];
-            draft.checkItemList = [...newCheckItemList];
-        }
+        draft.itemId = draft.itemId.filter(Id => !draft.checkItemList.includes(Id))
+        draft.cartItem = draft.cartItem.filter(Item => draft.itemId.includes(Item.id))
+        draft.checkItemList = [];
     }),
     [RESET_CARTITEM] : (state, action) => produce(state, (draft) => {
         draft.cartItem = [];
@@ -108,6 +123,8 @@ const actionCreators = {
     resetCartItem,
     singleCheck,
     allCheck,
+    loadCartitem,
+    loadCartItemDB
 };
 
 export { actionCreators };

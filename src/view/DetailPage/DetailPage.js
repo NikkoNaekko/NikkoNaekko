@@ -23,7 +23,7 @@ const DetailPage = (props) => {
           <TopBar title="니꼬내꼬" history={props.history} rightMenu />
           <div className="fixedArea Section1">
             <div style={{ position: "relative" }}>
-              {item.purchesd ? <PopularProductBanner /> : null}
+              {item.purchased > 99 ? <PopularProductBanner /> : null}
               {item.imgSrc && (
                 <Carousel autoplay style={{ marginTop: "81px" }}>
                   {item.imgSrc.map((img, index) => {

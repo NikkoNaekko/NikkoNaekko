@@ -15,7 +15,7 @@ const CartPage = (props) => {
                 <div className="wrapper">
                     <TopBar title="장바구니" history={props.history} rightMenu/>   
                     <CartHeader/>
-                    <CartItemList/>
+                    <CartItemList history={props.history}/>
                     <CartTotal/>
                 </div>
                 <Button items={"3"} title={"cart"}/>

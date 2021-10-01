@@ -4,9 +4,10 @@ import { CloseOutlined } from '@ant-design/icons';
 import PriceList from '../../../shared/PriceList';
 import { actionCreators as cartAction } from '../../../redux/moduels/cart';
 
-const CartItem = ({info}) => {
+const CartItem = ({info, history}) => {
     const dispatch = useDispatch();
     const isCheckedAll = useSelector(state => state.cart.isCheckedAll);
+    const checkItemList = useSelector(state => state.cart.checkItemList)
     const [ isChecked, setIsChecked ] = useState(false);
     const id = info.id;
     const productName = info.name;
@@ -39,11 +40,11 @@ const CartItem = ({info}) => {
                 <input 
                     type="checkbox"
                     onClick={() => handleIsChecked()}
-                    checked={ isChecked === true ? true : false}
+                    checked={ checkItemList.includes(id) ? true : false}
                     onChange={(e)=>dispatch(cartAction.singleCheck(e.target.checked, id))}
                 />
-                <img src={info.imgSrc[0]} alt="img" />
-                <div className="cartContentInfo">
+                <img src={info.imgSrc[0]} alt="img"  onClick={() => history.push(`/detail/${info.id}`)}/>
+                <div className="cartContentInfo"  onClick={() => history.push(`/detail/${info.id}`)}>
                     <div className="cartItemTitle">
                         <div className="cartItemBrand">[{info.brand}] </div>
                         <div className="cartItemname">{truncate(productName, 16)}</div>
