@@ -6,19 +6,15 @@
 > - npm i : package.json에 들어있는 node_moduels 설치
 > - npm run start : 실행 명령어 ("script" 참조)
 
-
-**프로젝트 실행 후  http://loaclhost:3000/** 링크를 [ctrl + Click]하거나 직접 브라우저에 url을 입력하면 출력 화면이 보입니다.
-
+**프로젝트 실행 후 http://loaclhost:3000/** 링크를 [ctrl + Click]하거나 직접 브라우저에 url을 입력하면 출력 화면이 보입니다.
 
 # 에러 사항
 
 - 2021.09.08 Na [ DetailPage에 들어가면 스크롤이 자동으로 밑으로 가는 문제 ] 2021.09.10 Na [ DetailPage에 들어가면 스크롤이 자동으로 밑으로 가는 문제 해결 ]
-- 2021.09.16 Ryu [ CartPage에 아이템이 중복되어 추가되는 문제 ]
-- 2021.09.17 Ryu [ CartPage 아이템 중복추가허용 문제 해결 ]
+- 2021.09.16 Ryu [ CartPage에 아이템이 중복되어 추가되는 문제 ] | 2021.09.17 Ryu [ CartPage 아이템 중복추가허용 문제 해결 ]
 - 2021.09.24 Na [ DetailPage에서 likeButton이 제대로 동작하지 않은 문제 & MainPage에서 axios.get 함수가 여러 번 호출되 성능을 떨어뜨리는 문제 ]
-- 2021.09.24 Na [ DetailPage에서 likeButton이 제대로 동작하지 않은 문제 해결 & MainPage에서 axios.get 함수가 여러 번 호출되 성능을 떨어뜨리는 문제 해결] 
-
-
+- 2021.09.24 Na [ DetailPage에서 likeButton이 제대로 동작하지 않은 문제 해결 & MainPage에서 axios.get 함수가 여러 번 호출되 성능을 떨어뜨리는 문제 해결]
+- 2021.09.24 Ryu [ TopBar 로고를 클릭해도 mainPage로 돌아가지 않는 문제 & 2021.09.24 Ryu TopBar 로고를 클릭해도 mainPage로 돌아가지 않는 문제 해결 ]
 
 # 수정 사항
 
