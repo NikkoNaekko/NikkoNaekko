@@ -5,6 +5,8 @@ import Button from '../../shared/button/Button';
 import { clothesInformation } from '../../data/data';
 import { useSelector, useDispatch } from 'react-redux';
 import { actionCreators as itemsAction } from '../../redux/moduels/items'; 
+import { actionCreators as userAction } from '../../redux/moduels/user'; 
+
 import './recommend.scss';
 
 const moodCollection = [ '꾸안꾸', '미니멀', '스트릿', '아메카지', '오피스룩', '캐주얼' ];
@@ -15,6 +17,11 @@ const RecommendPage = ({history}) => {
     const [ selectedItem, setSelectedItem ] = useState([]);
     const likedMood = useSelector(state => state.items.likedMood);
     const dispatch = useDispatch();
+
+    //임시 로그인
+    useEffect(() => {
+        dispatch(userAction.logIn("admin@admin.com"));
+    }, []);
 
     useEffect(()=>{
         if(likedMood.length > 0) {

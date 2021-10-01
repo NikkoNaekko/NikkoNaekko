@@ -867,5 +867,17 @@
       "brand": "세러데이무드"
     }
   ],
-  "users": []
+  "users": [
+    {
+      "uid": "",
+      "id": "admin@admin.com",
+      "password": "12341234",
+      "name": "admin",
+      "token": "",
+      "likedItems": [
+        12
+      ],
+      "isFirst": true
+    }
+  ]
 }
