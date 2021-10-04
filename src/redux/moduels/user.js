@@ -16,14 +16,14 @@ const loadOneData = createAction(LOAD_ONE_DATA, (data) => ({ data }));
 
 // initialState
 const initialState = {
-  uid: "",
-  id: "",
-  password: "",
-  name: "",
-  token: "",
-  likedItems: [],
-  isFirst: false,
-};
+    uid:'',
+    id : 'admin@admin.com',
+    name : 'ablue',
+    token: '',
+    likedItems: [],
+    isFirst: false,
+}
+
 
 //middle ware
 const loadOneUserDataFromDB = (userID) => {

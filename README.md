@@ -43,3 +43,4 @@
 - 2021.09.30 Na [ redux items.searchItems 추가 ]
 - 2021.10.01 Na [ cartPage 구현 완료 및 cart redux 개선 ]
 - 2021.10.01 Ryu [ dummy api와 user module의 likedItems값 동일화 기능 구현 완료 ]
+- 2021.10.02 Na [ dummy api 를 사용해 cartPage 구현 완료 ]

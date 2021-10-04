@@ -54,7 +54,7 @@ const CartItem = ({info, history}) => {
                     </div>
                 </div>
                 
-                <div className="cartItemDelete" onClick={()=>dispatch(cartAction.deleteCartItem(id))}>
+                <div className="cartItemDelete" onClick={()=>dispatch(cartAction.deleteCartItemDB(id))}>
                     <CloseOutlined />
                 </div>
             </div>

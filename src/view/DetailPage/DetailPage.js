@@ -16,12 +16,7 @@ const DetailPage = (props) => {
   useEffect(() => {
     dispatch(itemsAction.loadOneClothesDataOnDB(props.match.params.id));
   }, []);
-
-<<<<<<< HEAD
-    useEffect(() => {
-        dispatch(itemsAction.loadOneClothesDataOnDB(props.match.params.id))
-    }, [])
-    
+  
     return (
         <div id="detailPage">
           <TopBar title="니꼬내꼬" history={props.history} rightMenu />
@@ -37,27 +32,6 @@ const DetailPage = (props) => {
               )}
             </div>
           </div>
-          <div className="Section2">
-            <ItemInformation item={item} />
-            <ItemDescription className="Section2" />
-          </div>
-=======
-  return (
-    <div id="detailPage">
-      <TopBar title="니꼬내꼬" history={props.history} rightMenu />
-      <div className="fixedArea Section1">
-        <div style={{ position: "relative" }}>
-          {item.purchesd ? <PopularProductBanner /> : null}
-          {item.imgSrc && (
-            <Carousel autoplay style={{ marginTop: "81px" }}>
-              {item.imgSrc.map((img, index) => {
-                return <img key={index} src={img} className="carouselImg" />;
-              })}
-            </Carousel>
-          )}
->>>>>>> Front
-        </div>
-      </div>
       <div className="Section2">
         <ItemInformation item={item} />
         <ItemDescription className="Section2" />

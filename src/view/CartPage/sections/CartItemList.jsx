@@ -12,21 +12,8 @@ const CartItemList = ({history}) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if(itemId.length > 0) {
-            dispatch(cartAction.loadCartItemDB());
-        }
+        dispatch(cartAction.loadCartItemDB());
     }, [])
-
-
-    // useEffect(()=>{
-    //     for(let i = 0; i < itemId.length; i++){
-    //         const cartAry = clothes.filter((c) => c.id === itemId[i]);
-
-    //         if(cartItem.includes(cartAry[0]) === false) {
-    //             dispatch(cartAction.addCartItem(cartAry[0]))
-    //         }
-    //     }
-    // },[]);
 
     return (
         <div className="cartItemList">
