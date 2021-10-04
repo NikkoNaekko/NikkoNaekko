@@ -55,9 +55,9 @@ const initialState = {
 const loadAllClothesDataOnDB = () => {
     return function (dispatch, getState, { history }) {
         axios.get("http://localhost:3000/posts")
-        .then(data => {
-            // console.log(data.data);
-            dispatch(loadAllData(data.data));
+        .then(res => {
+            // console.log(res.data);
+            dispatch(loadAllData(res.data));
         })
         .catch(error => {
             console.log('데이터를 받아오지 못했습니다!', error);
@@ -68,9 +68,9 @@ const loadAllClothesDataOnDB = () => {
 const loadOneClothesDataOnDB = (itemId) => {
     return function (dispatch, getState, { history }) {
         axios.get(`http://localhost:3000/posts/${itemId}`)
-        .then(data => {
-            // console.log(data.data);
-            dispatch(loadOneData(data.data));
+        .then(res => {
+            // console.log(res.data);
+            dispatch(loadOneData(res.data));
         })
         .catch(error => {
             console.log('데이터를 받아오지 못했습니다!', error);
@@ -81,9 +81,9 @@ const loadOneClothesDataOnDB = (itemId) => {
 const loadSearchedClothesDataOnDB = (itemName) => {
     return function (dispatch, getState, { history }) {
         axios.get(`http://localhost:3000/posts?name=${itemName}`)
-        .then(data => {
-            // console.log(data.data);
-            dispatch(loadSearchData(data.data));
+        .then(res => {
+            // console.log(res.data);
+            dispatch(loadSearchData(res.data));
         })
         .catch(error => {
             console.log('데이터를 받아오지 못했습니다!', error);
@@ -94,9 +94,9 @@ const loadSearchedClothesDataOnDB = (itemName) => {
 const loadPopularClothesDataOnDB = () => {
     return function (dispatch, getState, { history }) {
         axios.get('http://localhost:3000/posts?_sort=liked&_order=desc&_limit=10')
-        .then(data => {
-            // console.log(data.data);
-            dispatch(loadPopularData(data.data));
+        .then(res => {
+            // console.log(res.data);
+            dispatch(loadPopularData(res.data));
         })
         .catch(error => {
             console.log('데이터를 받아오지 못했습니다!', error);

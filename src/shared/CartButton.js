@@ -16,15 +16,15 @@ const CartButton = ({itemID}) => {
         } else {
             setIsChecked(false)
         }
-    }, [cart])
+    }, [cart, itemID])
 
     const onClick = () => {
         if(isChecked){      // 장바구니에서 뺀다
             setIsChecked(false);
-            dispatch(CartAction.tackingOutToCart(itemID))
+            dispatch(CartAction.tackingOutToCartDB(itemID))
         } else {            // 장바구니에 넣는다
             setIsChecked(true)
-            dispatch(CartAction.putInInCart(itemID))
+            dispatch(CartAction.putInInCartDB(itemID))
         }
     }
 

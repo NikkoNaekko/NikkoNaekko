@@ -30,8 +30,8 @@ const CartHeader = () => {
                     <div className="">{checkItemList.length}/{cartItem.length}</div>
                 </div>
                 <div className="cartDelete">
-                    <span className="deleteSelection" onClick={()=>dispatch(cartAction.deleteCheckedItem())}>선택삭제</span>
-                    <span className="deleteAll" onClick={()=> dispatch(cartAction.resetCartItem())}>전체삭제</span>
+                    <span className="deleteSelection" onClick={()=>dispatch(cartAction.deleteCheckedItemDB())}>선택삭제</span>
+                    <span className="deleteAll" onClick={()=> dispatch(cartAction.resetCartItemDB())}>전체삭제</span>
                 </div>
             </div>
             <hr style={{margin:0}}/>

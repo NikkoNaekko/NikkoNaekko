@@ -8,7 +8,7 @@ const ItemInformation = ({item}) => {
     return (
         <>
             <div className='detailBorder'>
-                <p className="font gray">{item.brand}</p>
+                <p className="font gray">{item.brand} [{item.mood}]</p>
                 <p className="font bold">{item.name}</p>
                 <div className='detailBorderHorizen'>
                     <div className="icons">
