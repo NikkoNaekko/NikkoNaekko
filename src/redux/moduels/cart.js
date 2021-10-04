@@ -27,7 +27,6 @@ const singleCheck = createAction(CHECK_SINGLE, (checked, id) => ({
 }));
 const allCheck = createAction(CHECK_ALL, checked => ({ checked }));
 
-let a;
 // initialState
 const initialState = {
   id: "",

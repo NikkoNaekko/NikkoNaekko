@@ -8,8 +8,8 @@ import "./button/button.scss";
 const LikeButton = ({ item, title, itemID }) => {
   const [isChecked, setIsChecked] = useState(false);
   const dispatch = useDispatch();
-  const likedItems = useSelector((state) => state.user.likedItems);
-  const userID = useSelector((state) => state.user.id);
+  const likedItems = useSelector(state => state.user.likedItems);
+  const userID = useSelector(state => state.user.id);
 
   useEffect(() => {
     if (likedItems.includes(itemID)) {
@@ -54,9 +54,9 @@ const LikeButton = ({ item, title, itemID }) => {
   };
 
   return (
-    <div className="icons-list" onClick={() => handleLike()}>
+    <div className='icons-list' onClick={() => handleLike()}>
       {isChecked ? (
-        <HeartFilled className="iconButton red" />
+        <HeartFilled className='iconButton red' />
       ) : (
         <HeartOutlined
           className={
@@ -72,7 +72,7 @@ const LikeButton = ({ item, title, itemID }) => {
 
 LikeButton.defafultProps = {
   title: "",
-  item: [],
+  item: []
 };
 
 export default LikeButton;

@@ -1,12 +1,12 @@
-import React from 'react'
-import VerticalItemList from '../Component/VerticalItemList';
+import React from "react";
+import VerticalItemList from "../Component/VerticalItemList";
 
 const NewProduct = () => {
-    return (
-        <div style={{marginTop:'40px'}}>
-            <VerticalItemList isNewProduct/>
-        </div>
-    )
-}
+  return (
+    <div style={{ marginTop: "40px" }}>
+      <VerticalItemList isNewProduct />
+    </div>
+  );
+};
 
-export default NewProduct
+export default NewProduct;

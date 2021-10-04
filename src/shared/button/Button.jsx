@@ -7,7 +7,6 @@ import './button.scss';
 const Button = ({name, isDisabled, title, history}) => {
 
     const cartItem = useSelector(state => state.cart.cartItem);
-
     const totalPrice = cartItem.reduce((acc, cur) => {
         return acc+parseInt(cur.price);
     }, 0)

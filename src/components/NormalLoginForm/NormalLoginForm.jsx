@@ -8,7 +8,6 @@ const NormalLoginForm = () => {
   const onFinish = (values) => {
     console.log('Received values of form: ', values);
   };
-
   return (
     <Form
         name="normal_login"
