@@ -4,10 +4,10 @@ import { useSelector } from "react-redux";
 const ItemDescription = () => {
   const item = useSelector(state => state.items.selectedItems);
 
-  let str = item.explain;
+  let str = item.productExplain;
   const br = "<br>";
   useEffect(() => {
-    if (item.explain) {
+    if (item.productExplain) {
       str = lineUp(str, br);
       document.querySelector(".description").innerHTML = str;
     }

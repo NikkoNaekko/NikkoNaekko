@@ -11,34 +11,34 @@ const VerticalItemList = ({ isBookMark, isNewProduct, isSearchProduct }) => {
   const [likedItems, setLikedItems] = useState([]);
 
   useEffect(() => {
-    if (isNewProduct && items.length === 0) {
-      dispatch(itemsAction.loadAllClothesDataOnDB());
-    }
+    // if (isNewProduct && items.length === 0) {
+    //   dispatch(itemsAction.loadAllClothesDataOnDB());
+    // }
   }, []);
 
   useEffect(() => {
     if (isBookMark) {
-      setLikedItems([]);
-      let ary = [];
-      likedItemsID.map(clothesToFind => {
-        const likedItemsObject = items.filter(
-          item => item.id === clothesToFind
-        );
-        ary.push(likedItemsObject[0]);
-      });
-      setLikedItems([...ary]);
+      // setLikedItems([]);
+      // let ary = [];
+      // likedItemsID.map(clothesToFind => {
+      //   const likedItemsObject = items.filter(
+      //     item => item.id === clothesToFind
+      //   );
+      //   ary.push(likedItemsObject[0]);
+      // });
+      // setLikedItems([...ary]);
     }
   }, [likedItemsID]);
   return (
     <div className='vericalItemList'>
-      {isBookMark &&
+      {/* {isBookMark &&
         likedItems &&
         likedItems.map(item => {
           return <Item item={item} key={item.id} isVertical />;
-        })}
+        })} */}
       {isNewProduct &&
         items.map(item => {
-          return <Item item={item} key={item.id} isVertical />;
+          return <Item item={item} key={item.productId} isVertical />;
         })}
       {isSearchProduct &&
         searchedItems.length > 0 &&

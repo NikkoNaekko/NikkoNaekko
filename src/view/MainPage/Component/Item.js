@@ -5,32 +5,32 @@ import PriceList from "../../../shared/PriceList";
 
 const Item = ({ item, isVertical, isHorizen }) => {
   let truncatedString = "";
-  if (item.name.length > 7) {
-    if (item.name[7] !== " ") {
-      truncatedString = item.name.substr(0, 8) + "...";
+  if (item.productName.length > 7) {
+    if (item.productName[7] !== " ") {
+      truncatedString = item.productName.substr(0, 8) + "...";
     } else {
-      truncatedString = item.name.substr(0, 7) + "...";
+      truncatedString = item.productName.substr(0, 7) + "...";
     }
   } else {
-    truncatedString = item.name;
+    truncatedString = item.productName;
   }
 
   if (isHorizen) {
     return (
       <div className='item' style={{ marginRight: "20px" }}>
-        <Link to={`/detail/${item.id}`}>
-          <img src={item.imgSrc[0]} />
+        <Link to={`/detail/${item.productId}`}>
+          <img src={item.productImage[0]} />
         </Link>
         <div style={{ width: "120px" }}>
           <p className='font'>[{item.brand}]</p>
           <p className='font'>{truncatedString}</p>
           <p style={{ color: "red" }}>
-            <PriceList price={item.price} title={"main"} />
+            <PriceList price={item.productPrice} title={"main"} />
           </p>
           {/* <p >{item.price}원</p> */}
           <div className='likedDiv'>
-            <LikeButton itemID={item.id} />
-            <span style={{ marginLeft: "10px" }}>{item.liked}</span>
+            <LikeButton itemID={item.productId} />
+            <span style={{ marginLeft: "10px" }}>{item.productLike}</span>
           </div>
         </div>
       </div>
@@ -38,18 +38,18 @@ const Item = ({ item, isVertical, isHorizen }) => {
   } else if (isVertical) {
     return (
       <div className='item'>
-        <Link to={`/detail/${item.id}`}>
-          <img src={item.imgSrc[0]} />
+        <Link to={`/detail/${item.productId}`}>
+          <img src={item.productImage[0]} />
         </Link>
         <div style={{ width: "120px" }}>
           <p className='font'>[{item.brand}]</p>
           <p className='font'>{truncatedString}</p>
           <p style={{ color: "red" }}>
-            <PriceList price={item.price} />
+            <PriceList price={item.productPrice} />
           </p>
           <div className='likedDiv'>
-            <LikeButton itemID={item.id} />
-            <span style={{ marginLeft: "10px" }}>{item.liked}</span>
+            <LikeButton itemID={item.productId} />
+            <span style={{ marginLeft: "10px" }}>{item.productLike}</span>
           </div>
         </div>
       </div>
