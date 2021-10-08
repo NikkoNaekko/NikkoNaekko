@@ -19,7 +19,7 @@ const LikeButton = ({ item, title, itemID }) => {
     }
   }, [likedItems, itemID]);
 
-  const handleLike = () => {
+  const handleLike = async () => {
     if (title === "recommend") {
       const mood = item.mood;
 
@@ -35,12 +35,12 @@ const LikeButton = ({ item, title, itemID }) => {
     } else if (title === "recommendResult") {
       if (!isChecked) {
         setIsChecked(true);
-        dispatch(userAction.Like(itemID));
-        dispatch(userAction.syncStateAndDB(userID));
+        await dispatch(userAction.tempLike(itemID));
+        await dispatch(userAction.syncStateAndDB(userID));
       } else {
         setIsChecked(false);
-        dispatch(userAction.disLike(itemID));
-        dispatch(userAction.syncStateAndDB(userID));
+        await dispatch(userAction.tempDislike(itemID));
+        await dispatch(userAction.syncStateAndDB(userID));
       }
     } else {
       if (!isChecked) {
