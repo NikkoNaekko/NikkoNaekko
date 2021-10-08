@@ -869,23 +869,21 @@
   ],
   "users": [
     {
-      "id": "admin@admin.com",
       "uid": "",
-      "user_id": "admin@admin.com",
-      "password": "12341234",
-      "user_name": "admin",
+      "id": "admin@admin.com",
       "token": "",
-      "liked_array": [
-        12
-      ],
-      "isFirst": true
+      "likedItems": [],
+      "isFirst": true,
+      "password": "12341234"
     }
   ],
   "cart": [
     {
       "cart_id": "admin@admin.com",
       "order_count": 0,
-      "product_id": [],
+      "product_id": [
+        53
+      ],
       "id": "admin@admin.com"
     }
   ]

@@ -8,17 +8,17 @@ const HorizenItemList = () => {
   const popluarItems = useSelector(state => state.items.popluarItems);
 
   useEffect(() => {
-    if (popluarItems.length === 0) {
-      dispatch(itemsAction.loadPopularClothesDataOnDB());
-    }
+    // if (popluarItems.length === 0) {
+    //   dispatch(itemsAction.loadPopularClothesDataOnDB());
+    // }
   }, []);
 
   return (
     <div className='HorizenItemList'>
-      {popluarItems &&
+      {/* {popluarItems &&
         popluarItems.map(item => {
           return <Item item={item} key={item.id} isHorizen />;
-        })}
+        })} */}
     </div>
   );
 };

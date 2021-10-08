@@ -3,7 +3,9 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 
 //action
-const LOAD_ALL_DATA = "load_all_data";
+const LOADING = "loading";
+const NO_MORE_RECEIVE = "no_more_receive";
+const SAVE_DATA = "save_data";
 const LOAD_ONE_DATA = "load_add_data";
 const LOAD_SEARCHED_DATA = "load_searched_data";
 const LOAD_POPULAR_DATA = "load_popular_data";
@@ -14,7 +16,10 @@ const RESET_LIKEDMOOD = "items/RESET_LIKEDMOOD";
 const RESET_SELECTEDMOOD = "items/RESET_SELECTEDMOOD";
 
 //action creators
-const loadAllData = createAction(LOAD_ALL_DATA, data => ({ data }));
+
+const loading = createAction(LOADING, data => ({ data }));
+const noMoreReceive = createAction(NO_MORE_RECEIVE, () => {});
+const saveData = createAction(SAVE_DATA, data => ({ data }));
 const loadOneData = createAction(LOAD_ONE_DATA, data => ({ data }));
 const loadSearchData = createAction(LOAD_SEARCHED_DATA, data => ({ data }));
 const loadPopularData = createAction(LOAD_POPULAR_DATA, data => ({ data }));
@@ -31,7 +36,9 @@ const initialState = {
   searchedItems: [],
   popluarItems: [],
   likedMood: [],
-  selectedMood: []
+  selectedMood: [],
+  is_loading: false,
+  paging: { next: 0, isEnd: false }
 };
 /**
  * items : [ item, item, item ...]
@@ -51,13 +58,25 @@ const initialState = {
  */
 
 //middleware
-const loadAllClothesDataOnDB = () => {
+const loadClothesDataOnDB = () => {
   return function (dispatch, getState, { history }) {
+    if (getState().items.paging.isEnd === true) {
+      dispatch(loading(false));
+      return;
+    }
+    dispatch(loading(true));
     axios
-      .get("http://localhost:3000/posts")
+      // .get("http://localhost:3000/posts")
+      .get(
+        `https://cors-anywhere.herokuapp.com/http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/product/newwest/${
+          getState().items.paging.next
+        }`
+      )
       .then(res => {
-        // console.log(res.data);
-        dispatch(loadAllData(res.data));
+        if (res.data.length === 0) {
+          dispatch(noMoreReceive());
+        }
+        dispatch(saveData(res.data));
       })
       .catch(error => {
         console.log("데이터를 받아오지 못했습니다!", error);
@@ -68,9 +87,12 @@ const loadAllClothesDataOnDB = () => {
 const loadOneClothesDataOnDB = itemId => {
   return function (dispatch, getState, { history }) {
     axios
-      .get(`http://localhost:3000/posts/${itemId}`)
+      // .get(`http://localhost:3000/posts/${itemId}`)
+      .get(
+        `https://cors-anywhere.herokuapp.com/http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/product/${itemId}`
+      )
       .then(res => {
-        // console.log(res.data);
+        console.log(res);
         dispatch(loadOneData(res.data));
       })
       .catch(error => {
@@ -96,9 +118,11 @@ const loadSearchedClothesDataOnDB = itemName => {
 const loadPopularClothesDataOnDB = () => {
   return function (dispatch, getState, { history }) {
     axios
-      .get("http://localhost:3000/posts?_sort=liked&_order=desc&_limit=10")
+      .get(
+        "https://cors-anywhere.herokuapp.com/http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/product/popular"
+      )
       .then(res => {
-        // console.log(res.data);
+        console.log(res);
         dispatch(loadPopularData(res.data));
       })
       .catch(error => {
@@ -110,9 +134,20 @@ const loadPopularClothesDataOnDB = () => {
 // reducer
 export default handleActions(
   {
-    [LOAD_ALL_DATA]: (state, action) =>
+    [LOADING]: (state, action) =>
       produce(state, draft => {
-        draft.items = [...action.payload.data];
+        draft.loading = action.payload.loading;
+      }),
+    [NO_MORE_RECEIVE]: (state, action) =>
+      produce(state, draft => {
+        draft.paging.isEnd = true;
+      }),
+
+    [SAVE_DATA]: (state, action) =>
+      produce(state, draft => {
+        draft.items = [...draft.items, ...action.payload.data];
+        draft.paging.next += 8;
+        draft.is_loading = false;
       }),
     [LOAD_ONE_DATA]: (state, action) =>
       produce(state, draft => {
@@ -158,11 +193,12 @@ export default handleActions(
 //action creator export
 const actionCreators = {
   addMood,
+  loadOneData,
   deleteMood,
   addSelectedMood,
   resetLikedMood,
   resetSelectiedMood,
-  loadAllClothesDataOnDB,
+  loadClothesDataOnDB,
   loadOneClothesDataOnDB,
   loadSearchedClothesDataOnDB,
   loadPopularClothesDataOnDB

@@ -4,28 +4,37 @@ import "../DetailPage.scss";
 import PriceList from "../../../shared/PriceList";
 import CartButton from "../../../shared/CartButton";
 
+const categoryList = {
+  1: "꾸안꾸",
+  2: "미니멀",
+  3: "스트릿",
+  4: "아메카지",
+  5: "오피스룩",
+  6: "캐주얼"
+};
+
 const ItemInformation = ({ item }) => {
   return (
     <>
       <div className='detailBorder'>
         <p className='font gray'>
-          {item.brand} [{item.mood}]
+          {item.brand} [{categoryList[item.categoryId]}]
         </p>
-        <p className='font bold'>{item.name}</p>
+        <p className='font bold'>{item.productName}</p>
         <div className='detailBorderHorizen'>
           <div className='icons'>
             <div className='liked'>
-              <LikeButton itemID={item.id} />
-              {item.liked}
+              <LikeButton itemID={item.productId} />
+              {item.productLike}
             </div>
             <div className='purchased'>
-              <CartButton itemID={item.id} />
-              {item.purchased}
+              <CartButton itemID={item.productId} />
+              {item.productSold}
             </div>
           </div>
           <div className='price'>
             <p className='font red'>
-              <PriceList price={item.price} />
+              <PriceList price={item.productPrice} />
             </p>
           </div>
         </div>
