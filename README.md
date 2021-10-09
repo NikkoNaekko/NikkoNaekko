@@ -15,7 +15,8 @@
 - 2021.09.24 Na [ DetailPage에서 likeButton이 제대로 동작하지 않은 문제 & MainPage에서 axios.get 함수가 여러 번 호출되 성능을 떨어뜨리는 문제 ]
 - 2021.09.24 Na [ DetailPage에서 likeButton이 제대로 동작하지 않은 문제 해결 & MainPage에서 axios.get 함수가 여러 번 호출되 성능을 떨어뜨리는 문제 해결]
 - 2021.09.24 Ryu [ TopBar 로고를 클릭해도 mainPage로 돌아가지 않는 문제 & 2021.09.24 Ryu TopBar 로고를 클릭해도 mainPage로 돌아가지 않는 문제 해결 ]
-- 2021.09.28 Ryu [ RecommentResult에서 취향을 선택하지 않아도 버튼이 활성화되는 문제 & RecommentResult에서 취향을 선택하지 않아도 버튼이 활성화되는 문제 해결 ]
+- 2021.09.28 Ryu [ RecommentResult에서 취향을 선택하지 않아도 버튼이 활성화되는 문제 ]
+- 2021.10.05 Ryu [ RecommentResult에서 취향을 선택하지 않아도 버튼이 활성화되는 문제 해결 ]
 
 # 수정 사항
 
@@ -42,9 +43,10 @@
 - 2021.09.30 Na [ detailPage UI 변경 (스크롤 추가)]
 - 2021.09.30 Na [ redux items.searchItems 추가 ]
 - 2021.10.01 Na [ cartPage 구현 완료 및 cart redux 개선 ]
-- 2021.10.01 Ryu [ dummy api와 user module의 likedItems값 동일화 기능 구현 완료 ]
+- 2021.10.01 Ryu [ Mock Server와 user state에 상품정보 동시저장 ]
 - 2021.10.02 Na [ dummy api 를 사용해 cartPage 구현 완료 ]
 - 2021.10.04 Na [ Prettier 적용 ]
 - 2021.10.04 Na [ jsx 파일을 js파일로 변경 ]
+- 2021.10.08 Ryu [ RecommendResultPage에서 버튼 클릭시 좋아요한 아이템 일괄 저장 ]
 - 2021.10.08 Na [ MainPage 무한 스크롤 기능 구현 및 필요하지 않은 모듈 제거 ]
 - 2021.10.09 Na [ 회원가입 시도, 로그인 시도, 상품 불러오기 등 대기 상태에서 Spinner 적용 ]

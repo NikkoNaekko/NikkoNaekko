@@ -1,20 +1,35 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import PriceList from "../PriceList";
 import "./button.scss";
+import { actionCreators as userAcions } from "../../redux/moduels/user";
 
 const Button = ({ name, isDisabled, title, history }) => {
+  const dispatch = useDispatch();
   const cartItem = useSelector(state => state.cart.cartItem);
+  const likedMood = useSelector(state => state.items.likedMood);
+  const tempLikedItems = useSelector(state => state.user.tempLikedItems);
+
   const totalPrice = cartItem.reduce((acc, cur) => {
     return acc + parseInt(cur.price);
   }, 0);
+
+  const uploadLikedItems = () => {
+    dispatch(userAcions.uploadTemp(tempLikedItems));
+
+    if (tempLikedItems.length > 0) {
+      history.push("/main");
+    }
+  };
 
   if (title === "recommend") {
     return (
       <button
         className={isDisabled ? `btn btn_gray` : `btn btn_pink`}
-        onClick={() => history.push("/recommendResult")}
+        onClick={() =>
+          likedMood.length > 0 ? history.push("/recommendResult") : ""
+        }
       >
         {name}
       </button>
@@ -23,14 +38,14 @@ const Button = ({ name, isDisabled, title, history }) => {
     return (
       <button
         className={isDisabled ? `btn btn_gray` : `btn btn_pink`}
-        onClick={() => history.push("/main")}
+        onClick={() => uploadLikedItems()}
       >
         {name}
       </button>
     );
   } else if (title === "cart") {
     return (
-      <button className='btn' onClick={() => history.push("/main")}>
+      <button className='btn' onClick={() => history.push("/order")}>
         총 {cartItem.length}개 | <PriceList price={totalPrice} /> 구매하기
       </button>
     );

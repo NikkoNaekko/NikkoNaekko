@@ -63,7 +63,7 @@ const signUpDB = (id, pwd, name) => {
   return function (dispatch, getState, { history }) {
     axios({
       method: "post",
-      url: "https://cors-anywhere.herokuapp.com/http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/user/join",
+      url: "http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/user/join",
       data: {
         name: name,
         id: id,

@@ -14,6 +14,7 @@ const RecommendResultPage = ({ history }) => {
   const selectedMood = useSelector(state => state.items.selectedMood);
   const allItems = useSelector(state => state.items.items);
   const likedItems = useSelector(state => state.user.likedItems);
+  const tempLikedItems = useSelector(state => state.user.tempLikedItems);
 
   useEffect(() => {
     dispatch(itemsAction.loadAllClothesDataOnDB());
@@ -30,12 +31,12 @@ const RecommendResultPage = ({ history }) => {
   }, [allItems]);
 
   useEffect(() => {
-    if (likedItems.length > 0) {
+    if (tempLikedItems.length > 0) {
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
     }
-  }, [likedItems]);
+  }, [tempLikedItems]);
 
   return (
     <div className='recommendResult'>
