@@ -8,13 +8,7 @@ const VerticalItemList = ({ isBookMark, isNewProduct, isSearchProduct }) => {
   const items = useSelector(state => state.items.items);
   const searchedItems = useSelector(state => state.items.searchedItems);
   const likedItemsID = useSelector(state => state.user.likedItems);
-  const [likedItems, setLikedItems] = useState([]);
-
-  useEffect(() => {
-    // if (isNewProduct && items.length === 0) {
-    //   dispatch(itemsAction.loadAllClothesDataOnDB());
-    // }
-  }, []);
+  // const [likedItems, setLikedItems] = useState([]);
 
   useEffect(() => {
     if (isBookMark) {

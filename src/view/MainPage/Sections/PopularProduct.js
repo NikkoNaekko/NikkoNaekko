@@ -1,17 +1,20 @@
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as itemsAction } from "../../../redux/moduels/items";
 import HorizenItemList from "../Component/HorizenItemList";
+import Spinner from "../Component/Spinner";
 
 const PopularProduct = () => {
   const dispatch = useDispatch();
+  const popluarItems = useSelector(state => state.items.popluarItems);
 
   useEffect(() => {
-    // dispatch(itemsAction.loadPopularClothesDataOnDB());
+    dispatch(itemsAction.loadPopularClothesDataOnDB());
   }, []);
+
   return (
     <div style={{ marginTop: "40px" }}>
-      <HorizenItemList />
+      {popluarItems.length > 0 ? <HorizenItemList /> : <Spinner />}
     </div>
   );
 };

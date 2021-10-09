@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./MainPage.scss";
 import TopBar from "../../shared/menu/TopBar";
 import BookMark from "./Sections/BookMark";
@@ -14,11 +14,17 @@ const MainPage = ({ history }) => {
   const is_loading = useSelector(state => state.items.is_loading);
   const paging = useSelector(state => state.items.paging);
 
+  useEffect(() => {
+    dispatch(itemsAction.loadClothesDataOnDB());
+  }, []);
+
   return (
     <>
       <InfinityScroll
         callNext={() => {
-          dispatch(itemsAction.loadClothesDataOnDB());
+          if (is_loading === false) {
+            dispatch(itemsAction.loadClothesDataOnDB());
+          }
         }}
         is_next={paging.isEnd ? false : true}
         loading={is_loading}
