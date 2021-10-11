@@ -1,0 +1,114 @@
+.order {
+
+    .container {
+        width: 100%;
+        height: initial;
+        padding: 0;
+
+        .wrapper {
+            width: 100%;
+            height: calc(100vh - 90px);
+            display: flex;
+            flex-direction: column;
+            margin-top: 61px;
+            font-size: 18px;
+            overflow: scroll;
+
+            .orderCard {
+                margin-top: 30px;
+
+                .orderHeader {
+                    height: 55px;
+                    display: flex;
+                    align-items: center;
+                    padding: 0 1rem;
+                    background-color: var(--color-div-light-pink);
+                    font-size: 18px;
+
+                    .orderDate {
+                        font-weight: bold;
+                        margin-right: 10px;
+                    }
+                }
+
+                .orderProducts {
+                    
+                    .product {
+                        
+                        display: flex;
+                        flex-direction: column;
+                        padding: 1rem;
+                        border-bottom: 1px solid #a7a7a7;
+
+                        &:last-child {
+                            border: none;
+                        }
+
+                        .mood {
+                            padding-bottom: 16px;
+                            font-size: 16px;
+                            font-weight: bold;
+                        }
+
+                        .productContent {
+                            display: flex;
+                            justify-content: space-between;
+                            
+                            .productImg {
+                                width: 110px;
+                                height: 110px;
+                                object-fit: cover;
+                                
+                                 > img {
+                                    width: 100%;
+                                    height: 100%;
+                                }
+                            }     
+                            
+                            .productInfo {
+                                // width: 45%;
+                                display: flex;
+                                flex-direction: column;
+                                justify-content: space-between;
+                                width: calc(100vw - 140px);
+                                padding-left: 15px;
+
+                                
+                                .productTitle {
+                                    
+                                    .orderComplete {
+                                        font-weight: bold;
+                                        font-size: 18px;
+                                        color: var(--color-font-dark-pink);
+                                    }
+
+                                    .brandName {
+                                        font-size: 16px;
+                                        font-weight: bold;
+                                        
+                                        .productBrand {
+                                            display: inline;
+                                        }
+        
+                                        .productName {
+                                            display: inline;
+                                        }
+                                    }   
+                                    
+                                }
+
+                                .productPrice {
+                                    font-size: 18px;
+                                }
+
+                                
+                            }
+                        }
+
+                        
+                    }
+                }
+            }
+        }
+    }
+}
