@@ -17,7 +17,7 @@ const RESET_SELECTEDMOOD = "items/RESET_SELECTEDMOOD";
 
 //action creators
 
-const loading = createAction(LOADING, data => ({ data }));
+const loading = createAction(LOADING, is_loading => ({ is_loading }));
 const noMoreReceive = createAction(NO_MORE_RECEIVE, () => {});
 const saveData = createAction(SAVE_DATA, data => ({ data }));
 const loadOneData = createAction(LOAD_ONE_DATA, data => ({ data }));
@@ -60,15 +60,16 @@ const initialState = {
 //middleware
 const loadClothesDataOnDB = () => {
   return function (dispatch, getState, { history }) {
+    if (getState().items.is_loading === true) return;
     if (getState().items.paging.isEnd === true) {
       dispatch(loading(false));
       return;
     }
     dispatch(loading(true));
     axios
-      // .get("http://localhost:3000/posts")
       .get(
         `https://cors-anywhere.herokuapp.com/http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/product/newwest/${
+          // `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/product/newwest/${
           getState().items.paging.next
         }`
       )
@@ -87,7 +88,6 @@ const loadClothesDataOnDB = () => {
 const loadOneClothesDataOnDB = itemId => {
   return function (dispatch, getState, { history }) {
     axios
-      // .get(`http://localhost:3000/posts/${itemId}`)
       .get(
         `https://cors-anywhere.herokuapp.com/http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/product/${itemId}`
       )
@@ -106,7 +106,6 @@ const loadSearchedClothesDataOnDB = itemName => {
     axios
       .get(`http://localhost:3000/posts?name=${itemName}`)
       .then(res => {
-        // console.log(res.data);
         dispatch(loadSearchData(res.data));
       })
       .catch(error => {
@@ -136,7 +135,7 @@ export default handleActions(
   {
     [LOADING]: (state, action) =>
       produce(state, draft => {
-        draft.loading = action.payload.loading;
+        draft.is_loading = action.payload.is_loading;
       }),
     [NO_MORE_RECEIVE]: (state, action) =>
       produce(state, draft => {
