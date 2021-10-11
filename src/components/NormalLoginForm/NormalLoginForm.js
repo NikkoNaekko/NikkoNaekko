@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Input } from "antd";
 import "./normalloginform.scss";
 import "../../shared/button/button.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { actionCreators as userAction } from "../../redux/moduels/user";
+import { LoadingOutlined } from "@ant-design/icons";
 
 const NormalLoginForm = () => {
+  const dispatch = useDispatch();
+  const isLoading = useSelector(state => state.user.isLoading);
+
   const onFinish = values => {
     console.log("Received values of form: ", values);
+    dispatch(userAction.signIn(values.userId, values.password));
   };
   return (
     <Form
@@ -49,10 +56,22 @@ const NormalLoginForm = () => {
       >
         <Input type='password' placeholder='6자 이상을 입력해주세요' />
       </Form.Item>
-
-      <button htmlType='submit' className='btn'>
-        로그인
-      </button>
+      {isLoading ? (
+        <button htmlType='submit' className='btn btn_gray'>
+          로그인 중
+          <LoadingOutlined
+            style={{
+              position: "relative",
+              left: "30px",
+              fontSize: "20px"
+            }}
+          />
+        </button>
+      ) : (
+        <button htmlType='submit' className='btn'>
+          로그인
+        </button>
+      )}
     </Form>
   );
 };

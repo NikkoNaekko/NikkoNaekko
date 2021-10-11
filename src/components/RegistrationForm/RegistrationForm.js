@@ -4,6 +4,7 @@ import "./registrationform.scss";
 import "../../shared/button/button.scss";
 import { useDispatch } from "react-redux";
 import { actionCreators as userAcions } from "../../redux/moduels/user";
+import { LoadingOutlined } from "@ant-design/icons";
 
 const { Option } = Select;
 const formItemLayout = {
@@ -41,10 +42,12 @@ const RegistrationForm = () => {
   const [id, setId] = useState("");
   const [pwd, setPwd] = useState("");
   const [pwd_check, setPwdCheck] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [name, setName] = useState("");
   const [form] = Form.useForm();
 
   const signUp = () => {
+    setIsLoading(true);
     dispatch(userAcions.signUpDB(id, pwd, name));
   };
 
@@ -167,10 +170,22 @@ const RegistrationForm = () => {
           onChange={e => setPwdCheck(e.target.value)}
         />
       </Form.Item>
-
-      <button htmlType='submit' className='btn' onClick={signUp}>
-        회원가입
-      </button>
+      {isLoading ? (
+        <button htmlType='submit' className='btn btn_gray' onClick={signUp}>
+          회원가입 중
+          <LoadingOutlined
+            style={{
+              position: "relative",
+              left: "30px",
+              fontSize: "20px"
+            }}
+          />
+        </button>
+      ) : (
+        <button htmlType='submit' className='btn' onClick={signUp}>
+          회원가입
+        </button>
+      )}
     </Form>
   );
 };

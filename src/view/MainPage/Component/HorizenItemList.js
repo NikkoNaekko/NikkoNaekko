@@ -15,10 +15,10 @@ const HorizenItemList = () => {
 
   return (
     <div className='HorizenItemList'>
-      {/* {popluarItems &&
+      {popluarItems &&
         popluarItems.map(item => {
           return <Item item={item} key={item.id} isHorizen />;
-        })} */}
+        })}
     </div>
   );
 };
