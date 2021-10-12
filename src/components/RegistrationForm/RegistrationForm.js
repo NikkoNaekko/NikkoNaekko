@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Form, Input, Select } from "antd";
 import "./registrationform.scss";
 import "../../shared/button/button.scss";
-import { useDispatch } from "react-redux";
-import { actionCreators as userAcions } from "../../redux/moduels/user";
+import { useDispatch, useSelector } from "react-redux";
+import { actionCreators as userActions } from "../../redux/moduels/user";
 import { LoadingOutlined } from "@ant-design/icons";
 
 const { Option } = Select;
@@ -37,18 +37,22 @@ const tailFormItemLayout = {
     }
   }
 };
-const RegistrationForm = () => {
+const RegistrationForm = props => {
   const dispatch = useDispatch();
   const [id, setId] = useState("");
   const [pwd, setPwd] = useState("");
   const [pwd_check, setPwdCheck] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [name, setName] = useState("");
   const [form] = Form.useForm();
+  const nameInput = useRef();
+  const is_Loading = useSelector(state => state.user.isLoading);
 
   const signUp = () => {
-    setIsLoading(true);
-    dispatch(userAcions.signUpDB(id, pwd, name));
+    dispatch(userActions.signUpDB(id, pwd, name));
+
+    if (is_Loading === false) {
+      nameInput.current.focus();
+    }
   };
 
   const onFinish = values => {
@@ -96,6 +100,7 @@ const RegistrationForm = () => {
         <Input
           placeholder='닉네임을 입력해주세요'
           onChange={e => setName(e.target.value)}
+          ref={nameInput}
         />
       </Form.Item>
 
@@ -170,8 +175,8 @@ const RegistrationForm = () => {
           onChange={e => setPwdCheck(e.target.value)}
         />
       </Form.Item>
-      {isLoading ? (
-        <button htmlType='submit' className='btn btn_gray' onClick={signUp}>
+      {is_Loading ? (
+        <button className='btn btn_gray'>
           회원가입 중
           <LoadingOutlined
             style={{
