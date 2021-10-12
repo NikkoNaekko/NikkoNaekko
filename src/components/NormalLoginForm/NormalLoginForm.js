@@ -68,7 +68,7 @@ const NormalLoginForm = () => {
           />
         </button>
       ) : (
-        <button htmlType='submit' className='btn'>
+        <button htmltype='submit' className='btn'>
           로그인
         </button>
       )}
