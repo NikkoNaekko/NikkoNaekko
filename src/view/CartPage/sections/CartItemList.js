@@ -12,7 +12,7 @@ const CartItemList = ({ history }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(cartAction.loadCartItemDB());
+    // dispatch(cartAction.loadCartItemDB());
   }, []);
 
   return (

@@ -6,6 +6,7 @@ import { actionCreators as userAction } from "../redux/moduels/user";
 import "./button/button.scss";
 
 const LikeButton = ({ item, title, itemID }) => {
+  const isLogin = useSelector(state => state.user.isLogin);
   const [isChecked, setIsChecked] = useState(false);
   const dispatch = useDispatch();
   const likedItems = useSelector(state => state.user.likedItems);
@@ -20,6 +21,10 @@ const LikeButton = ({ item, title, itemID }) => {
   }, [likedItems, itemID]);
 
   const handleLike = async () => {
+    if (!isLogin) {
+      alert("로그인 후 이용하실 수 있습니다.");
+      return;
+    }
     if (title === "recommend") {
       const mood = item.mood;
 

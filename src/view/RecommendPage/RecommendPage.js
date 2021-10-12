@@ -19,6 +19,18 @@ const moodCollection = [
 ];
 
 const RecommendPage = ({ history }) => {
+  const isLogin = useSelector(state => state.user.isLogin);
+  if (!isLogin) {
+    alert("로그인 후 이용해주세요.");
+    history.replace("/login");
+  }
+
+  const isFirst = useSelector(state => state.user.isFirst);
+  if (!isFirst) {
+    alert("잘못된 접근입니다..");
+    history.replace("/main");
+  }
+
   const { clothes } = clothesInformation;
   const [isDisabled, setIsDisabled] = useState(true);
   const [selectedItem, setSelectedItem] = useState([]);

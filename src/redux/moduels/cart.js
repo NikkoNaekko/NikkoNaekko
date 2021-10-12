@@ -5,7 +5,8 @@ import { produce } from "immer";
 // actions
 const PUTINCART = "PUTINCART";
 const TACKINGOUTTOCART = "TACKINGOUTTOCART";
-const LOAD_CARTITEM = "load_cartitem";
+const LOAD_CART = "load_cart";
+const REMOVE_CART = "remove_cartitem";
 const ADD_CARTITEM = "cart/ADD_CARTITEM";
 const DELETE_CARTITEM = "cart/DELETE_CARTITEM";
 const DELETE_CHECKEDITEM = "cart/DELETE_CHECKEDITEM";
@@ -16,7 +17,12 @@ const CHECK_ALL = "cart/CHECK_ALL";
 // action creators
 const putInCart = createAction(PUTINCART, itemID => ({ itemID }));
 const tackingOutToCart = createAction(TACKINGOUTTOCART, itemID => ({ itemID }));
-const loadCartitem = createAction(LOAD_CARTITEM, items => ({ items }));
+const loadCart = createAction(LOAD_CART, (cartId, userId, productId) => ({
+  cartId,
+  userId,
+  productId
+}));
+const removeCart = createAction(REMOVE_CART);
 const addCartItem = createAction(ADD_CARTITEM, item => ({ item }));
 const deleteCartItem = createAction(DELETE_CARTITEM, itemID => ({ itemID }));
 const deleteCheckedItem = createAction(DELETE_CHECKEDITEM);
@@ -29,8 +35,8 @@ const allCheck = createAction(CHECK_ALL, checked => ({ checked }));
 
 // initialState
 const initialState = {
-  id: "",
-  userUid: "",
+  id: null,
+  userUid: null,
   itemId: [],
   cartItem: [],
   checkItemList: [], //[checkbox=true]인 item id을 담는 배열
@@ -41,23 +47,17 @@ const initialState = {
 const loadCartItemDB = () => {
   return function (dispatch, getState, { history }) {
     axios
-      .get(`http://localhost:3000/cart/${getState().user.id}`)
+      .get(
+        `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/cart/${
+          getState().user.uid
+        }`
+      )
       .then(res => {
-        // console.log(res.data);
-        if (res.data.product_id.length > 0) {
-          let url = "http://localhost:3000/posts?";
-          getState().cart.itemId.map(id => {
-            url += "id=" + id + "&";
-          });
-          console.log(url);
-          axios
-            .get(url)
-            .then(res => {
-              dispatch(loadCartitem(res.data));
-            })
-            .catch(error => {
-              console.log("장바구니 데이터를 받아오지 못했습니다.", error);
-            });
+        console.log(res);
+        if (res.data.success) {
+          const { cartId, userId, productId } = res.data.data;
+          console.log(cartId, userId, productId);
+          dispatch(loadCart(cartId, userId, productId));
         }
       })
       .catch(error => {
@@ -173,13 +173,21 @@ export default handleActions(
         );
         draft.itemId = [...cartAry];
       }),
-    [LOAD_CARTITEM]: (state, action) =>
+    [LOAD_CART]: (state, action) =>
       produce(state, draft => {
+        const { cartId, userId, productId } = action.payload;
+        draft.id = cartId;
+        draft.userUid = userId;
+        draft.itemId = [...productId];
+      }),
+    [REMOVE_CART]: (state, action) =>
+      produce(state, draft => {
+        draft.id = null;
+        draft.userUid = null;
+        draft.itemId = [];
         draft.cartItem = [];
         draft.checkItemList = [];
-        action.payload.items.map(item => {
-          draft.cartItem = [...draft.cartItem, item];
-        });
+        draft.isCheckedAll = false;
       }),
     [ADD_CARTITEM]: (state, action) =>
       produce(state, draft => {
@@ -254,7 +262,8 @@ const actionCreators = {
   resetCartItem,
   singleCheck,
   allCheck,
-  loadCartitem,
+  loadCart,
+  removeCart,
   loadCartItemDB,
   putInInCartDB,
   tackingOutToCartDB,

@@ -6,6 +6,7 @@ import { connectRouter } from "connected-react-router";
 import User from "./moduels/user";
 import Items from "./moduels/items";
 import cart from "./moduels/cart";
+import order from "./moduels/order";
 
 export const history = createBrowserHistory();
 
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   user: User,
   cart: cart,
   items: Items,
+  order: order,
   router: connectRouter(history)
 });
 
