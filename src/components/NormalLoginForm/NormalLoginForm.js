@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Form, Input } from "antd";
 import "./normalloginform.scss";
 import "../../shared/button/button.scss";
@@ -57,7 +57,7 @@ const NormalLoginForm = () => {
         <Input type='password' placeholder='6자 이상을 입력해주세요' />
       </Form.Item>
       {isLoading ? (
-        <button htmlType='submit' className='btn btn_gray'>
+        <button className='btn btn_gray'>
           로그인 중
           <LoadingOutlined
             style={{

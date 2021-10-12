@@ -68,16 +68,20 @@ const loadClothesDataOnDB = () => {
     dispatch(loading(true));
     axios
       .get(
-        `https://cors-anywhere.herokuapp.com/http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/product/newwest/${
-          // `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/product/newwest/${
+        `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/product/newwest/${
           getState().items.paging.next
         }`
       )
       .then(res => {
-        if (res.data.length === 0) {
-          dispatch(noMoreReceive());
+        if (res.data.success) {
+          if (res.data.data.length === 0) {
+            dispatch(noMoreReceive());
+            return;
+          }
+          dispatch(saveData(res.data.data));
+          return;
         }
-        dispatch(saveData(res.data));
+        console.log("loadClothesDataOnDB에서 문제가 생겼습니다.");
       })
       .catch(error => {
         console.log("데이터를 받아오지 못했습니다!", error);
@@ -89,11 +93,11 @@ const loadOneClothesDataOnDB = itemId => {
   return function (dispatch, getState, { history }) {
     axios
       .get(
-        `https://cors-anywhere.herokuapp.com/http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/product/${itemId}`
+        `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/product/${itemId}`
       )
       .then(res => {
         console.log(res);
-        dispatch(loadOneData(res.data));
+        dispatch(loadOneData(res.data.data));
       })
       .catch(error => {
         console.log("데이터를 받아오지 못했습니다!", error);
@@ -118,11 +122,11 @@ const loadPopularClothesDataOnDB = () => {
   return function (dispatch, getState, { history }) {
     axios
       .get(
-        "https://cors-anywhere.herokuapp.com/http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/product/popular"
+        "http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/product/popular"
       )
       .then(res => {
         console.log(res);
-        dispatch(loadPopularData(res.data));
+        dispatch(loadPopularData(res.data.data));
       })
       .catch(error => {
         console.log("데이터를 받아오지 못했습니다!", error);
