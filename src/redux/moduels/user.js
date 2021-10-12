@@ -61,9 +61,10 @@ const syncStateAndDB = userID => {
 
 const signUpDB = (id, pwd, name) => {
   return function (dispatch, getState, { history }) {
+    dispatch(loading(true));
     axios({
       method: "post",
-      url: "https://cors-anywhere.herokuapp.com/http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/user/join",
+      url: "http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/user/join",
       data: {
         name: name,
         id: id,
@@ -72,8 +73,14 @@ const signUpDB = (id, pwd, name) => {
     })
       .then(res => {
         console.log(res);
-        console.log("회원 정보가 추가되었습니다.");
-        history.push("/");
+        if (res.data.success === true) {
+          console.log("회원 정보가 추가되었습니다.");
+          history.push("/");
+        } else if (res.data.success === false) {
+          dispatch(loading(false));
+          console.log("회원 정보 추가 실패");
+          alert("이미 가입된 회원정보입니다.");
+        }
       })
       .catch(error => {
         var errorCode = error.code;
