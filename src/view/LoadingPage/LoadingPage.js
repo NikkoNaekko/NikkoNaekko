@@ -1,6 +1,13 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import "./LoadingPage.scss";
+
 const LoadingPage = ({ history }) => {
+  const isLogin = useSelector(state => state.user.isLogin);
+  if (isLogin) {
+    alert("잘못된 접근입니다.");
+    history.replace("/main");
+  }
   return (
     <>
       <div className='container'>
@@ -13,7 +20,7 @@ const LoadingPage = ({ history }) => {
             회원가입
           </button>
           <button className='button' onClick={() => history.push("/main")}>
-            둘러보기
+            홈페이지
           </button>
         </div>
       </div>

@@ -17,14 +17,13 @@ const DetailPage = props => {
   window.scrollTo({ top: 0, left: 0 });
 
   useEffect(() => {
-    // dispatch(itemsAction.loadOneClothesDataOnDB(props.match.params.id));
     axios
       .get(
-        `https://cors-anywhere.herokuapp.com/http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/product/${props.match.params.id}`
+        `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/product/${props.match.params.id}`
       )
       .then(res => {
         console.log(res);
-        dispatch(itemsAction.loadOneData(res.data));
+        dispatch(itemsAction.loadOneData(res.data.data));
         setIsLoading(false);
       })
       .catch(error => {

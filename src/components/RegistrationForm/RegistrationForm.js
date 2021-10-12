@@ -187,7 +187,7 @@ const RegistrationForm = props => {
           />
         </button>
       ) : (
-        <button htmlType='submit' className='btn' onClick={signUp}>
+        <button htmltype='submit' className='btn' onClick={signUp}>
           회원가입
         </button>
       )}
