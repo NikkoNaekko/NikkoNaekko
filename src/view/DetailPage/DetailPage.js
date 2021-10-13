@@ -7,7 +7,7 @@ import TopBar from "../../shared/menu/TopBar";
 import ItemInformation from "./Sections/ItemInformation";
 import ItemDescription from "./Sections/ItemDescription";
 import PopularProductBanner from "./Component/PopularProductBanner";
-import Spinner from "../../shared/Spinner";
+import Spinner from "./Component/Spinner";
 import axios from "axios";
 
 const DetailPage = props => {

@@ -3,9 +3,11 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 
 // actions
-const PUTINCART = "PUTINCART";
-const TACKINGOUTTOCART = "TACKINGOUTTOCART";
+const LOADING = "LOADING";
+const PUT_IN_CART = "PUT_IN_CART";
+const TACKING_OUT_TO_CART = "TACKING_OUT_TO_CART";
 const LOAD_CART = "load_cart";
+const LOAD_CARTITEM = "load_cartitem";
 const REMOVE_CART = "remove_cartitem";
 const ADD_CARTITEM = "cart/ADD_CARTITEM";
 const DELETE_CARTITEM = "cart/DELETE_CARTITEM";
@@ -15,13 +17,17 @@ const CHECK_SINGLE = "cart/CHECK_SINGLE";
 const CHECK_ALL = "cart/CHECK_ALL";
 
 // action creators
-const putInCart = createAction(PUTINCART, itemID => ({ itemID }));
-const tackingOutToCart = createAction(TACKINGOUTTOCART, itemID => ({ itemID }));
+const loading = createAction(LOADING, isLoading => ({ isLoading }));
+const putInCart = createAction(PUT_IN_CART, itemID => ({ itemID }));
+const tackingOutToCart = createAction(TACKING_OUT_TO_CART, itemID => ({
+  itemID
+}));
 const loadCart = createAction(LOAD_CART, (cartId, userId, productId) => ({
   cartId,
   userId,
   productId
 }));
+const loadCartItem = createAction(LOAD_CARTITEM, item => ({ item }));
 const removeCart = createAction(REMOVE_CART);
 const addCartItem = createAction(ADD_CARTITEM, item => ({ item }));
 const deleteCartItem = createAction(DELETE_CARTITEM, itemID => ({ itemID }));
@@ -40,11 +46,12 @@ const initialState = {
   itemId: [],
   cartItem: [],
   checkItemList: [], //[checkbox=true]인 item id을 담는 배열
-  isCheckedAll: false
+  isCheckedAll: false,
+  isLoading: false
 };
 
 //middle ware
-const loadCartItemDB = () => {
+const loadCartInfomationDB = () => {
   return function (dispatch, getState, { history }) {
     axios
       .get(
@@ -61,8 +68,37 @@ const loadCartItemDB = () => {
         }
       })
       .catch(error => {
-        console.log("유저의 장바구니 데이터를 받아오지 못했습니다.", error);
+        console.log(
+          "loadCartInfomationDB에서 서버와의 수신이 제대로 연결되지 않았습니다.",
+          error
+        );
       });
+  };
+};
+
+const loadClothesInCartDB = () => {
+  return function (dispatch, getState, { history }) {
+    dispatch(loading(true));
+    axios
+      .get(
+        `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/cart/${
+          getState().user.uid
+        }/product`
+      )
+      .then(res => {
+        console.log(res);
+        if (res.data.success) {
+          dispatch(loadCartItem(res.data.data));
+        }
+        dispatch(loading(true));
+      })
+      .catch(error => {
+        console.log(
+          "loadClothesInCartDB에서 서버와의 수신이 제대로 연결되지 않았습니다.",
+          error
+        );
+      })
+      .finally(dispatch(loading(false)));
   };
 };
 
@@ -70,16 +106,22 @@ const putInInCartDB = itemID => {
   return async function (dispatch, getState, { history }) {
     await dispatch(putInCart(itemID));
     axios
-      .put(`http://localhost:3000/cart/${getState().user.id}`, {
-        cart_id: getState().user.id,
-        order_count: 0,
-        product_id: getState().cart.itemId
-      })
+      .post(
+        `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/cart/${
+          getState().user.uid
+        }/add/${itemID}`
+      )
       .then(res => {
+        if (!res.data.success) {
+          console.log("CartTable에 반영되지 못했습니다.");
+        }
         console.log(res);
       })
       .catch(error => {
-        console.log("CartTable에 저장하지 못했습니다.", error);
+        console.log(
+          "putInInCartDB에서 서버와의 수신이 제대로 연결되지 않았습니다.",
+          error
+        );
       });
   };
 };
@@ -88,16 +130,23 @@ const tackingOutToCartDB = itemID => {
   return async function (dispatch, getState, { history }) {
     await dispatch(tackingOutToCart(itemID));
     axios
-      .put(`http://localhost:3000/cart/${getState().user.id}`, {
-        cart_id: getState().user.id,
-        order_count: 0,
-        product_id: getState().cart.itemId
-      })
+      .post(
+        `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/cart/${
+          getState().user.uid
+        }`,
+        getState().cart.itemId
+      )
       .then(res => {
+        if (!res.data.success) {
+          console.log("CartTable에 반영되지 못했습니다.");
+        }
         console.log(res);
       })
       .catch(error => {
-        console.log("CartTable에 저장하지 못했습니다.", error);
+        console.log(
+          "tackingOutToCartDB에서 서버와의 수신이 제대로 연결되지 않았습니다.",
+          error
+        );
       });
   };
 };
@@ -106,17 +155,23 @@ const deleteCartItemDB = itemID => {
   return async function (dispatch, getState, { history }) {
     await dispatch(deleteCartItem(itemID));
     axios
-      .put(`http://localhost:3000/cart/${getState().user.id}`, {
-        cart_id: getState().user.id,
-        order_count: 0,
-        product_id: getState().cart.itemId,
-        id: "admin@admin.com"
-      })
+      .post(
+        `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/cart/${
+          getState().user.uid
+        }`,
+        getState().cart.itemId
+      )
       .then(res => {
+        if (!res.data.success) {
+          console.log("CartTable에 반영되지 못했습니다.");
+        }
         console.log(res);
       })
       .catch(error => {
-        console.log("cart테이블에 수정된 데이터가 반영되지 못했습니다.", error);
+        console.log(
+          "deleteCartItemDB에서 서버와의 수신이 제대로 연결되지 않았습니다.",
+          error
+        );
       });
   };
 };
@@ -125,17 +180,23 @@ const deleteCheckedItemDB = () => {
   return async function (dispatch, getState, { history }) {
     await dispatch(deleteCheckedItem());
     axios
-      .put(`http://localhost:3000/cart/${getState().user.id}`, {
-        cart_id: getState().user.id,
-        order_count: 0,
-        product_id: getState().cart.itemId,
-        id: "admin@admin.com"
-      })
+      .post(
+        `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/cart/${
+          getState().user.uid
+        }`,
+        getState().cart.itemId
+      )
       .then(res => {
+        if (!res.data.success) {
+          console.log("CartTable에 반영되지 못했습니다.");
+        }
         console.log(res);
       })
       .catch(error => {
-        console.log("cart테이블에 수정된 데이터가 반영되지 못했습니다.", error);
+        console.log(
+          "deleteCheckedItemDB에서 서버와의 수신이 제대로 연결되지 않았습니다.",
+          error
+        );
       });
   };
 };
@@ -144,17 +205,23 @@ const resetCartItemDB = () => {
   return async function (dispatch, getState, { history }) {
     await dispatch(resetCartItem());
     axios
-      .put(`http://localhost:3000/cart/${getState().user.id}`, {
-        cart_id: getState().user.id,
-        order_count: 0,
-        product_id: getState().cart.itemId,
-        id: "admin@admin.com"
-      })
+      .post(
+        `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/cart/${
+          getState().user.uid
+        }`,
+        []
+      )
       .then(res => {
+        if (!res.data.success) {
+          console.log("CartTable에 반영되지 못했습니다.");
+        }
         console.log(res);
       })
       .catch(error => {
-        console.log("cart테이블에 수정된 데이터가 반영되지 못했습니다.", error);
+        console.log(
+          "resetCartItemDB에서 서버와의 수신이 제대로 연결되지 않았습니다.",
+          error
+        );
       });
   };
 };
@@ -162,11 +229,15 @@ const resetCartItemDB = () => {
 // reducer
 export default handleActions(
   {
-    [PUTINCART]: (state, action) =>
+    [PUT_IN_CART]: (state, action) =>
+      produce(state, draft => {
+        draft.isLoading = action.payload.isLoading;
+      }),
+    [PUT_IN_CART]: (state, action) =>
       produce(state, draft => {
         draft.itemId = [...draft.itemId, action.payload.itemID];
       }),
-    [TACKINGOUTTOCART]: (state, action) =>
+    [TACKING_OUT_TO_CART]: (state, action) =>
       produce(state, draft => {
         const cartAry = draft.itemId.filter(
           value => value !== action.payload.itemID
@@ -189,6 +260,10 @@ export default handleActions(
         draft.checkItemList = [];
         draft.isCheckedAll = false;
       }),
+    [LOAD_CARTITEM]: (state, action) =>
+      produce(state, draft => {
+        draft.cartItem = [...action.payload.item];
+      }),
     [ADD_CARTITEM]: (state, action) =>
       produce(state, draft => {
         draft.cartItem = [...state.cartItem, action.payload.item];
@@ -197,7 +272,7 @@ export default handleActions(
       produce(state, draft => {
         // item의 'X' 아이콘을 눌러 삭제하는 경우
         draft.cartItem = draft.cartItem.filter(
-          item => item.id !== action.payload.itemID
+          item => item.productId !== action.payload.itemID
         );
         draft.itemId = draft.itemId.filter(
           value => value !== action.payload.itemID
@@ -213,7 +288,7 @@ export default handleActions(
           Id => !draft.checkItemList.includes(Id)
         );
         draft.cartItem = draft.cartItem.filter(Item =>
-          draft.itemId.includes(Item.id)
+          draft.itemId.includes(Item.productId)
         );
         draft.checkItemList = [];
       }),
@@ -257,6 +332,7 @@ const actionCreators = {
   putInCart,
   tackingOutToCart,
   addCartItem,
+  loadClothesInCartDB,
   deleteCartItem,
   deleteCheckedItem,
   resetCartItem,
@@ -264,7 +340,7 @@ const actionCreators = {
   allCheck,
   loadCart,
   removeCart,
-  loadCartItemDB,
+  loadCartInfomationDB,
   putInInCartDB,
   tackingOutToCartDB,
   deleteCartItemDB,
