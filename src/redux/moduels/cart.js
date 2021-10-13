@@ -70,16 +70,22 @@ const putInInCartDB = itemID => {
   return async function (dispatch, getState, { history }) {
     await dispatch(putInCart(itemID));
     axios
-      .put(`http://localhost:3000/cart/${getState().user.id}`, {
-        cart_id: getState().user.id,
-        order_count: 0,
-        product_id: getState().cart.itemId
-      })
+      .post(
+        `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/cart/${
+          getState().user.uid
+        }/add/${itemID}`
+      )
       .then(res => {
+        if (!res.data.success) {
+          console.log("CartTable에 반영되지 못했습니다.");
+        }
         console.log(res);
       })
       .catch(error => {
-        console.log("CartTable에 저장하지 못했습니다.", error);
+        console.log(
+          "putInInCartDB에서 서버와의 수신이 제대로 연결되지 않았습니다.",
+          error
+        );
       });
   };
 };
@@ -88,16 +94,23 @@ const tackingOutToCartDB = itemID => {
   return async function (dispatch, getState, { history }) {
     await dispatch(tackingOutToCart(itemID));
     axios
-      .put(`http://localhost:3000/cart/${getState().user.id}`, {
-        cart_id: getState().user.id,
-        order_count: 0,
-        product_id: getState().cart.itemId
-      })
+      .post(
+        `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/cart/${
+          getState().user.uid
+        }`,
+        getState().cart.itemId
+      )
       .then(res => {
+        if (!res.data.success) {
+          console.log("CartTable에 반영되지 못했습니다.");
+        }
         console.log(res);
       })
       .catch(error => {
-        console.log("CartTable에 저장하지 못했습니다.", error);
+        console.log(
+          "tackingOutToCartDB 서버와의 수신이 제대로 연결되지 않았습니다.",
+          error
+        );
       });
   };
 };
