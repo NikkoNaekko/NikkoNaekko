@@ -3,15 +3,7 @@ import LikeButton from "../../../shared/LikeButton";
 import "../DetailPage.scss";
 import PriceList from "../../../shared/PriceList";
 import CartButton from "../../../shared/CartButton";
-
-const categoryList = {
-  1: "꾸안꾸",
-  2: "미니멀",
-  3: "스트릿",
-  4: "아메카지",
-  5: "오피스룩",
-  6: "캐주얼"
-};
+import { categoryList } from "../../../data/categoryInfomation";
 
 const ItemInformation = ({ item }) => {
   return (

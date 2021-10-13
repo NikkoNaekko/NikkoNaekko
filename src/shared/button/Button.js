@@ -12,7 +12,7 @@ const Button = ({ name, isDisabled, title, history }) => {
   const tempLikedItems = useSelector(state => state.user.tempLikedItems);
 
   const totalPrice = cartItem.reduce((acc, cur) => {
-    return acc + parseInt(cur.price);
+    return acc + parseInt(cur.productPrice);
   }, 0);
 
   const uploadLikedItems = () => {

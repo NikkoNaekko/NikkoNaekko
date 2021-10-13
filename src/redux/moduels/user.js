@@ -54,7 +54,7 @@ const signIn = (id, pwd) => {
         if (res.data.success) {
           const { uid, userId, name, isFirst, token } = res.data.data;
           dispatch(saveUserData(uid, userId, name, isFirst));
-          dispatch(cartAction.loadCartItemDB());
+          dispatch(cartAction.loadCartInfomationDB());
           sessionStorage.setItem("my_token", token);
           alert(name + "님 안녕하세요!");
           history.push("/main");

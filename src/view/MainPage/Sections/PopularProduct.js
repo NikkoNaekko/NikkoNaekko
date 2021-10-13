@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as itemsAction } from "../../../redux/moduels/items";
 import HorizenItemList from "../Component/HorizenItemList";
-import Spinner from "../Component/Spinner";
+import Spinner from "../../../shared/Spinner";
 
 const PopularProduct = () => {
   const dispatch = useDispatch();

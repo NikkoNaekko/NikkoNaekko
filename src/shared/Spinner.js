@@ -1,13 +1,15 @@
 import React from "react";
 import "./shared.scss";
 import { LoadingOutlined } from "@ant-design/icons";
-const Spinner = () => {
+const Spinner = ({ full }) => {
   return (
-    <div className='Border'>
+    <div className={full ? "FullSpinnerBorder" : "SpinnerBorder"}>
       <LoadingOutlined style={{ fontSize: "40px" }} />
-      <h1>해당 상품을 불러오는 중입니다!</h1>
     </div>
   );
+};
+Spinner.defaultProps = {
+  full: null
 };
 
 export default Spinner;

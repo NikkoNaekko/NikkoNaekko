@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback } from "react";
 import _ from "lodash";
-import Spinner from "./Spinner";
+import Spinner from "../../../shared/Spinner";
 const InfinityScroll = props => {
   const { children, callNext, is_next, loading } = props;
   const _handleScroll = _.throttle(() => {
