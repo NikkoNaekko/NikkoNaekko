@@ -45,9 +45,34 @@ const RegistrationForm = props => {
   const [name, setName] = useState("");
   const [form] = Form.useForm();
   const nameInput = useRef();
+  const emailInput = useRef();
+  const pwdInput = useRef();
+  const pwdCheckInput = useRef();
   const is_Loading = useSelector(state => state.user.isLoading);
 
   const signUp = () => {
+    if (id === "" && pwd === "" && name === "") {
+      window.alert("닉네임, 아이디, 패스워드를 모두 입력해주세요!");
+      nameInput.current.focus();
+      return;
+    } else if (name === "") {
+      window.alert("아이디를 입력해주세요!");
+      nameInput.current.focus();
+      return;
+    } else if (id === "") {
+      window.alert("이메일을 입력해주세요!");
+      emailInput.current.focus();
+      return;
+    } else if (pwd === "") {
+      window.alert("패스워드를 입력해주세요!");
+      pwdInput.current.focus();
+      return;
+    } else if (pwd_check === "") {
+      window.alert("확인용 패스워드를 입력해주세요!");
+      pwdCheckInput.current.focus();
+      return;
+    }
+
     dispatch(userActions.signUpDB(id, pwd, name));
 
     if (is_Loading === false) {
@@ -123,6 +148,7 @@ const RegistrationForm = props => {
         <Input
           placeholder='이메일 형식으로 입력해주세요'
           onChange={e => setId(e.target.value)}
+          ref={emailInput}
         />
       </Form.Item>
       <label htmlFor='password' className='formLabel'>
@@ -140,6 +166,7 @@ const RegistrationForm = props => {
         <Input.Password
           placeholder='6자리 이상을 입력해주세요'
           onChange={e => setPwd(e.target.value)}
+          ref={pwdInput}
         />
       </Form.Item>
 
@@ -173,6 +200,7 @@ const RegistrationForm = props => {
         <Input.Password
           placeholder='비밀번호를 한 번 더 입력해주세요'
           onChange={e => setPwdCheck(e.target.value)}
+          ref={pwdCheckInput}
         />
       </Form.Item>
       {is_Loading ? (
