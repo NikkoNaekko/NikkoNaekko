@@ -2,6 +2,7 @@ import axios from "axios";
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import { actionCreators as cartAction } from "./cart";
+import { actionCreators as itemsAction } from "./items";
 // actions
 const SAVE_USER_DATA = "SAVE_USER_DATA";
 const REMOVE_USER_DATA = "REMOVE_USER_DATA";
@@ -12,18 +13,19 @@ const DISLIKE = "DISLIKE";
 // action creators
 const saveUserData = createAction(
   SAVE_USER_DATA,
-  (uid, userId, name, isFirst) => ({
+  (uid, userId, name, isFirst, likeItems) => ({
     uid,
     userId,
     name,
-    isFirst
+    isFirst,
+    likeItems
   })
 );
 const removeUserData = createAction(REMOVE_USER_DATA, isLoading => ({
   isLoading
 }));
 const loading = createAction(LOADING, isLoading => ({ isLoading }));
-const Like = createAction(LIKE, itemID => ({ itemID }));
+const like = createAction(LIKE, itemID => ({ itemID }));
 const disLike = createAction(DISLIKE, itemID => ({ itemID }));
 
 // initialState
@@ -31,7 +33,7 @@ const initialState = {
   uid: null,
   id: null,
   name: null,
-  likedItems: [],
+  likedItemsID: [],
   isFirst: null,
   isLoading: false,
   isLogin: false
@@ -52,8 +54,9 @@ const signIn = (id, pwd) => {
       .then(res => {
         console.log(res);
         if (res.data.success) {
-          const { uid, userId, name, isFirst, token } = res.data.data;
-          dispatch(saveUserData(uid, userId, name, isFirst));
+          const { uid, userId, name, isFirst, likeItems, token } =
+            res.data.data;
+          dispatch(saveUserData(uid, userId, name, isFirst, likeItems));
           dispatch(cartAction.loadCartInfomationDB());
           sessionStorage.setItem("my_token", token);
           alert(name + "님 안녕하세요!");
@@ -72,8 +75,9 @@ const signIn = (id, pwd) => {
 };
 const signOut = () => {
   return function (dispatch, getState, { history }) {
-    dispatch(removeUserData);
+    dispatch(removeUserData());
     dispatch(cartAction.removeCart());
+    sessionStorage.removeItem("my_token");
     alert("로그아웃되었습니다.");
     history.push("/");
   };
@@ -83,7 +87,7 @@ const syncStateAndDB = userID => {
   return async function (dispatch, getState, { history }) {
     const data = {
       ...getState().user,
-      likedItems: getState().user.likedItems
+      likedItemsID: getState().user.likedItemsID
     };
 
     axios
@@ -130,17 +134,69 @@ const signUpDB = (id, pwd, name) => {
   };
 };
 
+const likeOnDB = itemID => {
+  return function (dispatch, getState, { history }) {
+    dispatch(like(itemID));
+    dispatch(itemsAction.increase_liked(itemID));
+    const items = getState().items.items;
+    let itemIndex = items.findIndex(item => item.productId === itemID);
+    if (itemIndex !== -1) {
+      dispatch(itemsAction.addLikedData(items[itemIndex]));
+    } else {
+      const popluarItems = getState().items.popluarItems;
+      itemIndex = popluarItems.findIndex(item => item.productId === itemID);
+      if (itemIndex !== -1) {
+        dispatch(itemsAction.addLikedData(popluarItems[itemIndex]));
+      }
+    }
+
+    axios
+      .post(
+        `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/user/${
+          getState().user.uid
+        }/like/${itemID}`
+      )
+      .then(res => {
+        console.log(res);
+      })
+      .catch(error => {
+        console.log("좋아요가 DB에 반영되지 않았습니다.", error);
+      });
+  };
+};
+
+const disLikeOnDB = itemID => {
+  return function (dispatch, getState, { history }) {
+    dispatch(disLike(itemID));
+    dispatch(itemsAction.decrease_liked(itemID));
+    dispatch(itemsAction.subLikedData(itemID));
+    axios
+      .post(
+        `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/user/${
+          getState().user.uid
+        }/likeCancel/${itemID}`
+      )
+      .then(res => {
+        console.log(res);
+      })
+      .catch(error => {
+        console.log("좋아요가 DB에 반영되지 않았습니다.", error);
+      });
+  };
+};
+
 // reducer
 export default handleActions(
   {
     [SAVE_USER_DATA]: (state, action) =>
       produce(state, draft => {
         // produce의 첫번째 인자는 원본 값, 두번째 인자는 createAction의 입력인자(user_id)가 들어있는 객체이다.
-        const { uid, userId, name, isFirst } = action.payload;
+        const { uid, userId, name, isFirst, likeItems } = action.payload;
         draft.uid = uid;
         draft.id = userId;
         draft.name = name;
         draft.isFirst = isFirst;
+        draft.likedItemsID = [...likeItems];
         draft.isLogin = true;
       }),
     [REMOVE_USER_DATA]: state =>
@@ -150,6 +206,7 @@ export default handleActions(
         draft.name = null;
         draft.isFirst = null;
         draft.isLogin = false;
+        draft.likedItemsID = null;
         sessionStorage.removeItem("my_token");
       }),
     [LOADING]: (state, action) =>
@@ -158,14 +215,14 @@ export default handleActions(
       }),
     [LIKE]: (state, action) =>
       produce(state, draft => {
-        draft.likedItems = [...draft.likedItems, action.payload.itemID];
+        draft.likedItemsID = [...draft.likedItemsID, action.payload.itemID];
       }),
     [DISLIKE]: (state, action) =>
       produce(state, draft => {
-        const likeAry = draft.likedItems.filter(
+        const likeAry = draft.likedItemsID.filter(
           value => value !== action.payload.itemID
         );
-        draft.likedItems = [...likeAry];
+        draft.likedItemsID = [...likeAry];
       })
   },
   initialState
@@ -176,8 +233,8 @@ const actionCreators = {
   signIn,
   signOut,
   loading,
-  Like,
-  disLike,
+  likeOnDB,
+  disLikeOnDB,
   signUpDB,
   syncStateAndDB
 };
