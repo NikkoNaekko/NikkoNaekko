@@ -9,16 +9,16 @@ const LikeButton = ({ item, title, itemID }) => {
   const isLogin = useSelector(state => state.user.isLogin);
   const [isChecked, setIsChecked] = useState(false);
   const dispatch = useDispatch();
-  const likedItems = useSelector(state => state.user.likedItems);
+  const likedItemsID = useSelector(state => state.user.likedItemsID);
   const userID = useSelector(state => state.user.id);
 
   useEffect(() => {
-    if (likedItems.includes(itemID)) {
+    if (likedItemsID.includes(itemID)) {
       setIsChecked(true);
     } else {
       setIsChecked(false);
     }
-  }, [likedItems, itemID]);
+  }, [likedItemsID, itemID]);
 
   const handleLike = async () => {
     if (!isLogin) {
@@ -50,10 +50,10 @@ const LikeButton = ({ item, title, itemID }) => {
     } else {
       if (!isChecked) {
         setIsChecked(true);
-        dispatch(userAction.Like(itemID));
+        dispatch(userAction.likeOnDB(itemID));
       } else {
         setIsChecked(false);
-        dispatch(userAction.disLike(itemID));
+        dispatch(userAction.disLikeOnDB(itemID));
       }
     }
   };

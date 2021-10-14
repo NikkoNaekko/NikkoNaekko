@@ -9,12 +9,16 @@ const SAVE_DATA = "save_data";
 const LOAD_ONE_DATA = "load_add_data";
 const LOAD_SEARCHED_DATA = "load_searched_data";
 const LOAD_POPULAR_DATA = "load_popular_data";
+const LOAD_LIKED_DATA = "load_liked_data";
+const ADD_LIKED_DATA = "add_liked_data";
+const SUB_LIKED_DATA = "sub_liked_data";
 const ADD_MODE = "items/ADD_MODE";
 const DELETE_MODE = "items/DELETE_MODE";
 const ADD_SELECTEMOOD = "items/ADD_SELECTEMOOD";
 const RESET_LIKEDMOOD = "items/RESET_LIKEDMOOD";
 const RESET_SELECTEDMOOD = "items/RESET_SELECTEDMOOD";
-
+const INCREASE_LIKED = "INCREASE_LIKED";
+const DECREASE_LIKED = "DECREASE_LIKED";
 //action creators
 
 const loading = createAction(LOADING, isLoading => ({ isLoading }));
@@ -23,11 +27,16 @@ const saveData = createAction(SAVE_DATA, data => ({ data }));
 const loadOneData = createAction(LOAD_ONE_DATA, data => ({ data }));
 const loadSearchData = createAction(LOAD_SEARCHED_DATA, data => ({ data }));
 const loadPopularData = createAction(LOAD_POPULAR_DATA, data => ({ data }));
+const loadLikedData = createAction(LOAD_LIKED_DATA, data => ({ data }));
+const addLikedData = createAction(ADD_LIKED_DATA, data => ({ data }));
+const subLikedData = createAction(SUB_LIKED_DATA, itemId => ({ itemId }));
 const addMood = createAction(ADD_MODE, mood => ({ mood }));
 const deleteMood = createAction(DELETE_MODE, mood => ({ mood }));
 const addSelectedMood = createAction(ADD_SELECTEMOOD, mood => ({ mood }));
 const resetLikedMood = createAction(RESET_LIKEDMOOD, () => ({}));
 const resetSelectiedMood = createAction(RESET_SELECTEDMOOD, () => ({}));
+const increase_liked = createAction(INCREASE_LIKED, itemId => ({ itemId }));
+const decrease_liked = createAction(DECREASE_LIKED, itemId => ({ itemId }));
 
 //init
 const initialState = {
@@ -35,6 +44,7 @@ const initialState = {
   selectedItems: {},
   searchedItems: [],
   popluarItems: [],
+  likedItems: null,
   likedMood: [],
   selectedMood: [],
   isLoading: false,
@@ -123,7 +133,7 @@ const loadSearchedClothesDataOnDB = itemName => {
       })
       .catch(error => {
         console.log(
-          "loadSearchedClothesDataOnDB에서 서버와의 수신이 제대로 연결되지 않았습니다,",
+          "loadSearchedClothesDataOnDB에서 서버와의 통신이 제대로 연결되지 않았습니다,",
           error
         );
       })
@@ -148,6 +158,28 @@ const loadPopularClothesDataOnDB = () => {
   };
 };
 
+const loadLikedClothesDataOnDB = () => {
+  return function (dispatch, getState, { history }) {
+    axios
+      .get(
+        ` http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/user/${
+          getState().user.uid
+        }/like`
+      )
+      .then(res => {
+        console.log(res);
+        if (res.data.success) {
+          dispatch(loadLikedData(res.data.data));
+        }
+      })
+      .catch(error => {
+        console.log(
+          "loadLikedClothesDataOnDB에서 서버와의 통신이 제대로 연결되지 않았습니다.",
+          error
+        );
+      });
+  };
+};
 // reducer
 export default handleActions(
   {
@@ -178,6 +210,20 @@ export default handleActions(
       produce(state, draft => {
         draft.popluarItems = [...action.payload.data];
       }),
+    [LOAD_LIKED_DATA]: (state, action) =>
+      produce(state, draft => {
+        draft.likedItems = [...action.payload.data];
+      }),
+    [ADD_LIKED_DATA]: (state, action) =>
+      produce(state, draft => {
+        draft.likedItems = [...draft.likedItems, action.payload.data];
+      }),
+    [SUB_LIKED_DATA]: (state, action) =>
+      produce(state, draft => {
+        draft.likedItems = draft.likedItems.filter(item => {
+          return item.productId !== action.payload.itemId;
+        });
+      }),
     [ADD_MODE]: (state, action) =>
       produce(state, draft => {
         const newLikedMood = [...state.likedMood, action.payload.mood];
@@ -202,6 +248,56 @@ export default handleActions(
     [RESET_SELECTEDMOOD]: (state, action) =>
       produce(state, draft => {
         draft.selectedMood = [];
+      }),
+    [INCREASE_LIKED]: (state, action) =>
+      produce(state, draft => {
+        const itemId = action.payload.itemId;
+        if (draft.selectedItems && draft.selectedItems.productId === itemId) {
+          draft.selectedItems.productLike++;
+        }
+        let itemIndex = draft.items.findIndex(
+          item => item.productId === itemId
+        );
+        if (itemIndex !== -1) {
+          draft.items[itemIndex].productLike++;
+        }
+        itemIndex = draft.searchedItems.findIndex(
+          item => item.productId === itemId
+        );
+        if (itemIndex !== -1) {
+          draft.searchedItems[itemIndex].productLike++;
+        }
+        itemIndex = draft.popluarItems.findIndex(
+          item => item.productId === itemId
+        );
+        if (itemIndex !== -1) {
+          draft.popluarItems[itemIndex].productLike++;
+        }
+      }),
+    [DECREASE_LIKED]: (state, action) =>
+      produce(state, draft => {
+        const itemId = action.payload.itemId;
+        if (draft.selectedItems && draft.selectedItems.productId === itemId) {
+          draft.selectedItems.productLike--;
+        }
+        let itemIndex = draft.items.findIndex(
+          item => item.productId === itemId
+        );
+        if (itemIndex !== -1) {
+          draft.items[itemIndex].productLike--;
+        }
+        itemIndex = draft.searchedItems.findIndex(
+          item => item.productId === itemId
+        );
+        if (itemIndex !== -1) {
+          draft.searchedItems[itemIndex].productLike--;
+        }
+        itemIndex = draft.popluarItems.findIndex(
+          item => item.productId === itemId
+        );
+        if (itemIndex !== -1) {
+          draft.popluarItems[itemIndex].productLike--;
+        }
       })
   },
   initialState
@@ -218,7 +314,12 @@ const actionCreators = {
   loadClothesDataOnDB,
   loadOneClothesDataOnDB,
   loadSearchedClothesDataOnDB,
-  loadPopularClothesDataOnDB
+  loadPopularClothesDataOnDB,
+  loadLikedClothesDataOnDB,
+  addLikedData,
+  subLikedData,
+  increase_liked,
+  decrease_liked
 };
 
 export { actionCreators };

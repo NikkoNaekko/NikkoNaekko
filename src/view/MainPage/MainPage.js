@@ -13,6 +13,7 @@ const MainPage = ({ history }) => {
   const dispatch = useDispatch();
   const isLoading = useSelector(state => state.items.isLoading);
   const paging = useSelector(state => state.items.paging);
+  const isLogin = useSelector(state => state.user.isLogin);
 
   useEffect(() => {
     dispatch(itemsAction.loadClothesDataOnDB());
@@ -31,13 +32,15 @@ const MainPage = ({ history }) => {
       >
         <TopBar title='니꼬내꼬' history={history} rightMenu />
         <div className='mainBorder'>
-          <div
-            className='Section1'
-            style={{ margin: "var(--margin-item-list)" }}
-          >
-            <Header title={"BookMark"} />
-            <BookMark />
-          </div>
+          {isLogin ? (
+            <div
+              className='Section1'
+              style={{ margin: "var(--margin-item-list)" }}
+            >
+              <Header title={"BookMark"} />
+              <BookMark />
+            </div>
+          ) : null}
           <div
             className='Section2'
             style={{ margin: "var(--margin-item-list)" }}
