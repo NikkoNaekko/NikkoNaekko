@@ -11,7 +11,7 @@ import { actionCreators as itemsAction } from "../../redux/moduels/items";
 
 const MainPage = ({ history }) => {
   const dispatch = useDispatch();
-  const is_loading = useSelector(state => state.items.is_loading);
+  const isLoading = useSelector(state => state.items.isLoading);
   const paging = useSelector(state => state.items.paging);
 
   useEffect(() => {
@@ -22,12 +22,12 @@ const MainPage = ({ history }) => {
     <>
       <InfinityScroll
         callNext={() => {
-          if (is_loading === false) {
+          if (isLoading === false) {
             dispatch(itemsAction.loadClothesDataOnDB());
           }
         }}
         is_next={paging.isEnd ? false : true}
-        loading={is_loading}
+        loading={isLoading}
       >
         <TopBar title='니꼬내꼬' history={history} rightMenu />
         <div className='mainBorder'>

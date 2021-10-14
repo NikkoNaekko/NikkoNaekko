@@ -17,7 +17,7 @@ const RESET_SELECTEDMOOD = "items/RESET_SELECTEDMOOD";
 
 //action creators
 
-const loading = createAction(LOADING, is_loading => ({ is_loading }));
+const loading = createAction(LOADING, isLoading => ({ isLoading }));
 const noMoreReceive = createAction(NO_MORE_RECEIVE, () => {});
 const saveData = createAction(SAVE_DATA, data => ({ data }));
 const loadOneData = createAction(LOAD_ONE_DATA, data => ({ data }));
@@ -37,7 +37,7 @@ const initialState = {
   popluarItems: [],
   likedMood: [],
   selectedMood: [],
-  is_loading: false,
+  isLoading: false,
   paging: { next: 0, isEnd: false }
 };
 /**
@@ -60,7 +60,7 @@ const initialState = {
 //middleware
 const loadClothesDataOnDB = () => {
   return function (dispatch, getState, { history }) {
-    if (getState().items.is_loading === true) return;
+    if (getState().items.isLoading === true) return;
     if (getState().items.paging.isEnd === true) {
       dispatch(loading(false));
       return;
@@ -85,6 +85,9 @@ const loadClothesDataOnDB = () => {
       })
       .catch(error => {
         console.log("데이터를 받아오지 못했습니다!", error);
+      })
+      .finally(() => {
+        dispatch(loading(false));
       });
   };
 };
@@ -106,13 +109,26 @@ const loadOneClothesDataOnDB = itemId => {
 
 const loadSearchedClothesDataOnDB = itemName => {
   return function (dispatch, getState, { history }) {
+    dispatch(loading(true));
+
     axios
-      .get(`http://localhost:3000/posts?name=${itemName}`)
+      .get(
+        `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/product/search?q=${itemName}`
+      )
       .then(res => {
-        dispatch(loadSearchData(res.data));
+        console.log(res);
+        if (res.data.success) {
+          dispatch(loadSearchData(res.data.data));
+        }
       })
       .catch(error => {
-        console.log("데이터를 받아오지 못했습니다!", error);
+        console.log(
+          "loadSearchedClothesDataOnDB에서 서버와의 수신이 제대로 연결되지 않았습니다,",
+          error
+        );
+      })
+      .finally(() => {
+        dispatch(loading(false));
       });
   };
 };
@@ -137,7 +153,7 @@ export default handleActions(
   {
     [LOADING]: (state, action) =>
       produce(state, draft => {
-        draft.is_loading = action.payload.is_loading;
+        draft.isLoading = action.payload.isLoading;
       }),
     [NO_MORE_RECEIVE]: (state, action) =>
       produce(state, draft => {
@@ -148,7 +164,7 @@ export default handleActions(
       produce(state, draft => {
         draft.items = [...draft.items, ...action.payload.data];
         draft.paging.next += 8;
-        draft.is_loading = false;
+        draft.isLoading = false;
       }),
     [LOAD_ONE_DATA]: (state, action) =>
       produce(state, draft => {

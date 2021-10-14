@@ -40,6 +40,7 @@ const MenuComponent = ({ history }) => {
           <>
             <MenuItem onClick={() => history.push("/cart")}>장바구니</MenuItem>
             <MenuItem onClick={() => history.push("/order")}>구매내역</MenuItem>
+            <MenuItem onClick={() => history.push("/main")}>메인화면</MenuItem>
             <MenuItem onClick={() => dispatch(userAction.signOut())}>
               로그아웃
             </MenuItem>

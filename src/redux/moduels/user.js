@@ -12,11 +12,12 @@ const DISLIKE = "DISLIKE";
 // action creators
 const saveUserData = createAction(
   SAVE_USER_DATA,
-  (uid, userId, name, isFirst) => ({
+  (uid, userId, name, isFirst, likeItems) => ({
     uid,
     userId,
     name,
-    isFirst
+    isFirst,
+    likeItems
   })
 );
 const removeUserData = createAction(REMOVE_USER_DATA, isLoading => ({
@@ -52,8 +53,9 @@ const signIn = (id, pwd) => {
       .then(res => {
         console.log(res);
         if (res.data.success) {
-          const { uid, userId, name, isFirst, token } = res.data.data;
-          dispatch(saveUserData(uid, userId, name, isFirst));
+          const { uid, userId, name, isFirst, likeItems, token } =
+            res.data.data;
+          dispatch(saveUserData(uid, userId, name, isFirst, likeItems));
           dispatch(cartAction.loadCartInfomationDB());
           sessionStorage.setItem("my_token", token);
           alert(name + "님 안녕하세요!");
@@ -74,6 +76,7 @@ const signOut = () => {
   return function (dispatch, getState, { history }) {
     dispatch(removeUserData);
     dispatch(cartAction.removeCart());
+    sessionStorage.removeItem("my_token");
     alert("로그아웃되었습니다.");
     history.push("/");
   };
@@ -136,11 +139,12 @@ export default handleActions(
     [SAVE_USER_DATA]: (state, action) =>
       produce(state, draft => {
         // produce의 첫번째 인자는 원본 값, 두번째 인자는 createAction의 입력인자(user_id)가 들어있는 객체이다.
-        const { uid, userId, name, isFirst } = action.payload;
+        const { uid, userId, name, isFirst, likeItems } = action.payload;
         draft.uid = uid;
         draft.id = userId;
         draft.name = name;
         draft.isFirst = isFirst;
+        draft.likedItems = [...likeItems];
         draft.isLogin = true;
       }),
     [REMOVE_USER_DATA]: state =>

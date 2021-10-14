@@ -56,3 +56,4 @@
 - 2021.10.13 Ryu [ JoinPage REST API를 활용한 회원가입 중복처리 ]
 - 2021.10.13 Na [ cartButton을 통해 DB에 itemId 수정하기 ]
 - 2021.10.13 Na [ axios를 통해 서버와 장바구니 데이터 수신 처리하기 ]
+- 2021.10.14 Na [ axios를 통해 검색 기능 처리하기 ]

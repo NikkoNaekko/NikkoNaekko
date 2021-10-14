@@ -30,7 +30,7 @@ const Header = ({ title }) => {
     );
   } else if (title === "Search") {
     return (
-      <div>
+      <div style={{ marginBottom: "40px" }}>
         <SearchOutlined
           style={{ fontSize: "30px", color: "rgb(55, 116, 230)" }}
         />
