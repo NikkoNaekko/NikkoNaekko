@@ -4,6 +4,7 @@ import { produce } from "immer";
 
 //action
 const LOADING = "loading";
+const LIKED_DATA_LOADING = "likedDataLoading";
 const NO_MORE_RECEIVE = "no_more_receive";
 const SAVE_DATA = "save_data";
 const LOAD_ONE_DATA = "load_add_data";
@@ -22,6 +23,9 @@ const DECREASE_LIKED = "DECREASE_LIKED";
 //action creators
 
 const loading = createAction(LOADING, isLoading => ({ isLoading }));
+const likedDataLoading = createAction(LIKED_DATA_LOADING, isLoading => ({
+  isLoading
+}));
 const noMoreReceive = createAction(NO_MORE_RECEIVE, () => {});
 const saveData = createAction(SAVE_DATA, data => ({ data }));
 const loadOneData = createAction(LOAD_ONE_DATA, data => ({ data }));
@@ -44,10 +48,11 @@ const initialState = {
   selectedItems: {},
   searchedItems: [],
   popluarItems: [],
-  likedItems: null,
+  likedItems: [],
   likedMood: [],
   selectedMood: [],
   isLoading: false,
+  isLikedDataLoading: false,
   paging: { next: 0, isEnd: false }
 };
 /**
@@ -160,6 +165,7 @@ const loadPopularClothesDataOnDB = () => {
 
 const loadLikedClothesDataOnDB = () => {
   return function (dispatch, getState, { history }) {
+    dispatch(likedDataLoading(true));
     axios
       .get(
         ` http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/user/${
@@ -177,6 +183,9 @@ const loadLikedClothesDataOnDB = () => {
           "loadLikedClothesDataOnDB에서 서버와의 통신이 제대로 연결되지 않았습니다.",
           error
         );
+      })
+      .finally(() => {
+        dispatch(likedDataLoading(false));
       });
   };
 };
@@ -186,6 +195,10 @@ export default handleActions(
     [LOADING]: (state, action) =>
       produce(state, draft => {
         draft.isLoading = action.payload.isLoading;
+      }),
+    [LIKED_DATA_LOADING]: (state, action) =>
+      produce(state, draft => {
+        draft.isLikedDataLoading = action.payload.isLoading;
       }),
     [NO_MORE_RECEIVE]: (state, action) =>
       produce(state, draft => {

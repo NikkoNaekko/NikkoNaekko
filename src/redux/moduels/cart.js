@@ -89,16 +89,16 @@ const loadClothesInCartDB = () => {
         console.log(res);
         if (res.data.success) {
           dispatch(loadCartItem(res.data.data));
+          dispatch(loading(false));
         }
-        dispatch(loading(true));
       })
       .catch(error => {
         console.log(
           "loadClothesInCartDB에서 서버와의 수신이 제대로 연결되지 않았습니다.",
           error
         );
-      })
-      .finally(dispatch(loading(false)));
+        dispatch(loading(false));
+      });
   };
 };
 
@@ -229,7 +229,7 @@ const resetCartItemDB = () => {
 // reducer
 export default handleActions(
   {
-    [PUT_IN_CART]: (state, action) =>
+    [LOADING]: (state, action) =>
       produce(state, draft => {
         draft.isLoading = action.payload.isLoading;
       }),
