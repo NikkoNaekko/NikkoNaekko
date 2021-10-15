@@ -1,25 +1,28 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import OrderHeader from "../component/OrderHeader";
 import OrderProducts from "../component/OrderProducts";
-import { actionCreators as orderActions } from "../../../redux/moduels/order";
+import { Empty } from "antd";
 
-const OrderCard = props => {
-  const dispatch = useDispatch();
+const OrderCard = () => {
   const orders = useSelector(state => state.order.orders);
-
-  useEffect(() => {
-    dispatch(orderActions.loadAllOrdersDataOnDB());
-  }, []);
+  const isLoading = useSelector(state => state.order.isLoading);
 
   return (
     <React.Fragment>
-      {orders.map(order => (
-        <div className='orderCard' key={order.id}>
-          <OrderHeader info={order} />
-          <OrderProducts order={order} />
+      {orders &&
+        orders.map(order => (
+          <div className='orderCard' key={order.orderId}>
+            <OrderHeader orderId={order.orderId} orderDate={order.orderDate} />
+            <OrderProducts orderList={order.productDetailList} />
+          </div>
+        ))}
+      {!orders && !isLoading && (
+        <div className='emptyBorder'>
+          <Empty description={false} />
+          <h3>구매내역 기록이 없습니다.</h3>
         </div>
-      ))}
+      )}
     </React.Fragment>
   );
 };

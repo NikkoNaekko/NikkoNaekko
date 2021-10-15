@@ -60,10 +60,9 @@ const loadCartInfomationDB = () => {
         }`
       )
       .then(res => {
-        console.log(res);
+        // console.log(res);
         if (res.data.success) {
           const { cartId, userId, productId } = res.data.data;
-          console.log(cartId, userId, productId);
           dispatch(loadCart(cartId, userId, productId));
         }
       })
@@ -86,7 +85,7 @@ const loadClothesInCartDB = () => {
         }/product`
       )
       .then(res => {
-        console.log(res);
+        // console.log(res);
         if (res.data.success) {
           dispatch(loadCartItem(res.data.data));
           dispatch(loading(false));
@@ -115,7 +114,7 @@ const putInInCartDB = itemID => {
         if (!res.data.success) {
           console.log("CartTable에 반영되지 못했습니다.");
         }
-        console.log(res);
+        // console.log(res);
       })
       .catch(error => {
         console.log(
@@ -140,7 +139,7 @@ const tackingOutToCartDB = itemID => {
         if (!res.data.success) {
           console.log("CartTable에 반영되지 못했습니다.");
         }
-        console.log(res);
+        // console.log(res);
       })
       .catch(error => {
         console.log(
@@ -165,7 +164,7 @@ const deleteCartItemDB = itemID => {
         if (!res.data.success) {
           console.log("CartTable에 반영되지 못했습니다.");
         }
-        console.log(res);
+        // console.log(res);
       })
       .catch(error => {
         console.log(
@@ -190,7 +189,7 @@ const deleteCheckedItemDB = () => {
         if (!res.data.success) {
           console.log("CartTable에 반영되지 못했습니다.");
         }
-        console.log(res);
+        // console.log(res);
       })
       .catch(error => {
         console.log(
@@ -215,7 +214,7 @@ const resetCartItemDB = () => {
         if (!res.data.success) {
           console.log("CartTable에 반영되지 못했습니다.");
         }
-        console.log(res);
+        // console.log(res);
       })
       .catch(error => {
         console.log(
@@ -234,7 +233,7 @@ const addOrderDataOnDB = () => {
         `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/user/tokenValidation/${myToken}`
       )
       .then(res => {
-        console.log(res);
+        // console.log(res);
         if (res.data.success) {
           axios
             .post(
@@ -243,7 +242,8 @@ const addOrderDataOnDB = () => {
               }`
             )
             .then(res => {
-              console.log(res);
+              // console.log(res);
+              dispatch(resetCartItem());
               dispatch(loading(false));
               alert("주문이 성공적으로 완료되었습니다.");
               history.push("/order");

@@ -3,6 +3,7 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import { actionCreators as cartAction } from "./cart";
 import { actionCreators as itemsAction } from "./items";
+import { actionCreators as orderAction } from "./order";
 // actions
 const SAVE_USER_DATA = "SAVE_USER_DATA";
 const REMOVE_USER_DATA = "REMOVE_USER_DATA";
@@ -52,7 +53,7 @@ const signIn = (id, pwd) => {
       }
     })
       .then(res => {
-        console.log(res);
+        // console.log(res);
         if (res.data.success) {
           const { uid, userId, name, isFirst, likeItems, token } =
             res.data.data;
@@ -77,6 +78,7 @@ const signOut = () => {
   return function (dispatch, getState, { history }) {
     dispatch(removeUserData());
     dispatch(cartAction.removeCart());
+    dispatch(orderAction.removeOrder());
     sessionStorage.removeItem("my_token");
     alert("로그아웃되었습니다.");
     history.push("/");
@@ -93,7 +95,7 @@ const syncStateAndDB = userID => {
     axios
       .put(`http://localhost:3000/users/${userID}`, data)
       .then(res => {
-        console.log(res.data);
+        // console.log(res.data);
       })
       .catch(error => {
         console.log("취향 추가 실패", error);
@@ -114,7 +116,7 @@ const signUpDB = (id, pwd, name) => {
       }
     })
       .then(res => {
-        console.log(res);
+        // console.log(res);
         if (res.data.success === true) {
           console.log("회원 정보가 추가되었습니다.");
           history.push("/");
@@ -157,7 +159,7 @@ const likeOnDB = itemID => {
         }/like/${itemID}`
       )
       .then(res => {
-        console.log(res);
+        // console.log(res);
       })
       .catch(error => {
         console.log("좋아요가 DB에 반영되지 않았습니다.", error);
@@ -177,7 +179,7 @@ const disLikeOnDB = itemID => {
         }/likeCancel/${itemID}`
       )
       .then(res => {
-        console.log(res);
+        // console.log(res);
       })
       .catch(error => {
         console.log("좋아요가 DB에 반영되지 않았습니다.", error);
