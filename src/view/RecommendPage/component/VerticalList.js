@@ -1,16 +1,18 @@
 import React from "react";
 import Item from "./Item";
 import ItemTitle from "./ItemTitle";
+import { categoryList } from "../../../data/categoryInfomation";
 
-const VerticalList = ({ selectedItem }) => {
+const VerticalList = ({ filteredItems }) => {
   return (
     <div className='verticalList'>
-      {selectedItem.map(item => (
-        <div className='listItem' key={item.id}>
-          <Item item={item} />
-          <ItemTitle title={item.mood} />
-        </div>
-      ))}
+      {filteredItems &&
+        filteredItems.map(item => (
+          <div className='listItem' key={item.productId}>
+            <Item item={item} />
+            <ItemTitle title={categoryList[item.categoryId]} />
+          </div>
+        ))}
     </div>
   );
 };

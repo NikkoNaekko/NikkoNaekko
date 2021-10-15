@@ -57,7 +57,7 @@ const signIn = (id, pwd) => {
           dispatch(cartAction.loadCartInfomationDB());
           sessionStorage.setItem("my_token", token);
           alert(name + "님 안녕하세요!");
-          history.push("/main");
+          history.push("/recommend");
         } else {
           alert("가입되지 않은 ID거나 비밀번호가 일치하지 않습니다.");
         }
