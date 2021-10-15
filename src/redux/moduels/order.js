@@ -21,6 +21,7 @@ const initialState = {
 };
 
 //middleware
+
 const loadAllOrdersDataOnDB = () => {
   return function (dispatch, getState, { history }) {
     axios
