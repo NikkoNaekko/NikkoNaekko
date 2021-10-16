@@ -4,6 +4,7 @@ import Button from "../../shared/button/Button";
 import SquareList from "./Component/SquareList";
 import Title from "../RecommendPage/component/Title";
 import { actionCreators as itemsAction } from "../../redux/moduels/items";
+import { actionCreators as userAction } from "../../redux/moduels/user";
 import Spinner from "../../shared/Spinner";
 import { categoryList } from "../../data/categoryInfomation";
 import "./recommendresult.scss";
@@ -29,19 +30,19 @@ const RecommendResultPage = ({ history }) => {
   const allItems = useSelector(state => state.items.items);
   const selectedMoodItems = useSelector(state => state.items.selectedMoodItems);
   const isLoading = useSelector(state => state.items.isLoading);
-  const tempLikedItems = useSelector(state => state.items.tempLikedItems);
+  const likedItemsID = useSelector(state => state.user.likedItemsID);
 
   useEffect(() => {
     dispatch(itemsAction.loadItemsByCategoryOnDB());
   }, []);
 
   useEffect(() => {
-    if (tempLikedItems.length > 0) {
+    if (likedItemsID.length > 0) {
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
     }
-  }, [tempLikedItems]);
+  }, [likedItemsID]);
 
   return (
     <div className='recommendResult'>

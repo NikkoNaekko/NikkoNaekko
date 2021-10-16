@@ -13,7 +13,8 @@ const Button = ({ name, isDisabled, title, history }) => {
   const likedMood = useSelector(state => state.items.likedMood);
   // const tempLikedItems = useSelector(state => state.user.tempLikedItems);
   const isLoading = useSelector(state => state.cart.isLoading);
-  const tempLikedItems = useSelector(state => state.items.tempLikedItems);
+  const userIsLoading = useSelector(state => state.user.isLoading);
+  const likedItemsID = useSelector(state => state.user.likedItemsID);
 
   const totalPrice = cartItem.reduce((acc, cur) => {
     return acc + parseInt(cur.productPrice);
@@ -30,10 +31,9 @@ const Button = ({ name, isDisabled, title, history }) => {
   };
 
   const uploadLikedItems = () => {
-    dispatch(userAcions.likesOnDB(tempLikedItems));
-    // if (tempLikedItems.length > 0) {
-    // history.push("/main");
-    // }
+    if (likedItemsID.length > 0) {
+      dispatch(userAcions.likesOnDB(likedItemsID));
+    }
   };
 
   if (title === "recommend") {
@@ -49,12 +49,27 @@ const Button = ({ name, isDisabled, title, history }) => {
     );
   } else if (title === "recommendResult") {
     return (
-      <button
-        className={isDisabled ? `btn btn_gray` : `btn btn_pink`}
-        onClick={() => uploadLikedItems()}
-      >
-        {name}
-      </button>
+      <>
+        {userIsLoading ? (
+          <button className='btn btn_gray'>
+            선택 추가 중
+            <LoadingOutlined
+              style={{
+                position: "relative",
+                left: "30px",
+                fontSize: "20px"
+              }}
+            />
+          </button>
+        ) : (
+          <button
+            className={isDisabled ? `btn btn_gray` : `btn btn_pink`}
+            onClick={() => uploadLikedItems()}
+          >
+            {name}
+          </button>
+        )}
+      </>
     );
   } else if (title === "cart") {
     return (

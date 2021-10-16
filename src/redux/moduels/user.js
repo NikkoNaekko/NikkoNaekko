@@ -10,6 +10,7 @@ const REMOVE_USER_DATA = "REMOVE_USER_DATA";
 const LOADING = "loading";
 const LIKE = "LIKE";
 const DISLIKE = "DISLIKE";
+const LIKE_ARY = "LIKE_ARY";
 
 // action creators
 const saveUserData = createAction(
@@ -28,6 +29,7 @@ const removeUserData = createAction(REMOVE_USER_DATA, isLoading => ({
 const loading = createAction(LOADING, isLoading => ({ isLoading }));
 const like = createAction(LIKE, itemID => ({ itemID }));
 const disLike = createAction(DISLIKE, itemID => ({ itemID }));
+const likeAry = createAction(LIKE_ARY, itemsID => ({ itemsID }));
 
 // initialState
 const initialState = {
@@ -172,7 +174,8 @@ const likeOnDB = itemID => {
 };
 
 const likesOnDB = itemAry => {
-  return function (dispatch, getState, { history }) {
+  return async function (dispatch, getState, { history }) {
+    await dispatch(loading(true));
     axios
       .post(
         `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/user/${
@@ -181,13 +184,16 @@ const likesOnDB = itemAry => {
         itemAry
       )
       .then(res => {
-        for (let i = 0; i < itemAry.length; i++) {
-          dispatch(like(itemAry[i]));
+        if (res.data.success) {
+          history.push("/main");
         }
+        dispatch(checkFirstOnDB());
       })
-      .then(dispatch(checkFirstOnDB()))
       .catch(error => {
         console.log("좋아요가 DB에 반영되지 않았습니다.", error);
+      })
+      .finally(() => {
+        dispatch(loading(false));
       });
   };
 };
@@ -272,6 +278,10 @@ export default handleActions(
           value => value !== action.payload.itemID
         );
         draft.likedItemsID = [...likeAry];
+      }),
+    [LIKE_ARY]: (state, action) =>
+      produce(state, draft => {
+        draft.likedItemsID = [...action.payload.itemsID];
       })
   },
   initialState
@@ -287,7 +297,10 @@ const actionCreators = {
   signUpDB,
   syncStateAndDB,
   likesOnDB,
-  checkFirstOnDB
+  checkFirstOnDB,
+  likeAry,
+  like,
+  disLike
 };
 
 export { actionCreators };
