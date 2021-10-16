@@ -1,0 +1,106 @@
+.recommend {
+
+    .container {
+        width: 100%;
+        height: initial;
+
+        .wrapper {
+            width: 100%;
+            height: calc(100vh - 100px);
+            overflow: scroll;
+            -ms-overflow-style: none;
+
+            &::-webkit-scrollbar{ 
+                display:none; 
+            }
+
+            .recommendTitle {
+                width: 100%;
+                padding-top: 10px;
+                animation: appear 0.5s 0.5s ease forwards;
+                visibility:hidden;
+    
+                .titleIcon {
+    
+                    svg {
+                        color: var(--color-font-dark-pink);
+                        font-size: 40px;
+                    }
+                }
+    
+                .titleHead {
+                    font-size: 16px;
+                    font-weight: bold;
+                }
+    
+                .titleDesc {
+                    padding-bottom: 20px;
+                    font-size: 14px;
+                }
+            }
+    
+            .recommendContent {
+                width: 100%;
+                animation: appear 0.5s 1s ease forwards;
+                visibility:hidden;
+    
+                .contentBox {
+                    display: flex;
+                    flex-direction: column;
+    
+                    .verticalList {
+                        width: 100%;
+                        height: 100%;
+                        display: grid;
+                        place-items: center;
+                        grid-template-columns: 1fr 1fr;
+                        min-height: 99px;
+
+                        .listItem {
+                            width: 100%;
+                            
+                            .item {
+                                width: 95%;
+                                height: 157px;
+                                margin-bottom: 5px;
+                                object-fit: contain;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                position: relative;
+                                border-radius: 20px;
+                                overflow: hidden;
+                                cursor: pointer;
+    
+                                img {
+                                    display: block;
+                                    width: 100%;
+                                    height: 100%;
+                                    object-fit: cover;
+                                }
+    
+                                .itemTitle {
+                                    display: block;
+                                }
+    
+                                .icons-list {
+                                    position: absolute;
+                                    bottom: 10px;
+                                    right: 12px;
+                                    color: #fff;
+                                }
+                            }
+                        }
+
+                        .itemTitle {
+                            text-align: center;
+                            margin-bottom: 15px;
+                            font-size: 16px;
+                        }
+                    }
+                }
+            }
+        }
+        
+    }
+}

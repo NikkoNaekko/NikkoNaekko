@@ -1,0 +1,105 @@
+// ----- TopBar -----
+.topBar{
+    position:fixed;
+    top:0px;
+    left: 0;
+    width:100vw; 
+    background-color:white;
+    z-index: 999;
+    
+    .topBarMenu{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height:61px;
+        margin:0px 10px 0px 10px;
+
+        .topBarTitle{
+            color:var(--color-font-dark-pink);
+            font-size: 24px;
+            font-weight: bold;
+            z-index: 900;
+        }
+        .hover{
+            &:active{
+                color: #C82FF5;
+            }
+        }
+        .topBarLeftMenu{
+            position: absolute;
+            top:15px;
+            left:10px;
+        }
+        .topBarRightMenu{
+            position: absolute;
+            right:10px;
+            display: flex;
+            align-items: center;
+
+            .area {
+                position: relative;
+                width: 75vw;
+                height: 61px;
+                display: flex;
+                align-items: center;
+                margin-right: 2px;
+
+                .searchInput {
+                    background-color: var(--color-div-gray);
+                    border:none;
+                    border-radius: 10px;
+                    padding: 10px;
+                    width: 100%;
+                    height: 70%;
+                    position: absolute;
+                    right: 0;
+                    visibility: hidden;
+
+                    &::placeholder{
+                        color:rgb(166,166,166);
+                    }
+                    &:focus{
+                        outline: none;
+                    }
+                }
+                .searchIcon{
+                    font-size: 40px;
+                    position: absolute;
+                    right: 4px;
+                    z-index: 902;
+                }
+            }   
+        }
+    }
+}
+.MuiIconButton-root{
+    padding:0px !important;
+}
+// ----- SearchBar -----
+
+@keyframes inputAppear{
+    from{
+        width: 0;
+        opacity: 0;
+        visibility: hidden;
+    }
+    to{
+        width: 100%;
+        opacity: 1;
+        visibility: visible;
+        z-index: 901;
+    }
+}
+@keyframes inputDisAppear{
+    from{
+        width: 100%;
+        opacity: 1;
+        visibility: visible;
+    }
+    to{
+        width: 0;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 900;
+    }
+}
