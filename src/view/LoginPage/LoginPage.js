@@ -1,6 +1,6 @@
 import TopBar from "../../shared/menu/TopBar";
 import React from "react";
-import NormalLoginForm from "../../components/NormalLoginForm/NormalLoginForm";
+import NormalLoginForm from "./component/NormalLoginForm";
 import { useSelector } from "react-redux";
 
 const LoginPage = ({ history }) => {

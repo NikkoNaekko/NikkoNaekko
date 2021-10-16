@@ -1,11 +1,11 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import PriceList from "../PriceList";
-import "./button.scss";
+import { LoadingOutlined } from "@ant-design/icons";
 import { actionCreators as userAcions } from "../../redux/moduels/user";
 import { actionCreators as cartAcions } from "../../redux/moduels/cart";
-import { LoadingOutlined } from "@ant-design/icons";
+import PriceList from "../PriceList";
+import "./button.scss";
 
 const Button = ({ name, isDisabled, title, history }) => {
   const dispatch = useDispatch();
@@ -39,9 +39,7 @@ const Button = ({ name, isDisabled, title, history }) => {
     return (
       <button
         className={isDisabled ? `btn btn_gray` : `btn btn_pink`}
-        onClick={() =>
-          likedMood.length > 0 ? history.push("/recommendResult") : ""
-        }
+        onClick={() => likedMood.length > 0 && history.push("/recommendResult")}
       >
         {name}
       </button>
@@ -49,7 +47,7 @@ const Button = ({ name, isDisabled, title, history }) => {
   } else if (title === "recommendResult") {
     return (
       <>
-        {userIsLoading === true && likedItemsID.length > 0 ? (
+        {userIsLoading && likedItemsID.length > 0 ? (
           <button className='btn btn_gray'>
             선택 추가 중
             <LoadingOutlined

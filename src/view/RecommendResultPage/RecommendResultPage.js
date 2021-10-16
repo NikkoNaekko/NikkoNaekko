@@ -15,21 +15,16 @@ const RecommendResultPage = ({ history }) => {
     history.replace("/login");
   }
 
-  // const isFirst = useSelector(state => state.user.isFirst);
-  // if (!isFirst) {
-  //   alert("잘못된 접근입니다..");
-  //   history.replace("/main");
-  // }
+  const isFirst = useSelector(state => state.user.isFirst);
+  if (!isFirst) {
+    alert("잘못된 접근입니다..");
+    history.replace("/main");
+  }
 
   const dispatch = useDispatch();
   const [isDisabled, setIsDisabled] = useState(true);
-
-  const likedMood = useSelector(state => state.items.likedMood);
-  const selectedMood = useSelector(state => state.items.selectedMood);
-  const allItems = useSelector(state => state.items.items);
   const selectedMoodItems = useSelector(state => state.items.selectedMoodItems);
   const itemIsLoading = useSelector(state => state.items.isLoading);
-  const userIsLoading = useSelector(state => state.user.isLoading);
   const likedItemsID = useSelector(state => state.user.likedItemsID);
 
   useEffect(() => {
@@ -56,7 +51,7 @@ const RecommendResultPage = ({ history }) => {
               selectedMoodItems.map(items => (
                 <div className='contentBox'>
                   <div className='recommnedTitle'>
-                    {categoryList[items[0]?.categoryId]}
+                    {categoryList[items[0].categoryId]}
                   </div>
                   <SquareList items={items} />
                 </div>
