@@ -1,6 +1,6 @@
 import React from "react";
 import TopBar from "../../shared/menu/TopBar";
-import RegistrationForm from "../../components/RegistrationForm/RegistrationForm";
+import RegistrationForm from "./component/RegistrationForm";
 import { useSelector } from "react-redux";
 
 const JoinPage = ({ history }) => {

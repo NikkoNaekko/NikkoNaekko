@@ -1,12 +1,11 @@
 import React, { useState, useRef } from "react";
-import { Form, Input, Select } from "antd";
+import { Form, Input } from "antd";
 import "./registrationform.scss";
-import "../../shared/button/button.scss";
+import "../../../shared/button/button.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { actionCreators as userActions } from "../../redux/moduels/user";
+import { actionCreators as userActions } from "../../../redux/moduels/user";
 import { LoadingOutlined } from "@ant-design/icons";
 
-const { Option } = Select;
 const formItemLayout = {
   labelCol: {
     xs: {
@@ -25,18 +24,7 @@ const formItemLayout = {
     }
   }
 };
-const tailFormItemLayout = {
-  wrapperCol: {
-    xs: {
-      span: 24,
-      offset: 0
-    },
-    sm: {
-      span: 16,
-      offset: 8
-    }
-  }
-};
+
 const RegistrationForm = props => {
   const dispatch = useDispatch();
   const [id, setId] = useState("");
@@ -83,23 +71,6 @@ const RegistrationForm = props => {
   const onFinish = values => {
     console.log("Received values of form: ", values);
   };
-
-  const [autoCompleteResult, setAutoCompleteResult] = useState([]);
-
-  const onWebsiteChange = value => {
-    if (!value) {
-      setAutoCompleteResult([]);
-    } else {
-      setAutoCompleteResult(
-        [".com", ".org", ".net"].map(domain => `${value}${domain}`)
-      );
-    }
-  };
-
-  const websiteOptions = autoCompleteResult.map(website => ({
-    label: website,
-    value: website
-  }));
 
   return (
     <Form

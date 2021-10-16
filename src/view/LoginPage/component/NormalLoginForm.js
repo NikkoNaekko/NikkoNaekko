@@ -1,19 +1,19 @@
 import React from "react";
 import { Form, Input } from "antd";
-import "./normalloginform.scss";
-import "../../shared/button/button.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { actionCreators as userAction } from "../../redux/moduels/user";
+import { actionCreators as userAction } from "../../../redux/moduels/user";
 import { LoadingOutlined } from "@ant-design/icons";
+import "./normalloginform.scss";
+import "../../../shared/button/button.scss";
 
 const NormalLoginForm = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector(state => state.user.isLoading);
 
   const onFinish = values => {
-    console.log("Received values of form: ", values);
     dispatch(userAction.signIn(values.userId, values.password));
   };
+
   return (
     <Form
       name='normal_login'

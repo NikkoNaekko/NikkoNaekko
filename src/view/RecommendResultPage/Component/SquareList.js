@@ -1,7 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 import LikeButton from "../../../shared/LikeButton";
-import { useSelector, useDispatch } from "react-redux";
-import { actionCreators as userAction } from "../../../redux/moduels/user";
 
 const SquareList = ({ history, items }) => {
   return (

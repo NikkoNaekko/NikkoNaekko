@@ -1,8 +1,8 @@
 import React, { useState, useRef } from "react";
-import "./TopBar.scss";
-import MenuComponent from "./MenuComponent";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import SearchIcon from "@material-ui/icons/Search";
+import MenuComponent from "./MenuComponent";
+import "./TopBar.scss";
 
 const TopBar = ({ title, history, rightMenu }) => {
   const [searching, setSearching] = useState(false);

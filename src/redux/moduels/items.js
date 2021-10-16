@@ -21,8 +21,6 @@ const RESET_LIKEDMOOD = "items/RESET_LIKEDMOOD";
 const RESET_FILTEREDMOOD = "items/RESET_FILTEREDMOOD";
 const INCREASE_LIKED = "INCREASE_LIKED";
 const DECREASE_LIKED = "DECREASE_LIKED";
-const LIKED_DATA_STRING = "items/LIKED_DATA_STRING";
-const RESET_LIKED_DATA_STRING = "items/RESET_LIKED_DATA_STRING";
 const ADD_MOODITEMS = "itmes/ADD_MOODITEMS";
 
 //action creators
@@ -48,10 +46,6 @@ const resetLikedMood = createAction(RESET_LIKEDMOOD, () => ({}));
 const resetFilteredMood = createAction(RESET_FILTEREDMOOD, () => ({}));
 const increase_liked = createAction(INCREASE_LIKED, itemId => ({ itemId }));
 const decrease_liked = createAction(DECREASE_LIKED, itemId => ({ itemId }));
-const likedDataString = createAction(LIKED_DATA_STRING, data => ({ data }));
-const resetLikedDataString = createAction(RESET_LIKED_DATA_STRING, data => ({
-  data
-}));
 const addMoodItems = createAction(ADD_MOODITEMS, data => ({ data }));
 
 //init
@@ -164,7 +158,6 @@ const loadPopularCategoryDataOnDB = () => {
   return function (dispatch, getState, { history }) {
     dispatch(loading(true));
     dispatch(resetMood());
-    dispatch(resetLikedDataString());
     axios
       .get(
         "http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/category/popular"
@@ -215,16 +208,14 @@ const loadLikedClothesDataOnDB = () => {
 const loadItemsByCategoryOnDB = () => {
   return function (dispatch, getState, { history }) {
     dispatch(loading(true));
-    for (let i = 0; i < getState().items.likedMood.length; i++) {
-      dispatch(likedDataString(`&id=${getState().items.likedMood[i]}`));
-    }
+    let url =
+      "http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/category/categoryId?";
+    getState().items.likedMood.map(item => {
+      url += "&id=" + item;
+    });
 
     axios
-      .get(
-        `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/category/categoryId?${
-          getState().items.likedDataString
-        }`
-      )
+      .get(url)
       .then(res => {
         dispatch(addMoodItems(res.data.data));
       })
@@ -363,14 +354,6 @@ export default handleActions(
           draft.popluarItems[itemIndex].productLike--;
         }
       }),
-    [LIKED_DATA_STRING]: (state, action) =>
-      produce(state, draft => {
-        draft.likedDataString = state.likedDataString + action.payload.data;
-      }),
-    [RESET_LIKED_DATA_STRING]: (state, action) =>
-      produce(state, draft => {
-        draft.likedDataString = "";
-      }),
     [ADD_MOODITEMS]: (state, action) =>
       produce(state, draft => {
         draft.selectedMoodItems = [...action.payload.data];
@@ -399,7 +382,6 @@ const actionCreators = {
   increase_liked,
   decrease_liked,
   loadItemsByCategoryOnDB,
-  likedDataString,
   addMoodItems
 };
 

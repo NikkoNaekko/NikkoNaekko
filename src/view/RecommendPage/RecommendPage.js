@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { actionCreators as itemsAction } from "../../redux/moduels/items";
 import Title from "./component/Title";
 import VerticalList from "./component/VerticalList";
 import Button from "../../shared/button/Button";
-import { useSelector, useDispatch } from "react-redux";
-import { actionCreators as itemsAction } from "../../redux/moduels/items";
-import { actionCreators as userAction } from "../../redux/moduels/user";
 import Spinner from "../../shared/Spinner";
 import "./recommend.scss";
 
@@ -29,7 +28,6 @@ const RecommendPage = ({ history }) => {
 
   useEffect(() => {
     if (likedMood.length > 0) {
-      console.log(likedMood.length);
       setIsDisabled(false);
     } else {
       setIsDisabled(true);

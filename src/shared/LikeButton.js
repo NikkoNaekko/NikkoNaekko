@@ -6,9 +6,9 @@ import { actionCreators as userAction } from "../redux/moduels/user";
 import "./button/button.scss";
 
 const LikeButton = ({ item, title, itemID }) => {
-  const isLogin = useSelector(state => state.user.isLogin);
-  const [isChecked, setIsChecked] = useState(false);
   const dispatch = useDispatch();
+  const [isChecked, setIsChecked] = useState(false);
+  const isLogin = useSelector(state => state.user.isLogin);
   const likedItemsID = useSelector(state => state.user.likedItemsID);
 
   useEffect(() => {
