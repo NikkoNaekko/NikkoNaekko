@@ -11,8 +11,9 @@ import { actionCreators as itemsAction } from "../../redux/moduels/items";
 
 const MainPage = ({ history }) => {
   const dispatch = useDispatch();
-  const is_loading = useSelector(state => state.items.is_loading);
+  const isLoading = useSelector(state => state.items.isLoading);
   const paging = useSelector(state => state.items.paging);
+  const isLogin = useSelector(state => state.user.isLogin);
 
   useEffect(() => {
     dispatch(itemsAction.loadClothesDataOnDB());
@@ -22,22 +23,24 @@ const MainPage = ({ history }) => {
     <>
       <InfinityScroll
         callNext={() => {
-          if (is_loading === false) {
+          if (isLoading === false) {
             dispatch(itemsAction.loadClothesDataOnDB());
           }
         }}
         is_next={paging.isEnd ? false : true}
-        loading={is_loading}
+        loading={isLoading}
       >
         <TopBar title='니꼬내꼬' history={history} rightMenu />
         <div className='mainBorder'>
-          <div
-            className='Section1'
-            style={{ margin: "var(--margin-item-list)" }}
-          >
-            <Header title={"BookMark"} />
-            <BookMark />
-          </div>
+          {isLogin ? (
+            <div
+              className='Section1'
+              style={{ margin: "var(--margin-item-list)" }}
+            >
+              <Header title={"BookMark"} />
+              <BookMark />
+            </div>
+          ) : null}
           <div
             className='Section2'
             style={{ margin: "var(--margin-item-list)" }}

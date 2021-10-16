@@ -18,7 +18,7 @@ const CartPage = ({ history }) => {
       alert("로그인 후 이용해주세요.");
       history.replace("/login");
     }
-    // dispatch(CartAction.loadClothesInCartDB());
+    dispatch(CartAction.loadClothesInCartDB());
   }, []);
 
   return (
