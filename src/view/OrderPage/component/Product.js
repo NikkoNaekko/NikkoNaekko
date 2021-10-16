@@ -1,16 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { categoryList } from "../../../data/categoryInfomation";
 import PriceList from "../../../shared/PriceList";
-import WOW from "wowjs";
 
 const Product = ({ order }) => {
-  useEffect(() => {
-    new WOW.WOW().init();
-  }, []);
-
   return (
-    <div className='product wow fadeInUp'>
+    <div className='product'>
       <div className='mood'>{categoryList[order.categoryId]}</div>
       <Link to={`/detail/${order.productId}`}>
         <div className='productContent'>

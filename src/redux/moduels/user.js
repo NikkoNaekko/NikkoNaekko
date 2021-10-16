@@ -125,6 +125,7 @@ const signUpDB = (id, pwd, name) => {
         // console.log(res);
         if (res.data.success === true) {
           console.log("회원 정보가 추가되었습니다.");
+          alert("회원가입을 성공했습니다.");
           history.push("/");
         } else if (res.data.success === false) {
           console.log("회원 정보 추가 실패");
