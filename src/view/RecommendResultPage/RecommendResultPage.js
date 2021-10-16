@@ -4,7 +4,6 @@ import Button from "../../shared/button/Button";
 import SquareList from "./Component/SquareList";
 import Title from "../RecommendPage/component/Title";
 import { actionCreators as itemsAction } from "../../redux/moduels/items";
-import { actionCreators as userAction } from "../../redux/moduels/user";
 import Spinner from "../../shared/Spinner";
 import { categoryList } from "../../data/categoryInfomation";
 import "./recommendresult.scss";
@@ -29,7 +28,8 @@ const RecommendResultPage = ({ history }) => {
   const selectedMood = useSelector(state => state.items.selectedMood);
   const allItems = useSelector(state => state.items.items);
   const selectedMoodItems = useSelector(state => state.items.selectedMoodItems);
-  const isLoading = useSelector(state => state.items.isLoading);
+  const itemIsLoading = useSelector(state => state.items.isLoading);
+  const userIsLoading = useSelector(state => state.user.isLoading);
   const likedItemsID = useSelector(state => state.user.likedItemsID);
 
   useEffect(() => {
@@ -50,7 +50,7 @@ const RecommendResultPage = ({ history }) => {
         <div className='wrapper'>
           <Title title={"recommendResult"} />
           <div className='recommendContent'>
-            {isLoading ? (
+            {itemIsLoading && likedItemsID.length === 0 ? (
               <Spinner full={false} />
             ) : (
               selectedMoodItems.map(items => (

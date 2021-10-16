@@ -46,7 +46,7 @@ const LikeButton = ({ item, title, itemID }) => {
     } else {
       if (!isChecked) {
         setIsChecked(true);
-        dispatch(userAction.likeOnDB(itemID));
+        dispatch(userAction.iLikeOneProduct(itemID));
       } else {
         setIsChecked(false);
         dispatch(userAction.disLikeOnDB(itemID));

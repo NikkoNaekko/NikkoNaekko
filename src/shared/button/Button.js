@@ -11,7 +11,6 @@ const Button = ({ name, isDisabled, title, history }) => {
   const dispatch = useDispatch();
   const cartItem = useSelector(state => state.cart.cartItem);
   const likedMood = useSelector(state => state.items.likedMood);
-  // const tempLikedItems = useSelector(state => state.user.tempLikedItems);
   const isLoading = useSelector(state => state.cart.isLoading);
   const userIsLoading = useSelector(state => state.user.isLoading);
   const likedItemsID = useSelector(state => state.user.likedItemsID);
@@ -32,7 +31,7 @@ const Button = ({ name, isDisabled, title, history }) => {
 
   const uploadLikedItems = () => {
     if (likedItemsID.length > 0) {
-      dispatch(userAcions.likesOnDB(likedItemsID));
+      dispatch(userAcions.iLikeSeveralProduct(likedItemsID));
     }
   };
 
@@ -50,7 +49,7 @@ const Button = ({ name, isDisabled, title, history }) => {
   } else if (title === "recommendResult") {
     return (
       <>
-        {userIsLoading ? (
+        {userIsLoading === true && likedItemsID.length > 0 ? (
           <button className='btn btn_gray'>
             선택 추가 중
             <LoadingOutlined

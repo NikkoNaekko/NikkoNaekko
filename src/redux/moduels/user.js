@@ -142,7 +142,7 @@ const signUpDB = (id, pwd, name) => {
   };
 };
 
-const likeOnDB = itemID => {
+const iLikeOneProduct = itemID => {
   return function (dispatch, getState, { history }) {
     dispatch(like(itemID));
     dispatch(itemsAction.increase_liked(itemID));
@@ -173,7 +173,7 @@ const likeOnDB = itemID => {
   };
 };
 
-const likesOnDB = itemAry => {
+const iLikeSeveralProduct = itemAry => {
   return async function (dispatch, getState, { history }) {
     await dispatch(loading(true));
     axios
@@ -187,7 +187,7 @@ const likesOnDB = itemAry => {
         if (res.data.success) {
           history.push("/main");
         }
-        dispatch(checkFirstOnDB());
+        // dispatch(checkFirstOnDB());
       })
       .catch(error => {
         console.log("좋아요가 DB에 반영되지 않았습니다.", error);
@@ -292,11 +292,11 @@ const actionCreators = {
   signIn,
   signOut,
   loading,
-  likeOnDB,
+  iLikeOneProduct,
   disLikeOnDB,
   signUpDB,
   syncStateAndDB,
-  likesOnDB,
+  iLikeSeveralProduct,
   checkFirstOnDB,
   likeAry,
   like,
