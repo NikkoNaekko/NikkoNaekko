@@ -4,6 +4,7 @@ import VerticalList from "./component/VerticalList";
 import Button from "../../shared/button/Button";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as itemsAction } from "../../redux/moduels/items";
+import { actionCreators as userAction } from "../../redux/moduels/user";
 import Spinner from "../../shared/Spinner";
 import "./recommend.scss";
 
@@ -23,7 +24,7 @@ const RecommendPage = ({ history }) => {
   const [isDisabled, setIsDisabled] = useState(true);
   const likedMood = useSelector(state => state.items.likedMood);
   const filteredMood = useSelector(state => state.items.filteredMood);
-  const isLoading = useSelector(state => state.items.is_loading);
+  const isLoading = useSelector(state => state.items.isLoading);
   const dispatch = useDispatch();
 
   useEffect(() => {

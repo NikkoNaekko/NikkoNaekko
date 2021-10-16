@@ -19,7 +19,7 @@ const Item = ({ item, isVertical, isHorizen }) => {
     return (
       <div className='item' style={{ marginRight: "20px" }}>
         <Link to={`/detail/${item.productId}`}>
-          <img src={item.productImage[0]} />
+          <img src={item.productImage[0]} alt={item.productName} />
         </Link>
         <div style={{ width: "120px" }}>
           <p className='font'>[{item.brand}]</p>
@@ -39,7 +39,7 @@ const Item = ({ item, isVertical, isHorizen }) => {
     return (
       <div className='item'>
         <Link to={`/detail/${item.productId}`}>
-          <img src={item.productImage[0]} />
+          <img src={item.productImage[0]} alt={item.productName} />
         </Link>
         <div style={{ width: "120px" }}>
           <p className='font'>[{item.brand}]</p>

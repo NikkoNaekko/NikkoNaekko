@@ -20,32 +20,30 @@ const LikeButton = ({ item, title, itemID }) => {
     }
   }, [likedItemsID, itemID]);
 
-  const handleLike = async () => {
+  const handleLike = () => {
     if (!isLogin) {
       alert("로그인 후 이용하실 수 있습니다.");
       return;
     }
     if (title === "recommend") {
-      const mood = item.mood;
-
       if (!isChecked) {
         //유저가 좋아하면
-        dispatch(itemsAction.addMood(mood));
+        dispatch(itemsAction.addMood(item.categoryId));
         setIsChecked(true);
       } else {
         //유저가 싫어하면
-        dispatch(itemsAction.deleteMood(mood));
+        dispatch(itemsAction.deleteMood(item.categoryId));
         setIsChecked(false);
       }
     } else if (title === "recommendResult") {
       if (!isChecked) {
         setIsChecked(true);
-        await dispatch(userAction.tempLike(itemID));
-        await dispatch(userAction.syncStateAndDB(userID));
+        dispatch(itemsAction.tempLike(itemID));
+        // dispatch(userAction.syncStateAndDB(userID));
       } else {
         setIsChecked(false);
-        await dispatch(userAction.tempDislike(itemID));
-        await dispatch(userAction.syncStateAndDB(userID));
+        dispatch(itemsAction.tempDislike(itemID));
+        // dispatch(userAction.syncStateAndDB(userID));
       }
     } else {
       if (!isChecked) {
