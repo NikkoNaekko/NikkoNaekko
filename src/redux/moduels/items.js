@@ -15,14 +15,14 @@ const ADD_LIKED_DATA = "add_liked_data";
 const SUB_LIKED_DATA = "sub_liked_data";
 const ADD_MODE = "items/ADD_MODE";
 const DELETE_MODE = "items/DELETE_MODE";
+const RESET_MODE = "items/RESET_MODE";
 const ADD_FILTEREDMOOD = "items/ADD_FILTEREDMOOD";
 const RESET_LIKEDMOOD = "items/RESET_LIKEDMOOD";
 const RESET_FILTEREDMOOD = "items/RESET_FILTEREDMOOD";
 const INCREASE_LIKED = "INCREASE_LIKED";
 const DECREASE_LIKED = "DECREASE_LIKED";
 const LIKED_DATA_STRING = "items/LIKED_DATA_STRING";
-const TEMP_LIKE = "items/TEMP_LIKE";
-const TEMP_DISLIKE = "items/TEMP_DISLIKE";
+const RESET_LIKED_DATA_STRING = "items/RESET_LIKED_DATA_STRING";
 const ADD_MOODITEMS = "itmes/ADD_MOODITEMS";
 
 //action creators
@@ -40,6 +40,7 @@ const addLikedData = createAction(ADD_LIKED_DATA, data => ({ data }));
 const subLikedData = createAction(SUB_LIKED_DATA, itemId => ({ itemId }));
 const addMood = createAction(ADD_MODE, mood => ({ mood }));
 const deleteMood = createAction(DELETE_MODE, mood => ({ mood }));
+const resetMood = createAction(RESET_MODE, mood => ({ mood }));
 const addFilteredMood = createAction(ADD_FILTEREDMOOD, data => ({
   data
 }));
@@ -48,8 +49,9 @@ const resetFilteredMood = createAction(RESET_FILTEREDMOOD, () => ({}));
 const increase_liked = createAction(INCREASE_LIKED, itemId => ({ itemId }));
 const decrease_liked = createAction(DECREASE_LIKED, itemId => ({ itemId }));
 const likedDataString = createAction(LIKED_DATA_STRING, data => ({ data }));
-const tempLike = createAction(TEMP_LIKE, itemID => ({ itemID }));
-const tempDislike = createAction(TEMP_DISLIKE, itemID => ({ itemID }));
+const resetLikedDataString = createAction(RESET_LIKED_DATA_STRING, data => ({
+  data
+}));
 const addMoodItems = createAction(ADD_MOODITEMS, data => ({ data }));
 
 //init
@@ -65,7 +67,6 @@ const initialState = {
   isLikedDataLoading: false,
   paging: { next: 0, isEnd: false },
   selectedMoodItems: [],
-  tempLikedItems: [],
   likedDataString: ""
 };
 /**
@@ -179,6 +180,8 @@ const loadPopularClothesDataOnDB = () => {
 const loadPopularCategoryDataOnDB = () => {
   return function (dispatch, getState, { history }) {
     dispatch(loading(true));
+    dispatch(resetMood());
+    dispatch(resetLikedDataString());
     axios
       .get(
         "http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/category/popular"
@@ -313,6 +316,10 @@ export default handleActions(
         });
         draft.likedMood = moodList;
       }),
+    [RESET_MODE]: (state, action) =>
+      produce(state, draft => {
+        draft.likedMood = [];
+      }),
     [ADD_FILTEREDMOOD]: (state, action) =>
       produce(state, draft => {
         draft.filteredMood = [...action.payload.data];
@@ -375,15 +382,9 @@ export default handleActions(
       produce(state, draft => {
         draft.likedDataString = state.likedDataString + action.payload.data;
       }),
-    [TEMP_LIKE]: (state, action) =>
+    [RESET_LIKED_DATA_STRING]: (state, action) =>
       produce(state, draft => {
-        draft.tempLikedItems = [...state.tempLikedItems, action.payload.itemID];
-      }),
-    [TEMP_DISLIKE]: (state, action) =>
-      produce(state, draft => {
-        draft.tempLikedItems = state.tempLikedItems.filter(item => {
-          return item !== action.payload.itemID;
-        });
+        draft.likedDataString = "";
       }),
     [ADD_MOODITEMS]: (state, action) =>
       produce(state, draft => {
@@ -398,6 +399,7 @@ const actionCreators = {
   addMood,
   loadOneData,
   deleteMood,
+  resetMood,
   addFilteredMood,
   resetLikedMood,
   resetFilteredMood,
@@ -413,8 +415,8 @@ const actionCreators = {
   decrease_liked,
   loadItemsByCategoryOnDB,
   likedDataString,
-  tempLike,
-  tempDislike,
+  // tempLike,
+  // tempDislike,
   addMoodItems
 };
 

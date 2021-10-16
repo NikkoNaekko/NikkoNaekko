@@ -38,17 +38,15 @@ const LikeButton = ({ item, title, itemID }) => {
     } else if (title === "recommendResult") {
       if (!isChecked) {
         setIsChecked(true);
-        dispatch(itemsAction.tempLike(itemID));
-        // dispatch(userAction.syncStateAndDB(userID));
+        dispatch(userAction.like(itemID));
       } else {
         setIsChecked(false);
-        dispatch(itemsAction.tempDislike(itemID));
-        // dispatch(userAction.syncStateAndDB(userID));
+        dispatch(userAction.disLike(itemID));
       }
     } else {
       if (!isChecked) {
         setIsChecked(true);
-        dispatch(userAction.likeOnDB(itemID));
+        dispatch(userAction.iLikeOneProduct(itemID));
       } else {
         setIsChecked(false);
         dispatch(userAction.disLikeOnDB(itemID));

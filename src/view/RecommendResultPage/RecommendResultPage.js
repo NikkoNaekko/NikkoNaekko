@@ -28,20 +28,21 @@ const RecommendResultPage = ({ history }) => {
   const selectedMood = useSelector(state => state.items.selectedMood);
   const allItems = useSelector(state => state.items.items);
   const selectedMoodItems = useSelector(state => state.items.selectedMoodItems);
-  const isLoading = useSelector(state => state.items.isLoading);
-  const tempLikedItems = useSelector(state => state.items.tempLikedItems);
+  const itemIsLoading = useSelector(state => state.items.isLoading);
+  const userIsLoading = useSelector(state => state.user.isLoading);
+  const likedItemsID = useSelector(state => state.user.likedItemsID);
 
   useEffect(() => {
     dispatch(itemsAction.loadItemsByCategoryOnDB());
   }, []);
 
   useEffect(() => {
-    if (tempLikedItems.length > 0) {
+    if (likedItemsID.length > 0) {
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
     }
-  }, [tempLikedItems]);
+  }, [likedItemsID]);
 
   return (
     <div className='recommendResult'>
@@ -49,7 +50,7 @@ const RecommendResultPage = ({ history }) => {
         <div className='wrapper'>
           <Title title={"recommendResult"} />
           <div className='recommendContent'>
-            {isLoading ? (
+            {itemIsLoading && likedItemsID.length === 0 ? (
               <Spinner full={false} />
             ) : (
               selectedMoodItems.map(items => (
