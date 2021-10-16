@@ -187,7 +187,7 @@ const iLikeSeveralProduct = itemAry => {
         if (res.data.success) {
           history.push("/main");
         }
-        // dispatch(checkFirstOnDB());
+        dispatch(checkFirstOnDB());
       })
       .catch(error => {
         console.log("좋아요가 DB에 반영되지 않았습니다.", error);
