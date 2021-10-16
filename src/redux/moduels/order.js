@@ -3,48 +3,63 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 
 // actions
-const LOAD_ALL_DATA = "order/LOAD_ALL_DATA";
-const ADD_FILTER_DATA = " order/FILTER_DATA";
-
+const LOADING = "LOADING";
+const LOAD_ORDERID = "LOAD_ORDERID";
+const REMOVE_ORDER = "REMOVE_ORDER";
 // action creators
-const loadAllData = createAction(LOAD_ALL_DATA, data => ({ data }));
-const addFilterData = createAction(ADD_FILTER_DATA, data => ({ data }));
+
+const loading = createAction(LOADING, isLoading => ({ isLoading }));
+const loadOrderId = createAction(LOAD_ORDERID, orders => ({ orders }));
+const removeOrder = createAction(REMOVE_ORDER);
 
 // initialState
 const initialState = {
-  orders: [],
-  // id: "",
-  // userUid: "",
-  // itemId: [],
-  // orderDt: "",
-  filteredData: []
+  orders: null,
+  isLoading: false
 };
 
 //middleware
-const loadAllOrdersDataOnDB = () => {
+const loadOrderOnDB = () => {
   return function (dispatch, getState, { history }) {
+    dispatch(loading(true));
     axios
-      .get(`http://localhost:3000/order?user_id=${getState().user.id}`)
+      .get(
+        `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/order/all/${
+          getState().user.uid
+        }`
+      )
       .then(res => {
-        console.log(res.data);
-        dispatch(loadAllData(res.data));
-      })
-      .catch(error => {
-        console.log("데이터를 받아오지 못했습니다!", error);
-      });
-  };
-};
+        console.log(res);
+        if (res.data.success && res.data.data.length > 0) {
+          let url =
+            "http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/order/orderId?";
+          res.data.data.map(orderInfomation => {
+            url += "id=" + orderInfomation.orderId + "&";
+          });
 
-const addOneClothesDataOnState = itemID => {
-  return function (dispatch, getState, { history }) {
-    axios
-      .get(`http://localhost:3000/posts/${itemID}`)
-      .then(res => {
-        console.log(res.data);
-        dispatch(addFilterData(res.data));
+          axios
+            .get(url)
+            .then(res => {
+              console.log(res);
+              if (res.data.success) {
+                dispatch(loadOrderId(res.data.data));
+              }
+            })
+            .catch(error => {
+              console.log(
+                "loadOrderIdOnDB에서 주문상품정보 조회 수신이 제대로 연결되지 않았습니다."
+              );
+            })
+            .finally(() => dispatch(loading(false)));
+        } else {
+          dispatch(loading(false));
+        }
       })
       .catch(error => {
-        console.log("데이터를 받아오지 못했습니다!", error);
+        console.log(
+          "loadOrderIdOnDB에서 주문내역 조회 수신이 제대로 연결되지 않았습니다."
+        );
+        dispatch(loading(false));
       });
   };
 };
@@ -52,13 +67,17 @@ const addOneClothesDataOnState = itemID => {
 // reducer
 export default handleActions(
   {
-    [LOAD_ALL_DATA]: (state, action) =>
+    [LOADING]: (state, action) =>
       produce(state, draft => {
-        draft.orders = action.payload.data;
+        draft.isLoading = action.payload.isLoading;
       }),
-    [ADD_FILTER_DATA]: (state, action) =>
+    [LOAD_ORDERID]: (state, action) =>
       produce(state, draft => {
-        draft.filteredData = [...state.filteredData, action.payload.data];
+        draft.orders = [...action.payload.orders];
+      }),
+    [REMOVE_ORDER]: (state, action) =>
+      produce(state, draft => {
+        draft.orders = null;
       })
   },
   initialState
@@ -66,10 +85,8 @@ export default handleActions(
 
 // action creator export
 const actionCreators = {
-  loadAllData,
-  loadAllOrdersDataOnDB,
-  addFilterData,
-  addOneClothesDataOnState
+  loadOrderOnDB,
+  removeOrder
 };
 
 export { actionCreators };

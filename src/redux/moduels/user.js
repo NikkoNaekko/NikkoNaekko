@@ -3,6 +3,7 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import { actionCreators as cartAction } from "./cart";
 import { actionCreators as itemsAction } from "./items";
+import { actionCreators as orderAction } from "./order";
 // actions
 const SAVE_USER_DATA = "SAVE_USER_DATA";
 const REMOVE_USER_DATA = "REMOVE_USER_DATA";
@@ -52,7 +53,7 @@ const signIn = (id, pwd) => {
       }
     })
       .then(res => {
-        console.log(res);
+        // console.log(res);
         if (res.data.success) {
           const { uid, userId, name, isFirst, likeItems, token } =
             res.data.data;
@@ -60,7 +61,11 @@ const signIn = (id, pwd) => {
           dispatch(cartAction.loadCartInfomationDB());
           sessionStorage.setItem("my_token", token);
           alert(name + "님 안녕하세요!");
-          history.push("/recommend");
+          if (getState().user.isFirst) {
+            history.push("/recommend");
+          } else {
+            history.push("/main");
+          }
         } else {
           alert("가입되지 않은 ID거나 비밀번호가 일치하지 않습니다.");
         }
@@ -77,6 +82,7 @@ const signOut = () => {
   return function (dispatch, getState, { history }) {
     dispatch(removeUserData());
     dispatch(cartAction.removeCart());
+    dispatch(orderAction.removeOrder());
     sessionStorage.removeItem("my_token");
     alert("로그아웃되었습니다.");
     history.push("/");
@@ -93,7 +99,7 @@ const syncStateAndDB = userID => {
     axios
       .put(`http://localhost:3000/users/${userID}`, data)
       .then(res => {
-        console.log(res.data);
+        // console.log(res.data);
       })
       .catch(error => {
         console.log("취향 추가 실패", error);
@@ -114,7 +120,7 @@ const signUpDB = (id, pwd, name) => {
       }
     })
       .then(res => {
-        console.log(res);
+        // console.log(res);
         if (res.data.success === true) {
           console.log("회원 정보가 추가되었습니다.");
           history.push("/");
@@ -157,8 +163,29 @@ const likeOnDB = itemID => {
         }/like/${itemID}`
       )
       .then(res => {
-        console.log(res);
+        // console.log(res);
       })
+      .catch(error => {
+        console.log("좋아요가 DB에 반영되지 않았습니다.", error);
+      });
+  };
+};
+
+const likesOnDB = itemAry => {
+  return function (dispatch, getState, { history }) {
+    axios
+      .post(
+        `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/user/${
+          getState().user.uid
+        }/like`,
+        itemAry
+      )
+      .then(res => {
+        for (let i = 0; i < itemAry.length; i++) {
+          dispatch(like(itemAry[i]));
+        }
+      })
+      .then(dispatch(checkFirstOnDB()))
       .catch(error => {
         console.log("좋아요가 DB에 반영되지 않았습니다.", error);
       });
@@ -177,10 +204,32 @@ const disLikeOnDB = itemID => {
         }/likeCancel/${itemID}`
       )
       .then(res => {
-        console.log(res);
+        // console.log(res);
       })
       .catch(error => {
         console.log("좋아요가 DB에 반영되지 않았습니다.", error);
+      });
+  };
+};
+
+const checkFirstOnDB = () => {
+  return function (dispatch, getState, { history }) {
+    axios
+      .post(
+        `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/user/firstVisit/${
+          getState().user.uid
+        }`
+      )
+      .then(res => {
+        console.log(res.data.data);
+        if (res.data.success) {
+          const { uid, userId, name, isFirst, likeItems } = res.data.data;
+          dispatch(saveUserData(uid, userId, name, isFirst, likeItems));
+        }
+        history.push("/main");
+      })
+      .catch(error => {
+        console.log("첫방문 여부 파악에 문제가 발생했습니다.", error);
       });
   };
 };
@@ -236,7 +285,9 @@ const actionCreators = {
   likeOnDB,
   disLikeOnDB,
   signUpDB,
-  syncStateAndDB
+  syncStateAndDB,
+  likesOnDB,
+  checkFirstOnDB
 };
 
 export { actionCreators };

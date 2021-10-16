@@ -4,23 +4,36 @@ import { useSelector, useDispatch } from "react-redux";
 import PriceList from "../PriceList";
 import "./button.scss";
 import { actionCreators as userAcions } from "../../redux/moduels/user";
+import { actionCreators as cartAcions } from "../../redux/moduels/cart";
+import { LoadingOutlined } from "@ant-design/icons";
 
 const Button = ({ name, isDisabled, title, history }) => {
   const dispatch = useDispatch();
   const cartItem = useSelector(state => state.cart.cartItem);
   const likedMood = useSelector(state => state.items.likedMood);
-  const tempLikedItems = useSelector(state => state.user.tempLikedItems);
+  // const tempLikedItems = useSelector(state => state.user.tempLikedItems);
+  const isLoading = useSelector(state => state.cart.isLoading);
+  const tempLikedItems = useSelector(state => state.items.tempLikedItems);
 
   const totalPrice = cartItem.reduce((acc, cur) => {
     return acc + parseInt(cur.productPrice);
   }, 0);
 
-  const uploadLikedItems = () => {
-    dispatch(userAcions.uploadTemp(tempLikedItems));
-
-    if (tempLikedItems.length > 0) {
-      history.push("/main");
+  const requestOrder = () => {
+    if (
+      window.confirm(
+        cartItem.length + "개의 상품을 " + totalPrice + "원에 구매하시겠습니까?"
+      )
+    ) {
+      dispatch(cartAcions.addOrderDataOnDB());
     }
+  };
+
+  const uploadLikedItems = () => {
+    dispatch(userAcions.likesOnDB(tempLikedItems));
+    // if (tempLikedItems.length > 0) {
+    // history.push("/main");
+    // }
   };
 
   if (title === "recommend") {
@@ -45,9 +58,30 @@ const Button = ({ name, isDisabled, title, history }) => {
     );
   } else if (title === "cart") {
     return (
-      <button className='btn' onClick={() => history.push("/order")}>
-        총 {cartItem.length}개 | <PriceList price={totalPrice} /> 구매하기
-      </button>
+      <>
+        {!isLoading && cartItem.length > 0 && (
+          <button className='btn' onClick={requestOrder}>
+            총 {cartItem.length}개 | <PriceList price={totalPrice} /> 구매하기
+          </button>
+        )}
+        {(cartItem.length === 0 || !cartItem) && (
+          <button className='btn btn_gray'>
+            총 {cartItem.length}개 | <PriceList price={totalPrice} /> 구매하기
+          </button>
+        )}
+        {isLoading && cartItem.length > 0 && (
+          <button className='btn btn_gray'>
+            구매 중
+            <LoadingOutlined
+              style={{
+                position: "relative",
+                left: "30px",
+                fontSize: "20px"
+              }}
+            />
+          </button>
+        )}
+      </>
     );
   } else {
     return (

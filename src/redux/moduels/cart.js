@@ -60,10 +60,9 @@ const loadCartInfomationDB = () => {
         }`
       )
       .then(res => {
-        console.log(res);
+        // console.log(res);
         if (res.data.success) {
           const { cartId, userId, productId } = res.data.data;
-          console.log(cartId, userId, productId);
           dispatch(loadCart(cartId, userId, productId));
         }
       })
@@ -86,7 +85,7 @@ const loadClothesInCartDB = () => {
         }/product`
       )
       .then(res => {
-        console.log(res);
+        // console.log(res);
         if (res.data.success) {
           dispatch(loadCartItem(res.data.data));
           dispatch(loading(false));
@@ -115,7 +114,7 @@ const putInInCartDB = itemID => {
         if (!res.data.success) {
           console.log("CartTable에 반영되지 못했습니다.");
         }
-        console.log(res);
+        // console.log(res);
       })
       .catch(error => {
         console.log(
@@ -140,7 +139,7 @@ const tackingOutToCartDB = itemID => {
         if (!res.data.success) {
           console.log("CartTable에 반영되지 못했습니다.");
         }
-        console.log(res);
+        // console.log(res);
       })
       .catch(error => {
         console.log(
@@ -165,7 +164,7 @@ const deleteCartItemDB = itemID => {
         if (!res.data.success) {
           console.log("CartTable에 반영되지 못했습니다.");
         }
-        console.log(res);
+        // console.log(res);
       })
       .catch(error => {
         console.log(
@@ -190,7 +189,7 @@ const deleteCheckedItemDB = () => {
         if (!res.data.success) {
           console.log("CartTable에 반영되지 못했습니다.");
         }
-        console.log(res);
+        // console.log(res);
       })
       .catch(error => {
         console.log(
@@ -215,13 +214,56 @@ const resetCartItemDB = () => {
         if (!res.data.success) {
           console.log("CartTable에 반영되지 못했습니다.");
         }
-        console.log(res);
+        // console.log(res);
       })
       .catch(error => {
         console.log(
           "resetCartItemDB에서 서버와의 수신이 제대로 연결되지 않았습니다.",
           error
         );
+      });
+  };
+};
+const addOrderDataOnDB = () => {
+  return function (dispatch, getState, { history }) {
+    dispatch(loading(true));
+    const myToken = sessionStorage.getItem("my_token");
+    axios
+      .get(
+        `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/user/tokenValidation/${myToken}`
+      )
+      .then(res => {
+        // console.log(res);
+        if (res.data.success) {
+          axios
+            .post(
+              `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/cart/makeOrder/${
+                getState().user.uid
+              }`
+            )
+            .then(res => {
+              // console.log(res);
+              dispatch(resetCartItem());
+              dispatch(loading(false));
+              alert("주문이 성공적으로 완료되었습니다.");
+              history.push("/order");
+            })
+            .catch(error => {
+              console.log(
+                "addOrderDataOnDB에서 카트에서 주문내역으로 이동되는데 문제가 있습니다.",
+                error
+              );
+            });
+        } else {
+          alert("로그인 유효시간이 지났습니다. 다시 로그인해주세요.");
+        }
+      })
+      .catch(error => {
+        console.log(
+          "addOrderDataOnDB에서 토큰값을 체크하는데 문제가 있습니다.",
+          error
+        );
+        dispatch(loading(false));
       });
   };
 };
@@ -345,7 +387,8 @@ const actionCreators = {
   tackingOutToCartDB,
   deleteCartItemDB,
   deleteCheckedItemDB,
-  resetCartItemDB
+  resetCartItemDB,
+  addOrderDataOnDB
 };
 
 export { actionCreators };
