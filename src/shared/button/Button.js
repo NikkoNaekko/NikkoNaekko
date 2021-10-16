@@ -11,8 +11,10 @@ const Button = ({ name, isDisabled, title, history }) => {
   const dispatch = useDispatch();
   const cartItem = useSelector(state => state.cart.cartItem);
   const likedMood = useSelector(state => state.items.likedMood);
-  const tempLikedItems = useSelector(state => state.user.tempLikedItems);
+  // const tempLikedItems = useSelector(state => state.user.tempLikedItems);
   const isLoading = useSelector(state => state.cart.isLoading);
+  const tempLikedItems = useSelector(state => state.items.tempLikedItems);
+
   const totalPrice = cartItem.reduce((acc, cur) => {
     return acc + parseInt(cur.productPrice);
   }, 0);
@@ -28,11 +30,10 @@ const Button = ({ name, isDisabled, title, history }) => {
   };
 
   const uploadLikedItems = () => {
-    dispatch(userAcions.uploadTemp(tempLikedItems));
-
-    if (tempLikedItems.length > 0) {
-      history.push("/main");
-    }
+    dispatch(userAcions.likesOnDB(tempLikedItems));
+    // if (tempLikedItems.length > 0) {
+    // history.push("/main");
+    // }
   };
 
   if (title === "recommend") {

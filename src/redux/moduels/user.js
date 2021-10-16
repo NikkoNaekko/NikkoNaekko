@@ -61,7 +61,11 @@ const signIn = (id, pwd) => {
           dispatch(cartAction.loadCartInfomationDB());
           sessionStorage.setItem("my_token", token);
           alert(name + "님 안녕하세요!");
-          history.push("/main");
+          if (getState().user.isFirst) {
+            history.push("/recommend");
+          } else {
+            history.push("/main");
+          }
         } else {
           alert("가입되지 않은 ID거나 비밀번호가 일치하지 않습니다.");
         }
@@ -167,6 +171,27 @@ const likeOnDB = itemID => {
   };
 };
 
+const likesOnDB = itemAry => {
+  return function (dispatch, getState, { history }) {
+    axios
+      .post(
+        `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/user/${
+          getState().user.uid
+        }/like`,
+        itemAry
+      )
+      .then(res => {
+        for (let i = 0; i < itemAry.length; i++) {
+          dispatch(like(itemAry[i]));
+        }
+      })
+      .then(dispatch(checkFirstOnDB()))
+      .catch(error => {
+        console.log("좋아요가 DB에 반영되지 않았습니다.", error);
+      });
+  };
+};
+
 const disLikeOnDB = itemID => {
   return function (dispatch, getState, { history }) {
     dispatch(disLike(itemID));
@@ -183,6 +208,28 @@ const disLikeOnDB = itemID => {
       })
       .catch(error => {
         console.log("좋아요가 DB에 반영되지 않았습니다.", error);
+      });
+  };
+};
+
+const checkFirstOnDB = () => {
+  return function (dispatch, getState, { history }) {
+    axios
+      .post(
+        `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/user/firstVisit/${
+          getState().user.uid
+        }`
+      )
+      .then(res => {
+        console.log(res.data.data);
+        if (res.data.success) {
+          const { uid, userId, name, isFirst, likeItems } = res.data.data;
+          dispatch(saveUserData(uid, userId, name, isFirst, likeItems));
+        }
+        history.push("/main");
+      })
+      .catch(error => {
+        console.log("첫방문 여부 파악에 문제가 발생했습니다.", error);
       });
   };
 };
@@ -238,7 +285,9 @@ const actionCreators = {
   likeOnDB,
   disLikeOnDB,
   signUpDB,
-  syncStateAndDB
+  syncStateAndDB,
+  likesOnDB,
+  checkFirstOnDB
 };
 
 export { actionCreators };

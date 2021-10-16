@@ -2,21 +2,11 @@ import React, { useState, useEffect } from "react";
 import Title from "./component/Title";
 import VerticalList from "./component/VerticalList";
 import Button from "../../shared/button/Button";
-import { clothesInformation } from "../../data/data";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as itemsAction } from "../../redux/moduels/items";
 import { actionCreators as userAction } from "../../redux/moduels/user";
-
+import Spinner from "../../shared/Spinner";
 import "./recommend.scss";
-
-const moodCollection = [
-  "꾸안꾸",
-  "미니멀",
-  "스트릿",
-  "아메카지",
-  "오피스룩",
-  "캐주얼"
-];
 
 const RecommendPage = ({ history }) => {
   const isLogin = useSelector(state => state.user.isLogin);
@@ -31,16 +21,11 @@ const RecommendPage = ({ history }) => {
     history.replace("/main");
   }
 
-  const { clothes } = clothesInformation;
   const [isDisabled, setIsDisabled] = useState(true);
-  const [selectedItem, setSelectedItem] = useState([]);
   const likedMood = useSelector(state => state.items.likedMood);
+  const filteredMood = useSelector(state => state.items.filteredMood);
+  const isLoading = useSelector(state => state.items.isLoading);
   const dispatch = useDispatch();
-
-  //임시 로그인
-  useEffect(() => {
-    dispatch(userAction.logIn("admin@admin.com"));
-  }, []);
 
   useEffect(() => {
     if (likedMood.length > 0) {
@@ -52,13 +37,7 @@ const RecommendPage = ({ history }) => {
   }, [likedMood]);
 
   useEffect(() => {
-    dispatch(itemsAction.resetLikedMood());
-    dispatch(itemsAction.resetSelectiedMood());
-    for (let i = 0; i < moodCollection.length; i++) {
-      const clothesAry = clothes.filter(c => c.mood === moodCollection[i]);
-      const index = Math.floor(Math.random() * clothesAry.length);
-      setSelectedItem(prevState => [...prevState, clothesAry[index]]);
-    }
+    dispatch(itemsAction.loadPopularCategoryDataOnDB());
   }, []);
 
   return (
@@ -68,7 +47,11 @@ const RecommendPage = ({ history }) => {
           <Title title={"recommend"} />
           <div className='recommendContent'>
             <div className='contentBox'>
-              <VerticalList selectedItem={selectedItem} />
+              {isLoading ? (
+                <Spinner full={false} />
+              ) : (
+                <VerticalList filteredItems={filteredMood} />
+              )}
             </div>
           </div>
         </div>

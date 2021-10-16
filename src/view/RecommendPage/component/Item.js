@@ -4,7 +4,7 @@ import LikeButton from "../../../shared/LikeButton";
 const Items = ({ item }) => {
   return (
     <div className='item'>
-      <img src={item.imgSrc[0]} alt={item.name} />
+      <img src={item.productImage[0]} alt={item.productName} />
       <LikeButton item={item} title={"recommend"} />
     </div>
   );

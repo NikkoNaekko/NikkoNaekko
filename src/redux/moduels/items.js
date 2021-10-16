@@ -15,13 +15,17 @@ const ADD_LIKED_DATA = "add_liked_data";
 const SUB_LIKED_DATA = "sub_liked_data";
 const ADD_MODE = "items/ADD_MODE";
 const DELETE_MODE = "items/DELETE_MODE";
-const ADD_SELECTEMOOD = "items/ADD_SELECTEMOOD";
+const ADD_FILTEREDMOOD = "items/ADD_FILTEREDMOOD";
 const RESET_LIKEDMOOD = "items/RESET_LIKEDMOOD";
-const RESET_SELECTEDMOOD = "items/RESET_SELECTEDMOOD";
+const RESET_FILTEREDMOOD = "items/RESET_FILTEREDMOOD";
 const INCREASE_LIKED = "INCREASE_LIKED";
 const DECREASE_LIKED = "DECREASE_LIKED";
-//action creators
+const LIKED_DATA_STRING = "items/LIKED_DATA_STRING";
+const TEMP_LIKE = "items/TEMP_LIKE";
+const TEMP_DISLIKE = "items/TEMP_DISLIKE";
+const ADD_MOODITEMS = "itmes/ADD_MOODITEMS";
 
+//action creators
 const loading = createAction(LOADING, isLoading => ({ isLoading }));
 const likedDataLoading = createAction(LIKED_DATA_LOADING, isLoading => ({
   isLoading
@@ -36,11 +40,17 @@ const addLikedData = createAction(ADD_LIKED_DATA, data => ({ data }));
 const subLikedData = createAction(SUB_LIKED_DATA, itemId => ({ itemId }));
 const addMood = createAction(ADD_MODE, mood => ({ mood }));
 const deleteMood = createAction(DELETE_MODE, mood => ({ mood }));
-const addSelectedMood = createAction(ADD_SELECTEMOOD, mood => ({ mood }));
+const addFilteredMood = createAction(ADD_FILTEREDMOOD, data => ({
+  data
+}));
 const resetLikedMood = createAction(RESET_LIKEDMOOD, () => ({}));
-const resetSelectiedMood = createAction(RESET_SELECTEDMOOD, () => ({}));
+const resetFilteredMood = createAction(RESET_FILTEREDMOOD, () => ({}));
 const increase_liked = createAction(INCREASE_LIKED, itemId => ({ itemId }));
 const decrease_liked = createAction(DECREASE_LIKED, itemId => ({ itemId }));
+const likedDataString = createAction(LIKED_DATA_STRING, data => ({ data }));
+const tempLike = createAction(TEMP_LIKE, itemID => ({ itemID }));
+const tempDislike = createAction(TEMP_DISLIKE, itemID => ({ itemID }));
+const addMoodItems = createAction(ADD_MOODITEMS, data => ({ data }));
 
 //init
 const initialState = {
@@ -50,10 +60,13 @@ const initialState = {
   popluarItems: [],
   likedItems: [],
   likedMood: [],
-  selectedMood: [],
+  filteredMood: [], // selectedMood
   isLoading: false,
   isLikedDataLoading: false,
-  paging: { next: 0, isEnd: false }
+  paging: { next: 0, isEnd: false },
+  selectedMoodItems: [],
+  tempLikedItems: [],
+  likedDataString: ""
 };
 /**
  * items : [ item, item, item ...]
@@ -131,7 +144,7 @@ const loadSearchedClothesDataOnDB = itemName => {
         `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/product/search?q=${itemName}`
       )
       .then(res => {
-        // console.log(res);
+        console.log(res);
         if (res.data.success) {
           dispatch(loadSearchData(res.data.data));
         }
@@ -163,6 +176,29 @@ const loadPopularClothesDataOnDB = () => {
   };
 };
 
+const loadPopularCategoryDataOnDB = () => {
+  return function (dispatch, getState, { history }) {
+    dispatch(loading(true));
+    axios
+      .get(
+        "http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/category/popular"
+      )
+      .then(res => {
+        // console.log(res);
+        if (res.data.success) {
+          dispatch(addFilteredMood(res.data.data));
+          // dispatch(loadLikedData(res.data.data));
+        }
+      })
+      .catch(error => {
+        console.log("데이터를 받아오지 못했습니다!", error);
+      })
+      .finally(_ => {
+        dispatch(loading(false));
+      });
+  };
+};
+
 const loadLikedClothesDataOnDB = () => {
   return function (dispatch, getState, { history }) {
     dispatch(likedDataLoading(true));
@@ -173,7 +209,7 @@ const loadLikedClothesDataOnDB = () => {
         }/like`
       )
       .then(res => {
-        // console.log(res);
+        console.log(res);
         if (res.data.success) {
           dispatch(loadLikedData(res.data.data));
         }
@@ -189,6 +225,32 @@ const loadLikedClothesDataOnDB = () => {
       });
   };
 };
+
+const loadItemsByCategoryOnDB = () => {
+  return function (dispatch, getState, { history }) {
+    dispatch(loading(true));
+    for (let i = 0; i < getState().items.likedMood.length; i++) {
+      dispatch(likedDataString(`&id=${getState().items.likedMood[i]}`));
+    }
+
+    axios
+      .get(
+        `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/category/categoryId?${
+          getState().items.likedDataString
+        }`
+      )
+      .then(res => {
+        dispatch(addMoodItems(res.data.data));
+      })
+      .catch(error => {
+        console.log("데이터를 받아오지 못했습니다!", error);
+      })
+      .finally(_ => {
+        dispatch(loading(false));
+      });
+  };
+};
+
 // reducer
 export default handleActions(
   {
@@ -230,6 +292,7 @@ export default handleActions(
     [ADD_LIKED_DATA]: (state, action) =>
       produce(state, draft => {
         draft.likedItems = [...draft.likedItems, action.payload.data];
+        // draft.likedItems = [...action.payload.data];
       }),
     [SUB_LIKED_DATA]: (state, action) =>
       produce(state, draft => {
@@ -237,6 +300,7 @@ export default handleActions(
           return item.productId !== action.payload.itemId;
         });
       }),
+
     [ADD_MODE]: (state, action) =>
       produce(state, draft => {
         const newLikedMood = [...state.likedMood, action.payload.mood];
@@ -249,18 +313,13 @@ export default handleActions(
         });
         draft.likedMood = moodList;
       }),
-    [ADD_SELECTEMOOD]: (state, action) =>
+    [ADD_FILTEREDMOOD]: (state, action) =>
       produce(state, draft => {
-        const newSelectedMood = [...state.selectedMood, action.payload.mood];
-        draft.selectedMood = newSelectedMood;
+        draft.filteredMood = [...action.payload.data];
       }),
-    [RESET_LIKEDMOOD]: (state, action) =>
+    [RESET_FILTEREDMOOD]: (state, action) =>
       produce(state, draft => {
-        draft.likedMood = [];
-      }),
-    [RESET_SELECTEDMOOD]: (state, action) =>
-      produce(state, draft => {
-        draft.selectedMood = [];
+        draft.filteredMood = [];
       }),
     [INCREASE_LIKED]: (state, action) =>
       produce(state, draft => {
@@ -311,6 +370,24 @@ export default handleActions(
         if (itemIndex !== -1) {
           draft.popluarItems[itemIndex].productLike--;
         }
+      }),
+    [LIKED_DATA_STRING]: (state, action) =>
+      produce(state, draft => {
+        draft.likedDataString = state.likedDataString + action.payload.data;
+      }),
+    [TEMP_LIKE]: (state, action) =>
+      produce(state, draft => {
+        draft.tempLikedItems = [...state.tempLikedItems, action.payload.itemID];
+      }),
+    [TEMP_DISLIKE]: (state, action) =>
+      produce(state, draft => {
+        draft.tempLikedItems = state.tempLikedItems.filter(item => {
+          return item !== action.payload.itemID;
+        });
+      }),
+    [ADD_MOODITEMS]: (state, action) =>
+      produce(state, draft => {
+        draft.selectedMoodItems = [...action.payload.data];
       })
   },
   initialState
@@ -321,18 +398,24 @@ const actionCreators = {
   addMood,
   loadOneData,
   deleteMood,
-  addSelectedMood,
+  addFilteredMood,
   resetLikedMood,
-  resetSelectiedMood,
+  resetFilteredMood,
   loadClothesDataOnDB,
   loadOneClothesDataOnDB,
   loadSearchedClothesDataOnDB,
   loadPopularClothesDataOnDB,
+  loadPopularCategoryDataOnDB,
   loadLikedClothesDataOnDB,
   addLikedData,
   subLikedData,
   increase_liked,
-  decrease_liked
+  decrease_liked,
+  loadItemsByCategoryOnDB,
+  likedDataString,
+  tempLike,
+  tempDislike,
+  addMoodItems
 };
 
 export { actionCreators };
