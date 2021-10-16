@@ -45,7 +45,7 @@ const initialState = {
   userUid: null,
   itemId: [],
   cartItem: [],
-  checkItemList: [], //[checkbox=true]인 item id을 담는 배열
+  checkItemList: [],
   isCheckedAll: false,
   isLoading: false
 };
@@ -60,14 +60,13 @@ const loadCartInfomationDB = () => {
         }`
       )
       .then(res => {
-        // console.log(res);
         if (res.data.success) {
           const { cartId, userId, productId } = res.data.data;
           dispatch(loadCart(cartId, userId, productId));
         }
       })
       .catch(error => {
-        console.log(
+        alert(
           "loadCartInfomationDB에서 서버와의 수신이 제대로 연결되지 않았습니다.",
           error
         );
@@ -85,14 +84,13 @@ const loadClothesInCartDB = () => {
         }/product`
       )
       .then(res => {
-        // console.log(res);
         if (res.data.success) {
           dispatch(loadCartItem(res.data.data));
           dispatch(loading(false));
         }
       })
       .catch(error => {
-        console.log(
+        alert(
           "loadClothesInCartDB에서 서버와의 수신이 제대로 연결되지 않았습니다.",
           error
         );
@@ -112,12 +110,11 @@ const putInInCartDB = itemID => {
       )
       .then(res => {
         if (!res.data.success) {
-          console.log("CartTable에 반영되지 못했습니다.");
+          alert("CartTable에 반영되지 못했습니다.");
         }
-        // console.log(res);
       })
       .catch(error => {
-        console.log(
+        alert(
           "putInInCartDB에서 서버와의 수신이 제대로 연결되지 않았습니다.",
           error
         );
@@ -137,12 +134,11 @@ const tackingOutToCartDB = itemID => {
       )
       .then(res => {
         if (!res.data.success) {
-          console.log("CartTable에 반영되지 못했습니다.");
+          alert("CartTable에 반영되지 못했습니다.");
         }
-        // console.log(res);
       })
       .catch(error => {
-        console.log(
+        alert(
           "tackingOutToCartDB에서 서버와의 수신이 제대로 연결되지 않았습니다.",
           error
         );
@@ -162,12 +158,11 @@ const deleteCartItemDB = itemID => {
       )
       .then(res => {
         if (!res.data.success) {
-          console.log("CartTable에 반영되지 못했습니다.");
+          alert("CartTable에 반영되지 못했습니다.");
         }
-        // console.log(res);
       })
       .catch(error => {
-        console.log(
+        alert(
           "deleteCartItemDB에서 서버와의 수신이 제대로 연결되지 않았습니다.",
           error
         );
@@ -187,12 +182,11 @@ const deleteCheckedItemDB = () => {
       )
       .then(res => {
         if (!res.data.success) {
-          console.log("CartTable에 반영되지 못했습니다.");
+          alert("CartTable에 반영되지 못했습니다.");
         }
-        // console.log(res);
       })
       .catch(error => {
-        console.log(
+        alert(
           "deleteCheckedItemDB에서 서버와의 수신이 제대로 연결되지 않았습니다.",
           error
         );
@@ -212,12 +206,11 @@ const resetCartItemDB = () => {
       )
       .then(res => {
         if (!res.data.success) {
-          console.log("CartTable에 반영되지 못했습니다.");
+          alert("CartTable에 반영되지 못했습니다.");
         }
-        // console.log(res);
       })
       .catch(error => {
-        console.log(
+        alert(
           "resetCartItemDB에서 서버와의 수신이 제대로 연결되지 않았습니다.",
           error
         );
@@ -227,13 +220,13 @@ const resetCartItemDB = () => {
 const addOrderDataOnDB = () => {
   return function (dispatch, getState, { history }) {
     dispatch(loading(true));
-    const myToken = sessionStorage.getItem("my_token");
     axios
       .get(
-        `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/user/tokenValidation/${myToken}`
+        `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/user/tokenValidation/${sessionStorage.getItem(
+          "my_token"
+        )}`
       )
       .then(res => {
-        // console.log(res);
         if (res.data.success) {
           axios
             .post(
@@ -242,14 +235,13 @@ const addOrderDataOnDB = () => {
               }`
             )
             .then(res => {
-              // console.log(res);
               dispatch(resetCartItem());
               dispatch(loading(false));
               alert("주문이 성공적으로 완료되었습니다.");
               history.push("/order");
             })
             .catch(error => {
-              console.log(
+              alert(
                 "addOrderDataOnDB에서 카트에서 주문내역으로 이동되는데 문제가 있습니다.",
                 error
               );
@@ -259,7 +251,7 @@ const addOrderDataOnDB = () => {
         }
       })
       .catch(error => {
-        console.log(
+        alert(
           "addOrderDataOnDB에서 토큰값을 체크하는데 문제가 있습니다.",
           error
         );

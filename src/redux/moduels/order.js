@@ -29,7 +29,6 @@ const loadOrderOnDB = () => {
         }`
       )
       .then(res => {
-        console.log(res);
         if (res.data.success && res.data.data.length > 0) {
           let url =
             "http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/order/orderId?";
@@ -40,14 +39,14 @@ const loadOrderOnDB = () => {
           axios
             .get(url)
             .then(res => {
-              console.log(res);
               if (res.data.success) {
                 dispatch(loadOrderId(res.data.data));
               }
             })
             .catch(error => {
-              console.log(
-                "loadOrderIdOnDB에서 주문상품정보 조회 수신이 제대로 연결되지 않았습니다."
+              alert(
+                "loadOrderIdOnDB에서 주문상품정보 조회 수신이 제대로 연결되지 않았습니다.",
+                error
               );
             })
             .finally(() => dispatch(loading(false)));
@@ -56,8 +55,9 @@ const loadOrderOnDB = () => {
         }
       })
       .catch(error => {
-        console.log(
-          "loadOrderIdOnDB에서 주문내역 조회 수신이 제대로 연결되지 않았습니다."
+        alert(
+          "loadOrderIdOnDB에서 주문내역 조회 수신이 제대로 연결되지 않았습니다.",
+          error
         );
         dispatch(loading(false));
       });

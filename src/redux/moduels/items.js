@@ -62,29 +62,13 @@ const initialState = {
   popluarItems: [],
   likedItems: [],
   likedMood: [],
-  filteredMood: [], // selectedMood
+  filteredMood: [],
   isLoading: false,
   isLikedDataLoading: false,
   paging: { next: 0, isEnd: false },
   selectedMoodItems: [],
   likedDataString: ""
 };
-/**
- * items : [ item, item, item ...]
- *
- * item = {
- *  id: '',
- *  name: '',
- *  price: 0,
- *  brand: '',
- *  liked: 0,
- *  purchased: 0,
- *  explain: '',
- *  registrationDt: new Date(),
- *  imgSrc: ['https://~','https://~','https://~'],
- *  mood: '',
- * }
- */
 
 //middleware
 const loadClothesDataOnDB = () => {
@@ -109,11 +93,12 @@ const loadClothesDataOnDB = () => {
           }
           dispatch(saveData(res.data.data));
           return;
+        } else {
+          alert("loadClothesDataOnDB에서 문제가 생겼습니다.");
         }
-        console.log("loadClothesDataOnDB에서 문제가 생겼습니다.");
       })
       .catch(error => {
-        console.log("데이터를 받아오지 못했습니다!", error);
+        alert("데이터를 받아오지 못했습니다!", error);
       })
       .finally(() => {
         dispatch(loading(false));
@@ -131,7 +116,7 @@ const loadOneClothesDataOnDB = itemId => {
         dispatch(loadOneData(res.data.data));
       })
       .catch(error => {
-        console.log("데이터를 받아오지 못했습니다!", error);
+        alert("데이터를 받아오지 못했습니다!", error);
       });
   };
 };
@@ -139,19 +124,17 @@ const loadOneClothesDataOnDB = itemId => {
 const loadSearchedClothesDataOnDB = itemName => {
   return function (dispatch, getState, { history }) {
     dispatch(loading(true));
-
     axios
       .get(
         `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/product/search?q=${itemName}`
       )
       .then(res => {
-        console.log(res);
         if (res.data.success) {
           dispatch(loadSearchData(res.data.data));
         }
       })
       .catch(error => {
-        console.log(
+        alert(
           "loadSearchedClothesDataOnDB에서 서버와의 통신이 제대로 연결되지 않았습니다,",
           error
         );
@@ -172,7 +155,7 @@ const loadPopularClothesDataOnDB = () => {
         dispatch(loadPopularData(res.data.data));
       })
       .catch(error => {
-        console.log("데이터를 받아오지 못했습니다!", error);
+        alert("데이터를 받아오지 못했습니다!", error);
       });
   };
 };
@@ -187,16 +170,17 @@ const loadPopularCategoryDataOnDB = () => {
         "http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/category/popular"
       )
       .then(res => {
-        // console.log(res);
         if (res.data.success) {
           dispatch(addFilteredMood(res.data.data));
-          // dispatch(loadLikedData(res.data.data));
         }
       })
       .catch(error => {
-        console.log("데이터를 받아오지 못했습니다!", error);
+        alert(
+          "loadPopularCategoryDataOnDB에서 데이터를 받아오지 못했습니다!",
+          error
+        );
       })
-      .finally(_ => {
+      .finally(() => {
         dispatch(loading(false));
       });
   };
@@ -212,13 +196,12 @@ const loadLikedClothesDataOnDB = () => {
         }/like`
       )
       .then(res => {
-        console.log(res);
         if (res.data.success) {
           dispatch(loadLikedData(res.data.data));
         }
       })
       .catch(error => {
-        console.log(
+        alert(
           "loadLikedClothesDataOnDB에서 서버와의 통신이 제대로 연결되지 않았습니다.",
           error
         );
@@ -246,7 +229,10 @@ const loadItemsByCategoryOnDB = () => {
         dispatch(addMoodItems(res.data.data));
       })
       .catch(error => {
-        console.log("데이터를 받아오지 못했습니다!", error);
+        alert(
+          "loadItemsByCategoryOnDB에서 서버와의 수신이 연결되지 않았습니다!",
+          error
+        );
       })
       .finally(_ => {
         dispatch(loading(false));
@@ -295,7 +281,6 @@ export default handleActions(
     [ADD_LIKED_DATA]: (state, action) =>
       produce(state, draft => {
         draft.likedItems = [...draft.likedItems, action.payload.data];
-        // draft.likedItems = [...action.payload.data];
       }),
     [SUB_LIKED_DATA]: (state, action) =>
       produce(state, draft => {
@@ -415,8 +400,6 @@ const actionCreators = {
   decrease_liked,
   loadItemsByCategoryOnDB,
   likedDataString,
-  // tempLike,
-  // tempDislike,
   addMoodItems
 };
 

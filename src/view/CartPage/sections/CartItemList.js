@@ -1,16 +1,11 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { actionCreators as cartAction } from "../../../redux/moduels/cart";
+import React from "react";
+import { useSelector } from "react-redux";
 
 import CartItem from "../component/CartItem";
 import { Empty } from "antd";
 
 const CartItemList = ({ history }) => {
-  const itemId = useSelector(state => state.cart.itemId);
   const cartItem = useSelector(state => state.cart.cartItem);
-  const dispatch = useDispatch();
-
-  useEffect(() => {}, []);
 
   return (
     <div className='cartItemList'>

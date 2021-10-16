@@ -10,7 +10,6 @@ const LikeButton = ({ item, title, itemID }) => {
   const [isChecked, setIsChecked] = useState(false);
   const dispatch = useDispatch();
   const likedItemsID = useSelector(state => state.user.likedItemsID);
-  const userID = useSelector(state => state.user.id);
 
   useEffect(() => {
     if (likedItemsID.includes(itemID)) {

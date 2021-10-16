@@ -99,11 +99,7 @@ const Button = ({ name, isDisabled, title, history }) => {
     );
   } else {
     return (
-      <button
-        className='btn'
-        // style={{'backgroundColor' : `${isDisabled ? 'var(--color-button-gray)' : '--color-button-pink'}`}}
-        onClick={() => history.push("/main")}
-      >
+      <button className='btn' onClick={() => history.push("/main")}>
         {" "}
         {name}
       </button>
