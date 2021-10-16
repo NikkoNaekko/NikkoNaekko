@@ -1,9 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Product from "./Product";
 
 const OrderProducts = ({ orderList }) => {
-  useEffect(() => {}, []);
-
   return (
     <React.Fragment>
       <div className='orderProducts'>

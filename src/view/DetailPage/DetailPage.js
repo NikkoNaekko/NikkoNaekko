@@ -13,21 +13,21 @@ import axios from "axios";
 const DetailPage = props => {
   const dispatch = useDispatch();
   const item = useSelector(state => state.items.selectedItems);
+  const popluarItems = useSelector(state => state.items.popluarItems);
   const [isLoading, setIsLoading] = useState(true);
+  const productId = parseInt(props.match.params.id);
   window.scrollTo({ top: 0, left: 0 });
-
   useEffect(() => {
     axios
       .get(
         `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/product/${props.match.params.id}`
       )
       .then(res => {
-        console.log(res);
         dispatch(itemsAction.loadOneData(res.data.data));
         setIsLoading(false);
       })
       .catch(error => {
-        console.log("데이터를 받아오지 못했습니다!", error);
+        alert("데이터를 받아오지 못했습니다!", error);
       });
   }, []);
 
@@ -40,7 +40,9 @@ const DetailPage = props => {
         <>
           <div className='fixedArea Section1'>
             <div style={{ position: "relative" }}>
-              {item.productSold > 99 ? <PopularProductBanner /> : null}
+              {popluarItems.some(item => item.productId === productId) ? (
+                <PopularProductBanner />
+              ) : null}
               {item.productImage && (
                 <Carousel autoplay style={{ marginTop: "81px" }}>
                   {item.productImage.map((img, index) => {

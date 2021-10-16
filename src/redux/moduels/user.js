@@ -55,7 +55,6 @@ const signIn = (id, pwd) => {
       }
     })
       .then(res => {
-        // console.log(res);
         if (res.data.success) {
           const { uid, userId, name, isFirst, likeItems, token } =
             res.data.data;
@@ -73,7 +72,7 @@ const signIn = (id, pwd) => {
         }
       })
       .catch(error => {
-        console.log("로그인 과정이 원활하게 진행되지 않았습니다.", error);
+        alert("로그인 과정이 원활하게 진행되지 않았습니다.", error);
       })
       .finally(() => {
         dispatch(loading(false));
@@ -91,24 +90,6 @@ const signOut = () => {
   };
 };
 
-const syncStateAndDB = userID => {
-  return async function (dispatch, getState, { history }) {
-    const data = {
-      ...getState().user,
-      likedItemsID: getState().user.likedItemsID
-    };
-
-    axios
-      .put(`http://localhost:3000/users/${userID}`, data)
-      .then(res => {
-        // console.log(res.data);
-      })
-      .catch(error => {
-        console.log("취향 추가 실패", error);
-      });
-  };
-};
-
 const signUpDB = (id, pwd, name) => {
   return function (dispatch, getState, { history }) {
     dispatch(loading(true));
@@ -122,20 +103,21 @@ const signUpDB = (id, pwd, name) => {
       }
     })
       .then(res => {
-        // console.log(res);
         if (res.data.success === true) {
-          console.log("회원 정보가 추가되었습니다.");
           alert("회원가입을 성공했습니다.");
           history.push("/");
         } else if (res.data.success === false) {
-          console.log("회원 정보 추가 실패");
           alert("이미 가입된 회원정보입니다.");
         }
       })
       .catch(error => {
         var errorCode = error.code;
         var errorMessage = error.message;
-        console.log("회원가입 실패", errorCode, errorMessage);
+        alert(
+          "회원가입이 실패하였습니다. 개발자에게 문의주세요",
+          errorCode,
+          errorMessage
+        );
       })
       .finally(_ => {
         dispatch(loading(false));
@@ -165,11 +147,9 @@ const iLikeOneProduct = itemID => {
           getState().user.uid
         }/like/${itemID}`
       )
-      .then(res => {
-        // console.log(res);
-      })
+      .then(res => {})
       .catch(error => {
-        console.log("좋아요가 DB에 반영되지 않았습니다.", error);
+        alert("좋아요가 DB에 반영되지 않았습니다.", error);
       });
   };
 };
@@ -191,7 +171,7 @@ const iLikeSeveralProduct = itemAry => {
         dispatch(checkFirstOnDB());
       })
       .catch(error => {
-        console.log("좋아요가 DB에 반영되지 않았습니다.", error);
+        alert("좋아요가 DB에 반영되지 않았습니다.", error);
       })
       .finally(() => {
         dispatch(loading(false));
@@ -210,11 +190,9 @@ const disLikeOnDB = itemID => {
           getState().user.uid
         }/likeCancel/${itemID}`
       )
-      .then(res => {
-        // console.log(res);
-      })
+      .then(res => {})
       .catch(error => {
-        console.log("좋아요가 DB에 반영되지 않았습니다.", error);
+        alert("좋아요 취소가 DB에 반영되지 않았습니다.", error);
       });
   };
 };
@@ -228,7 +206,6 @@ const checkFirstOnDB = () => {
         }`
       )
       .then(res => {
-        console.log(res.data.data);
         if (res.data.success) {
           const { uid, userId, name, isFirst, likeItems } = res.data.data;
           dispatch(saveUserData(uid, userId, name, isFirst, likeItems));
@@ -236,7 +213,7 @@ const checkFirstOnDB = () => {
         history.push("/main");
       })
       .catch(error => {
-        console.log("첫방문 여부 파악에 문제가 발생했습니다.", error);
+        alert("첫방문 여부 파악에 문제가 발생했습니다.", error);
       });
   };
 };
@@ -246,7 +223,6 @@ export default handleActions(
   {
     [SAVE_USER_DATA]: (state, action) =>
       produce(state, draft => {
-        // produce의 첫번째 인자는 원본 값, 두번째 인자는 createAction의 입력인자(user_id)가 들어있는 객체이다.
         const { uid, userId, name, isFirst, likeItems } = action.payload;
         draft.uid = uid;
         draft.id = userId;
@@ -296,7 +272,6 @@ const actionCreators = {
   iLikeOneProduct,
   disLikeOnDB,
   signUpDB,
-  syncStateAndDB,
   iLikeSeveralProduct,
   checkFirstOnDB,
   likeAry,

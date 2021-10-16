@@ -1,11 +1,7 @@
-import React, { useEffect } from "react";
-import WOW from "wowjs";
+import React from "react";
 const OrderHeader = ({ orderId, orderDate }) => {
-  useEffect(() => {
-    new WOW.WOW().init();
-  }, []);
   return (
-    <div className='orderHeader wow fadeInUp'>
+    <div className='orderHeader'>
       <div className='orderDate'>[{orderDate}]</div>
       <div className='orderId'>{orderId}</div>
     </div>

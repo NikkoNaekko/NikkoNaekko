@@ -27,7 +27,6 @@ const Item = ({ item, isVertical, isHorizen }) => {
           <p style={{ color: "red" }}>
             <PriceList price={item.productPrice} title={"main"} />
           </p>
-          {/* <p >{item.price}원</p> */}
           <div className='likedDiv'>
             <LikeButton itemID={item.productId} />
             <span style={{ marginLeft: "10px" }}>{item.productLike}</span>

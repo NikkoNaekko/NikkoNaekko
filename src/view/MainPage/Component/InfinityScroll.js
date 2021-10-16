@@ -7,7 +7,6 @@ const InfinityScroll = props => {
     if (loading) return;
     const { innerHeight } = window;
     const { scrollHeight } = document.body;
-    // 브라우저마다 창크기가 다르므로
     const scrollTop =
       (document.documentElement && document.documentElement.scrollTop) ||
       document.body.scrollTop;
@@ -41,7 +40,7 @@ InfinityScroll.defaultProps = {
   children: null,
   callNext: () => {},
   is_next: false,
-  loading: false // 불러오는 도중에는 사용할 수 없게 할려는 플래그
+  loading: false
 };
 
 export default InfinityScroll;
