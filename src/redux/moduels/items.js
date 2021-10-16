@@ -131,7 +131,7 @@ const loadSearchedClothesDataOnDB = itemName => {
         `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/product/search?q=${itemName}`
       )
       .then(res => {
-        console.log(res);
+        // console.log(res);
         if (res.data.success) {
           dispatch(loadSearchData(res.data.data));
         }
@@ -173,7 +173,7 @@ const loadLikedClothesDataOnDB = () => {
         }/like`
       )
       .then(res => {
-        console.log(res);
+        // console.log(res);
         if (res.data.success) {
           dispatch(loadLikedData(res.data.data));
         }

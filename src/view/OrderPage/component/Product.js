@@ -1,27 +1,38 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { categoryList } from "../../../data/categoryInfomation";
+import PriceList from "../../../shared/PriceList";
+import WOW from "wowjs";
 
-const product = ({ item }) => {
+const Product = ({ order }) => {
+  useEffect(() => {
+    new WOW.WOW().init();
+  }, []);
+
   return (
-    <div className='product'>
-      <div className='mood'>{item.mood}</div>
-
-      <div className='productContent'>
-        <div className='productImg'>
-          <img src={item.imgSrc[0]} alt='img' />
-        </div>
-        <div className='productInfo'>
-          <div className='productTitle'>
-            <div className='orderComplete'>구매완료</div>
-            <div className='brandName'>
-              <div className='productBrand'>[{item.brand}]</div>
-              <div className='productName'>{item.name}</div>
+    <div className='product wow fadeInUp'>
+      <div className='mood'>{categoryList[order.categoryId]}</div>
+      <Link to={`/detail/${order.productId}`}>
+        <div className='productContent'>
+          <div className='productImg'>
+            <img src={order.productImage[0]} alt='img' />
+          </div>
+          <div className='productInfo'>
+            <div className='productTitle'>
+              <div className='orderComplete'>구매완료</div>
+              <div className='brandName'>
+                <div className='productBrand'>[{order.brand}]</div>
+                <div className='productName'>{order.productName}</div>
+              </div>
+            </div>
+            <div className='productPrice'>
+              <PriceList price={order.productPrice} />
             </div>
           </div>
-          <div className='productPrice'>{item.price}원</div>
         </div>
-      </div>
+      </Link>
     </div>
   );
 };
 
-export default product;
+export default Product;
