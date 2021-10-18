@@ -20,7 +20,7 @@ const DetailPage = props => {
   useEffect(() => {
     axios
       .get(
-        `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/product/${props.match.params.id}`
+        `http://ec2-52-78-34-16.ap-northeast-2.compute.amazonaws.com/product/${props.match.params.id}`
       )
       .then(res => {
         dispatch(itemsAction.loadOneData(res.data.data));

@@ -24,14 +24,14 @@ const loadOrderOnDB = () => {
     dispatch(loading(true));
     axios
       .get(
-        `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/order/all/${
+        `http://ec2-52-78-34-16.ap-northeast-2.compute.amazonaws.com/order/all/${
           getState().user.uid
         }`
       )
       .then(res => {
         if (res.data.success && res.data.data.length > 0) {
           let url =
-            "http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/order/orderId?";
+            "http://ec2-52-78-34-16.ap-northeast-2.compute.amazonaws.com/order/orderId?";
           res.data.data.map(orderInfomation => {
             url += "id=" + orderInfomation.orderId + "&";
           });

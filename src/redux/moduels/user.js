@@ -48,7 +48,7 @@ const signIn = (id, pwd) => {
     await dispatch(loading(true));
     axios({
       method: "post",
-      url: "http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/user/login",
+      url: "http://ec2-52-78-34-16.ap-northeast-2.compute.amazonaws.com/user/login",
       data: {
         id: id,
         password: pwd
@@ -95,7 +95,7 @@ const signUpDB = (id, pwd, name) => {
     dispatch(loading(true));
     axios({
       method: "post",
-      url: "http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/user/join",
+      url: "http://ec2-52-78-34-16.ap-northeast-2.compute.amazonaws.com/user/join",
       data: {
         name: name,
         id: id,
@@ -143,7 +143,7 @@ const iLikeOneProduct = itemID => {
 
     axios
       .post(
-        `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/user/${
+        `http://ec2-52-78-34-16.ap-northeast-2.compute.amazonaws.com/user/${
           getState().user.uid
         }/like/${itemID}`
       )
@@ -159,7 +159,7 @@ const iLikeSeveralProduct = itemAry => {
     await dispatch(loading(true));
     axios
       .post(
-        `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/user/${
+        `http://ec2-52-78-34-16.ap-northeast-2.compute.amazonaws.com/user/${
           getState().user.uid
         }/like`,
         itemAry
@@ -186,7 +186,7 @@ const disLikeOnDB = itemID => {
     dispatch(itemsAction.subLikedData(itemID));
     axios
       .post(
-        `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/user/${
+        `http://ec2-52-78-34-16.ap-northeast-2.compute.amazonaws.com/user/${
           getState().user.uid
         }/likeCancel/${itemID}`
       )
@@ -201,7 +201,7 @@ const checkFirstOnDB = () => {
   return function (dispatch, getState, { history }) {
     axios
       .post(
-        `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/user/firstVisit/${
+        `http://ec2-52-78-34-16.ap-northeast-2.compute.amazonaws.com/user/firstVisit/${
           getState().user.uid
         }`
       )

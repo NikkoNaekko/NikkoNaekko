@@ -55,7 +55,7 @@ const loadCartInfomationDB = () => {
   return function (dispatch, getState, { history }) {
     axios
       .get(
-        `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/cart/${
+        `http://ec2-52-78-34-16.ap-northeast-2.compute.amazonaws.com/cart/${
           getState().user.uid
         }`
       )
@@ -79,7 +79,7 @@ const loadClothesInCartDB = () => {
     dispatch(loading(true));
     axios
       .get(
-        `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/cart/${
+        `http://ec2-52-78-34-16.ap-northeast-2.compute.amazonaws.com/cart/${
           getState().user.uid
         }/product`
       )
@@ -104,7 +104,7 @@ const putInInCartDB = itemID => {
     await dispatch(putInCart(itemID));
     axios
       .post(
-        `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/cart/${
+        `http://ec2-52-78-34-16.ap-northeast-2.compute.amazonaws.com/cart/${
           getState().user.uid
         }/add/${itemID}`
       )
@@ -127,7 +127,7 @@ const tackingOutToCartDB = itemID => {
     await dispatch(tackingOutToCart(itemID));
     axios
       .post(
-        `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/cart/${
+        `http://ec2-52-78-34-16.ap-northeast-2.compute.amazonaws.com/cart/${
           getState().user.uid
         }`,
         getState().cart.itemId
@@ -151,7 +151,7 @@ const deleteCartItemDB = itemID => {
     await dispatch(deleteCartItem(itemID));
     axios
       .post(
-        `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/cart/${
+        `http://ec2-52-78-34-16.ap-northeast-2.compute.amazonaws.com/cart/${
           getState().user.uid
         }`,
         getState().cart.itemId
@@ -175,7 +175,7 @@ const deleteCheckedItemDB = () => {
     await dispatch(deleteCheckedItem());
     axios
       .post(
-        `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/cart/${
+        `http://ec2-52-78-34-16.ap-northeast-2.compute.amazonaws.com/cart/${
           getState().user.uid
         }`,
         getState().cart.itemId
@@ -199,7 +199,7 @@ const resetCartItemDB = () => {
     await dispatch(resetCartItem());
     axios
       .post(
-        `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/cart/${
+        `http://ec2-52-78-34-16.ap-northeast-2.compute.amazonaws.com/cart/${
           getState().user.uid
         }`,
         []
@@ -222,7 +222,7 @@ const addOrderDataOnDB = () => {
     dispatch(loading(true));
     axios
       .get(
-        `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/user/tokenValidation/${sessionStorage.getItem(
+        `http://ec2-52-78-34-16.ap-northeast-2.compute.amazonaws.com/user/tokenValidation/${sessionStorage.getItem(
           "my_token"
         )}`
       )
@@ -230,7 +230,7 @@ const addOrderDataOnDB = () => {
         if (res.data.success) {
           axios
             .post(
-              `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/cart/makeOrder/${
+              `http://ec2-52-78-34-16.ap-northeast-2.compute.amazonaws.com/cart/makeOrder/${
                 getState().user.uid
               }`
             )

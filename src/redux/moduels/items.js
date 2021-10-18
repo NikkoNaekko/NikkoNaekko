@@ -75,7 +75,7 @@ const loadClothesDataOnDB = () => {
     dispatch(loading(true));
     axios
       .get(
-        `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/product/newwest/${
+        `http://ec2-52-78-34-16.ap-northeast-2.compute.amazonaws.com/product/newwest/${
           getState().items.paging.next
         }`
       )
@@ -104,7 +104,7 @@ const loadOneClothesDataOnDB = itemId => {
   return function (dispatch, getState, { history }) {
     axios
       .get(
-        `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/product/${itemId}`
+        `http://ec2-52-78-34-16.ap-northeast-2.compute.amazonaws.com/product/${itemId}`
       )
       .then(res => {
         dispatch(loadOneData(res.data.data));
@@ -120,7 +120,7 @@ const loadSearchedClothesDataOnDB = itemName => {
     dispatch(loading(true));
     axios
       .get(
-        `http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/product/search?q=${itemName}`
+        `http://ec2-52-78-34-16.ap-northeast-2.compute.amazonaws.com/product/search?q=${itemName}`
       )
       .then(res => {
         if (res.data.success) {
@@ -143,7 +143,7 @@ const loadPopularClothesDataOnDB = () => {
   return function (dispatch, getState, { history }) {
     axios
       .get(
-        "http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/product/popular"
+        "http://ec2-52-78-34-16.ap-northeast-2.compute.amazonaws.com/product/popular"
       )
       .then(res => {
         dispatch(loadPopularData(res.data.data));
@@ -160,7 +160,7 @@ const loadPopularCategoryDataOnDB = () => {
     dispatch(resetMood());
     axios
       .get(
-        "http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/category/popular"
+        "http://ec2-52-78-34-16.ap-northeast-2.compute.amazonaws.com/category/popular"
       )
       .then(res => {
         if (res.data.success) {
@@ -184,7 +184,7 @@ const loadLikedClothesDataOnDB = () => {
     dispatch(likedDataLoading(true));
     axios
       .get(
-        ` http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/user/${
+        ` http://ec2-52-78-34-16.ap-northeast-2.compute.amazonaws.com/user/${
           getState().user.uid
         }/like`
       )
@@ -209,7 +209,7 @@ const loadItemsByCategoryOnDB = () => {
   return function (dispatch, getState, { history }) {
     dispatch(loading(true));
     let url =
-      "http://ec2-3-13-167-112.us-east-2.compute.amazonaws.com/category/categoryId?";
+      "http://ec2-52-78-34-16.ap-northeast-2.compute.amazonaws.com/category/categoryId?";
     getState().items.likedMood.map(item => {
       url += "&id=" + item;
     });
