@@ -6,16 +6,10 @@ import { Empty } from "antd";
 const VerticalItemList = ({ isNewProduct, isSearchProduct }) => {
   const items = useSelector(state => state.items.items);
   const searchedItems = useSelector(state => state.items.searchedItems);
-  // const likedItems = useSelector(state => state.items.likedItems);
 
   return (
     <>
       <div className='vericalItemList'>
-        {/* {isBookMark &&
-          likedItems &&
-          likedItems.map(item => {
-            return <Item item={item} key={item.productId} isVertical />;
-          })} */}
         {isNewProduct &&
           items.map(item => {
             return <Item item={item} key={item.productId} isVertical />;
@@ -26,12 +20,7 @@ const VerticalItemList = ({ isNewProduct, isSearchProduct }) => {
             return <Item item={item} key={item.id} isVertical />;
           })}
       </div>
-      {/* {isBookMark && likedItems.length === 0 && (
-        <div className='emptyBorder'>
-          <Empty description={false} />
-          <h3>좋아요한 상품이 없습니다.</h3>
-        </div>
-      )} */}
+
       {isSearchProduct && searchedItems.length === 0 && (
         <div className='emptyBorder'>
           <Empty description={false} />
