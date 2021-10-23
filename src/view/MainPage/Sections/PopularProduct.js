@@ -14,7 +14,11 @@ const PopularProduct = () => {
 
   return (
     <div style={{ marginTop: "40px" }}>
-      {popluarItems.length > 0 ? <HorizenItemList /> : <Spinner />}
+      {popluarItems.length > 0 ? (
+        <HorizenItemList isPopularProduct />
+      ) : (
+        <Spinner />
+      )}
     </div>
   );
 };

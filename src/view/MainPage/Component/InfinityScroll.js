@@ -14,11 +14,6 @@ const InfinityScroll = props => {
     if (scrollHeight - innerHeight - scrollTop < 100) {
       callNext();
     }
-    console.log(scrollHeight, innerHeight, scrollTop);
-    console.log(
-      "scrollHeight - innerHeight - scrollTop = ",
-      scrollHeight - innerHeight - scrollTop
-    );
   }, 1000);
 
   const handleScroll = useCallback(_handleScroll, [loading]);

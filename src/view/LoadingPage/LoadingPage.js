@@ -1,7 +1,25 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import "./LoadingPage.scss";
-
+function checkMobileDevice() {
+  var mobileKeyWords = new Array(
+    "Android",
+    "iPhone",
+    "iPod",
+    "BlackBerry",
+    "Windows CE",
+    "SAMSUNG",
+    "LG",
+    "MOT",
+    "SonyEricsson"
+  );
+  for (var info in mobileKeyWords) {
+    if (window.navigator.userAgent.match(mobileKeyWords[info]) != null) {
+      return true;
+    }
+  }
+  return false;
+}
 const LoadingPage = ({ history }) => {
   const isLogin = useSelector(state => state.user.isLogin);
   if (isLogin) {
@@ -23,6 +41,11 @@ const LoadingPage = ({ history }) => {
             홈페이지
           </button>
         </div>
+        {checkMobileDevice() ? null : (
+          <h4 style={{ color: "red", fontWeight: "bold" }}>
+            모바일 환경을 권장합니다.
+          </h4>
+        )}
       </div>
     </>
   );

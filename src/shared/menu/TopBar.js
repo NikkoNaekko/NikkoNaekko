@@ -21,6 +21,11 @@ const TopBar = ({ title, history, rightMenu }) => {
       input.style.animation = "inputAppear 0.5s ease forwards";
     }
   };
+  const enterSearch = e => {
+    if (e.key === "Enter") {
+      history.push(`/search/${inputRef.current.value}`);
+    }
+  };
 
   return (
     <>
@@ -45,11 +50,12 @@ const TopBar = ({ title, history, rightMenu }) => {
           )}
           {rightMenu ? (
             <div className='topBarRightMenu'>
-              <div className='area'>
+              <div className='searchForm'>
                 <input
                   className='searchInput'
                   ref={inputRef}
                   placeholder='상품명을 입력하세요'
+                  onKeyPress={enterSearch}
                 />
                 <SearchIcon className='searchIcon' onClick={onSearch} />
               </div>

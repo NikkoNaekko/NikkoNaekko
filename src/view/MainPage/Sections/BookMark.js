@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import VerticalItemList from "../Component/VerticalItemList";
+import HorizenItemList from "../Component/HorizenItemList";
 import Spinner from "../../../shared/Spinner";
 import { actionCreators as itemsAction } from "../../../redux/moduels/items";
 const BookMark = () => {
@@ -15,7 +15,7 @@ const BookMark = () => {
 
   return (
     <div style={{ marginTop: "40px" }}>
-      {isLikedDataLoading ? <Spinner /> : <VerticalItemList isBookMark />}
+      {isLikedDataLoading ? <Spinner /> : <HorizenItemList isBookMark />}
     </div>
   );
 };
