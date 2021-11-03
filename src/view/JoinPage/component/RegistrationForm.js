@@ -131,7 +131,18 @@ const RegistrationForm = props => {
           {
             required: true,
             message: "Please input your password!"
-          }
+          },
+          () => ({
+            validator(_, value) {
+              if (!value) {
+                return Promise.resolve();
+              } else if (value.length < 6) {
+                return Promise.reject(
+                  new Error("Passwords must be at least 6 characters long.")
+                );
+              }
+            }
+          })
         ]}
       >
         <Input.Password
@@ -154,16 +165,17 @@ const RegistrationForm = props => {
           },
           ({ getFieldValue }) => ({
             validator(_, value) {
-              if (!value || getFieldValue("password") === value) {
+              if (!value) {
                 return Promise.resolve();
-              } else if (Number(value.length) < 6) {
+              } else if (value.length < 6) {
                 return Promise.reject(
                   new Error("Passwords must be at least 6 characters long.")
                 );
+              } else if (getFieldValue("password") !== value) {
+                return Promise.reject(
+                  new Error("The two passwords that you entered do not match!")
+                );
               }
-              return Promise.reject(
-                new Error("The two passwords that you entered do not match!")
-              );
             }
           })
         ]}

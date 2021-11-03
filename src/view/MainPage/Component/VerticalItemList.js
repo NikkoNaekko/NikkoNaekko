@@ -20,7 +20,6 @@ const VerticalItemList = ({ isNewProduct, isSearchProduct }) => {
             return <Item item={item} key={item.id} isVertical />;
           })}
       </div>
-
       {isSearchProduct && searchedItems.length === 0 && (
         <div className='emptyBorder'>
           <Empty description={false} />
