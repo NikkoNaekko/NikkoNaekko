@@ -51,7 +51,20 @@ const NormalLoginForm = () => {
           {
             required: true,
             message: "Please input your Password!"
-          }
+          },
+          () => ({
+            validator(_, value) {
+              if (!value) {
+                return Promise.resolve();
+              } else if (value.length < 6) {
+                return Promise.reject(
+                  new Error("Passwords must be at least 6 characters long.")
+                );
+              } else {
+                return Promise.resolve();
+              }
+            }
+          })
         ]}
       >
         <Input type='password' placeholder='6자 이상을 입력해주세요' />

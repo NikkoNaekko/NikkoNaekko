@@ -40,6 +40,9 @@ const LoadingPage = ({ history }) => {
           <button className='button' onClick={() => history.push("/main")}>
             홈페이지
           </button>
+          <button className='button' onClick={() => history.push("/version")}>
+            업데이트 기록
+          </button>
         </div>
         {checkMobileDevice() ? null : (
           <h4 style={{ color: "red", fontWeight: "bold" }}>
