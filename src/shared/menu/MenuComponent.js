@@ -44,11 +44,17 @@ const MenuComponent = ({ history }) => {
             <MenuItem onClick={() => dispatch(userAction.signOut())}>
               로그아웃
             </MenuItem>
+            <MenuItem onClick={() => history.push("/version")}>
+              업데이트 기록
+            </MenuItem>
           </>
         ) : (
           <>
             <MenuItem onClick={() => history.push("/join")}>회원가입</MenuItem>
             <MenuItem onClick={() => history.push("/login")}>로그인</MenuItem>
+            <MenuItem onClick={() => history.push("/version")}>
+              업데이트 기록
+            </MenuItem>
           </>
         )}
       </Menu>
