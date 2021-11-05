@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import LikeButton from "../../../shared/LikeButton";
 import PriceList from "../../../shared/PriceList";
-
+import { StarFilled } from "@ant-design/icons";
 const Item = ({ item, isVertical, isHorizen }) => {
   let truncatedString = "";
   if (item.productName.length > 7) {
@@ -49,6 +49,14 @@ const Item = ({ item, isVertical, isHorizen }) => {
           <div className='likedDiv'>
             <LikeButton itemID={item.productId} />
             <span style={{ marginLeft: "10px" }}>{item.productLike}</span>
+            <StarFilled
+              style={{
+                marginLeft: "10px",
+                color: "var(--color-star-yellow)",
+                fontSize: "30px"
+              }}
+            />
+            <span style={{ marginLeft: "10px" }}>4.0</span>
           </div>
         </div>
       </div>

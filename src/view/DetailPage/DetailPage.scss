@@ -1,7 +1,6 @@
-
-.carouselImg{
-    width:100vw;
-    height:300px;
+.carouselImg {
+  width: 100vw;
+  height: 300px;
 }
 // #detailPage{
 //     // overflow-y: hidden;
@@ -11,86 +10,97 @@
 // }
 // ----- ItemInformation -----
 .fixedArea {
-    position: sticky;
-    top: 0;
-    overflow: hidden;
-    z-index: 1;
-    background: #fff;
+  position: sticky;
+  top: 0;
+  overflow: hidden;
+  z-index: 1;
+  background: #fff;
 }
-.detailBorder{
-    margin:20px;
+.detailBorder {
+  margin: 20px;
 
-    .font{
-        font-size: 20px;
-    }
-    .gray{
-        color:var(--color-font-gray);
-    }
-    .red{
-        color:red;
-    }
-    .detailBorderHorizen{
+  .font {
+    font-size: 20px;
+  }
+  .gray {
+    color: var(--color-font-gray);
+  }
+  .red {
+    color: red;
+  }
+  .detailBorderHorizen {
+    display: flex;
+    justify-content: space-between;
+    .icons {
+      display: flex;
+      .liked {
         display: flex;
-        justify-content: space-between;
-        .icons{
-            display: flex;
-            .liked{
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                margin-right: 5px;
-            }
-            .purchased{
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-            }
-        }
-        .price{
-        }
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-right: 5px;
+      }
+      .purchased {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
     }
+    .price {
+    }
+  }
 }
 
 // ----- ItemInformation -----
-@import url('https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap');
-.descriptionBorder{
-    text-align: center;
-    font-family: 'Gowun Batang', serif;
-    line-height:50px; 
-    padding:20px;
-    font-size: 20px;
-    color:var(--color-font-gray);
+@import url("https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap");
+.descriptionBorder {
+  text-align: center;
+  font-family: "Gowun Batang", serif;
+  line-height: 50px;
+  padding: 20px;
+  font-size: 20px;
+  color: var(--color-font-gray);
 }
-
 
 // ----- PopularProductbanner -----
 
-.banner{
-    position: absolute;
-    top:20px;
-    left:20px;
-    z-index: 1;
+.banner {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 1;
 
-    .font{
-        padding:5px 20px 5px 20px;
-        font-weight: 600;
-        color:white;
-        background-color: rgba(127, 127, 127, 0.65)
-    }
-    .bold{
-        font-weight: 800;
-    }
+  .font {
+    padding: 5px 20px 5px 20px;
+    font-weight: 600;
+    color: white;
+    background-color: rgba(127, 127, 127, 0.65);
+  }
+  .bold {
+    font-weight: 800;
+  }
 }
-
+// ----- StarPoint -----
+.starpointBorder {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+.starpoint {
+  font-size: 50px;
+  font-family: "Gowun Batang", serif;
+  font-weight: bold;
+}
 // ----- Spinner -----
-.spinnerBorder{
-    width:100vw;
-    height:100vh;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.spinnerBorder {
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

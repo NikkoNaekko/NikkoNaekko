@@ -4,6 +4,7 @@ import "../DetailPage.scss";
 import PriceList from "../../../shared/PriceList";
 import CartButton from "../../../shared/CartButton";
 import { categoryList } from "../../../data/categoryInfomation";
+import Starpoint from "../Component/Starpoint";
 
 const ItemInformation = ({ item }) => {
   return (
@@ -30,6 +31,7 @@ const ItemInformation = ({ item }) => {
             </p>
           </div>
         </div>
+        <Starpoint />
       </div>
     </>
   );
