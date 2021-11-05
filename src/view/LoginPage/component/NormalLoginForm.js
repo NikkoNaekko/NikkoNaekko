@@ -60,6 +60,8 @@ const NormalLoginForm = () => {
                 return Promise.reject(
                   new Error("Passwords must be at least 6 characters long.")
                 );
+              } else {
+                return Promise.resolve();
               }
             }
           })
