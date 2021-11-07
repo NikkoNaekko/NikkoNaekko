@@ -56,7 +56,7 @@ const Item = ({ item, isVertical, isHorizen }) => {
                 fontSize: "30px"
               }}
             />
-            <span style={{ marginLeft: "10px" }}>4.0</span>
+            <span style={{ marginLeft: "10px" }}>{item.productStar}</span>
           </div>
         </div>
       </div>

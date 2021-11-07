@@ -2,10 +2,10 @@ import React from "react";
 import StarRatingComponent from "react-star-rating-component";
 import { StarFilled } from "@ant-design/icons";
 
-const Starpoint = () => {
+const Starpoint = ({ productStar }) => {
   return (
     <div className='starpointBorder'>
-      <span className='starpoint'>4.0/5.0</span>
+      <span className='starpoint'>{productStar}/5.0</span>
       <StarRatingComponent
         name='rate2'
         editing={false}
@@ -17,7 +17,7 @@ const Starpoint = () => {
           />
         )}
         starCount={5}
-        value={4}
+        value={productStar}
       />
     </div>
   );

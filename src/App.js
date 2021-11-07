@@ -17,7 +17,6 @@ import CartPage from "./view/CartPage/CartPage";
 import SearchPage from "./view/SearchPage/SearchPage";
 import OrderPage from "./view/OrderPage/OrderPage";
 import VersionPage from "./view/VersionPage/VersionPage";
-import Test from "./view/Test";
 const App = () => {
   return (
     <>
@@ -33,7 +32,6 @@ const App = () => {
         <Route path='/search/:name' component={SearchPage} />
         <Route path='/order' component={OrderPage} />
         <Route path='/version' component={VersionPage} />
-        <Route path='/test' component={Test} />
       </ConnectedRouter>
     </>
   );

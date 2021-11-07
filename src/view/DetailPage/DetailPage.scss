@@ -2,12 +2,6 @@
   width: 100vw;
   height: 300px;
 }
-// #detailPage{
-//     // overflow-y: hidden;
-//     &::-webkit-scrollbar{
-//         display: none;
-//     }
-// }
 // ----- ItemInformation -----
 .fixedArea {
   position: sticky;
@@ -18,7 +12,6 @@
 }
 .detailBorder {
   margin: 20px;
-
   .font {
     font-size: 20px;
   }
@@ -103,4 +96,37 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+// ----- CommentInput -----
+.CommentInputBorder {
+  padding: 20px;
+  margin-bottom: 40px;
+  .CommentInput {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    & > span {
+      font-weight: bold;
+    }
+  }
+}
+
+// ----- Comment -----
+.commentBorder {
+  margin: 20px;
+  .commentHeader {
+    display: flex;
+    justify-content: space-between;
+    .dv-star-rating-non-editable {
+      margin-right: 10px;
+    }
+    .commentHeaderRight {
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+.commentFont {
+  font-size: 18px;
+  font-weight: bold;
 }
