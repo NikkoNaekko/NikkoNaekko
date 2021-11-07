@@ -1,14 +1,14 @@
 import React from "react";
 import { Timeline } from "antd";
 import TopBar from "../../shared/menu/TopBar";
-
+import "./VersionPage.scss";
 const VersionPage = ({ history }) => {
   return (
-    <div className='container'>
+    <div className='VersionBorder'>
       <TopBar title='니꼬내꼬' history={history} />
       <h1
         className='Section1'
-        style={{ marginTop: "30px", fontWeight: "bold" }}
+        style={{ marginTop: "81px", fontWeight: "bold" }}
       >
         버전별 상세사항
       </h1>
