@@ -7,7 +7,7 @@ import User from "./moduels/user";
 import Items from "./moduels/items";
 import cart from "./moduels/cart";
 import order from "./moduels/order";
-
+import comment from "./moduels/comment";
 export const history = createBrowserHistory();
 
 // rootReducer 만들기
@@ -16,6 +16,7 @@ const rootReducer = combineReducers({
   cart: cart,
   items: Items,
   order: order,
+  comment: comment,
   router: connectRouter(history)
 });
 

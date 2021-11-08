@@ -6,10 +6,12 @@ import { Carousel } from "antd";
 import TopBar from "../../shared/menu/TopBar";
 import ItemInformation from "./Sections/ItemInformation";
 import ItemDescription from "./Sections/ItemDescription";
+import ItemComment from "./Sections/ItemComment";
 import PopularProductBanner from "./Component/PopularProductBanner";
 import Spinner from "./Component/Spinner";
 import axios from "axios";
-
+import { Tabs } from "antd";
+const { TabPane } = Tabs;
 const DetailPage = props => {
   const dispatch = useDispatch();
   const item = useSelector(state => state.items.selectedItems);
@@ -56,7 +58,14 @@ const DetailPage = props => {
           </div>
           <div className='Section2'>
             <ItemInformation item={item} />
-            <ItemDescription className='Section2' />
+            <Tabs defaultActiveKey='1' centered>
+              <TabPane tab='상품 정보' key='1'>
+                <ItemDescription className='Section2' />
+              </TabPane>
+              <TabPane tab='리뷰' key='2'>
+                <ItemComment productId={productId} />
+              </TabPane>
+            </Tabs>
           </div>
         </>
       )}

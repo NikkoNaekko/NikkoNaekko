@@ -1,87 +1,88 @@
-:root{
-    --color-font-light-pink: rgb(243, 186, 214);
-    --color-font-dark-pink: rgb(233, 59, 129);
-    --color-font-gray: rgb(114, 114, 114);
-    --color-button-pink: rgb(255, 174, 201);
-    --color-button-gray: rgb(224, 224, 224);
-    --color-div-gray : rgb(242,242,242);
-    --color-div-light-pink: rgba(243, 186, 214, 0.5);
+:root {
+  --color-font-light-pink: rgb(243, 186, 214);
+  --color-font-dark-pink: rgb(233, 59, 129);
+  --color-font-gray: rgb(114, 114, 114);
+  --color-button-pink: rgb(255, 174, 201);
+  --color-button-gray: rgb(224, 224, 224);
+  --color-div-gray: rgb(242, 242, 242);
+  --color-div-light-pink: rgba(243, 186, 214, 0.5);
+  --color-star-yellow: rgba(247, 203, 3, 118);
 
-    --margin-bottom-topbar: 61px;
-    --margin-item-list: 40px 0px 40px 0px;
+  --margin-bottom-topbar: 61px;
+  --margin-item-list: 40px 0px 40px 0px;
 }
 
 body {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
-.container{
-    height:100vh;
-    padding: 0 1.4rem;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
+.container {
+  height: 100vh;
+  padding: 0 1.4rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
-.Section1{
-    animation: appear 0.5s 0.5s ease forwards;
-    visibility:hidden;
+.Section1 {
+  animation: appear 0.5s 0.5s ease forwards;
+  visibility: hidden;
 }
-.Section2{
-    animation: appear 0.5s 1s ease forwards;
-    visibility:hidden;
+.Section2 {
+  animation: appear 0.5s 1s ease forwards;
+  visibility: hidden;
 }
-.Section3{
-    animation: appear 0.5s 1.5s ease forwards;
-    visibility:hidden;
+.Section3 {
+  animation: appear 0.5s 1.5s ease forwards;
+  visibility: hidden;
 }
 
 @keyframes appear {
-    from {
-        opacity: 0;
-    }
+  from {
+    opacity: 0;
+  }
 
-    to {
-        visibility: visible;
-        opacity: 1;
-    }
+  to {
+    visibility: visible;
+    opacity: 1;
+  }
 }
 
 @keyframes disAppear {
-    from {
-        opacity: 1;
-    }
+  from {
+    opacity: 1;
+  }
 
-    to {
-        visibility: hidden;
-        opacity: 0;
-    }
+  to {
+    visibility: hidden;
+    opacity: 0;
+  }
 }
 .join .container {
-    height: 100vh;
-    position: sticky;
-    bottom: 0;
+  height: 100vh;
+  position: sticky;
+  bottom: 0;
 }
 
-input[type=checkbox] {
-    -ms-transform: scale(2); /* IE */
-    -moz-transform: scale(2); /* FF */
-    -webkit-transform: scale(2); /* Safari and Chrome */
-    -o-transform: scale(2); /* Opera */
-    padding: 10px;
-    width: 25px;
+input[type="checkbox"] {
+  -ms-transform: scale(2); /* IE */
+  -moz-transform: scale(2); /* FF */
+  -webkit-transform: scale(2); /* Safari and Chrome */
+  -o-transform: scale(2); /* Opera */
+  padding: 10px;
+  width: 25px;
 }
 
 // ---- Empty -----
-.emptyBorder{
-    margin-top: 84px;
-    height: 100%;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.emptyBorder {
+  margin-top: 84px;
+  height: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
