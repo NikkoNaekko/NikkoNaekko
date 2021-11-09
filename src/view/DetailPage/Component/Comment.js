@@ -1,7 +1,7 @@
 import React from "react";
 import "../DetailPage.scss";
 import StarRatingComponent from "react-star-rating-component";
-import { StarFilled, CloseOutlined } from "@ant-design/icons";
+import { StarFilled, CloseOutlined, EditOutlined } from "@ant-design/icons";
 
 const Comment = ({ data }) => {
   return (
@@ -22,9 +22,10 @@ const Comment = ({ data }) => {
                 />
               )}
               starCount={5}
-              value={data.totalStar}
+              value={Number(data.userStar)}
             />
-            <CloseOutlined />
+            <EditOutlined className='commentIcon' />
+            <CloseOutlined className='commentIcon' />
           </div>
         </div>
 

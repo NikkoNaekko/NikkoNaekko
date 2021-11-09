@@ -83,9 +83,11 @@
   height: 100px;
 }
 .starpoint {
-  font-size: 50px;
-  font-family: "Gowun Batang", serif;
-  font-weight: bold;
+  font: {
+    size: 40px;
+    family: "Gowun Batang", serif;
+    weight: bold;
+  }
 }
 // ----- Spinner -----
 .spinnerBorder {
@@ -123,6 +125,10 @@
     .commentHeaderRight {
       display: flex;
       align-items: center;
+      .commentIcon {
+        font-size: 25px;
+        margin-right: 10px;
+      }
     }
   }
 }
