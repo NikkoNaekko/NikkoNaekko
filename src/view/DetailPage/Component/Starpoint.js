@@ -1,13 +1,16 @@
 import React from "react";
 import StarRatingComponent from "react-star-rating-component";
 import { StarFilled } from "@ant-design/icons";
+import { useSelector } from "react-redux";
 
-const Starpoint = ({ productStar }) => {
+const Starpoint = () => {
+  const productStar = useSelector(state => state.items.selectedItems.productStar)
+
   return (
     <div className='starpointBorder'>
       <span className='starpoint'>{productStar}/5.0</span>
       <StarRatingComponent
-        name='rate2'
+        name='productStar'
         editing={false}
         renderStarIcon={() => (
           <StarFilled
