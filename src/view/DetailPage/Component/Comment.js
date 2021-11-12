@@ -2,14 +2,30 @@ import React from "react";
 import "../DetailPage.scss";
 import StarRatingComponent from "react-star-rating-component";
 import { StarFilled, CloseOutlined, EditOutlined } from "@ant-design/icons";
+import { useSelector, useDispatch } from "react-redux";
+import { actionCreators as commentAction } from "../../../redux/moduels/comment";
 
 const Comment = ({ data }) => {
+  const dispatch = useDispatch();
+  const userName = useSelector(state => state.user.name);
+
+  const deleteComment = () => {
+    if (window.confirm("댓글을 삭제하시겠습니까?")) {
+      dispatch(commentAction.deleteCommentDataOnDB(data.commentId));
+    }
+  };
   return (
     <>
       <hr />
       <div className='commentBorder'>
         <div className='commentHeader'>
-          <span className='commentFont'>{data.userName}</span>
+          <span
+            className={`commentFont ${
+              userName && userName === data.userName && "myCommentFont"
+            }`}
+          >
+            {data.userName}
+          </span>
           <div className='commentHeaderRight'>
             <StarRatingComponent
               name='rate'
@@ -24,8 +40,15 @@ const Comment = ({ data }) => {
               starCount={5}
               value={Number(data.userStar)}
             />
-            <EditOutlined className='commentIcon' />
-            <CloseOutlined className='commentIcon' />
+            {userName && userName === data.userName && (
+              <>
+                <EditOutlined className='commentIcon' />
+                <CloseOutlined
+                  className='commentIcon'
+                  onClick={deleteComment}
+                />
+              </>
+            )}
           </div>
         </div>
 

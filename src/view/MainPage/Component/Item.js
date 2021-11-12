@@ -30,6 +30,14 @@ const Item = ({ item, isVertical, isHorizen }) => {
           <div className='likedDiv'>
             <LikeButton itemID={item.productId} />
             <span style={{ marginLeft: "10px" }}>{item.productLike}</span>
+            <StarFilled
+              style={{
+                marginLeft: "10px",
+                color: "var(--color-star-yellow)",
+                fontSize: "30px"
+              }}
+            />
+            <span style={{ marginLeft: "10px" }}>{item.productStar}</span>
           </div>
         </div>
       </div>
