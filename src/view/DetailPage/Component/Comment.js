@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "../DetailPage.scss";
 import StarRatingComponent from "react-star-rating-component";
 import { StarFilled, CloseOutlined, EditOutlined } from "@ant-design/icons";
@@ -9,20 +9,20 @@ import EditInput from "./EditInput";
 const Comment = ({ data }) => {
   const dispatch = useDispatch();
   const userName = useSelector(state => state.user.name);
-  const [isEdit, setIsEdit] = useState(false);
+  const isEditing = useSelector(state => state.comment.isEditing);
   const deleteComment = () => {
     if (window.confirm("댓글을 삭제하시겠습니까?")) {
       dispatch(commentAction.deleteCommentDataOnDB(data.commentId));
     }
   };
   const editComment = () => {
-    setIsEdit(true);
+    dispatch(commentAction.editing(true));
   };
   return (
     <>
       <hr />
 
-      {isEdit ? (
+      {data.userName === userName && isEditing ? (
         <EditInput
           commentId={data.commentId}
           userStar={data.userStar}
