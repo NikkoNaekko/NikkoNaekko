@@ -5,9 +5,14 @@ import { actionCreators as itemsAction } from "./items";
 // actions
 const LOADING = "LOADING";
 const LOAD_COMMENT_DATA = "LOAD_COMMENT_DATA";
+const DELETE_COMMENT_DATA = "DELETE_COMMENT_DATA";
 // action creators
 const loading = createAction(LOADING, isLoading => ({ isLoading }));
 const loadCommentData = createAction(LOAD_COMMENT_DATA, data => ({ data }));
+const deleteCommentData = createAction(
+  DELETE_COMMENT_DATA,
+  deletedCommentID => ({ deletedCommentID })
+);
 
 // initialState
 const initialState = {
@@ -63,6 +68,19 @@ const saveCommentDataOnDB = (userStar, comment) => {
       .finally(dispatch(loading(false)));
   };
 };
+const deleteCommentDataOnDB = commentID => {
+  return function (dispatch, getState, { history }) {
+    axios
+      .delete(
+        `http://ec2-52-78-34-16.ap-northeast-2.compute.amazonaws.com/comment/${commentID}`
+      )
+      .then(dispatch(deleteCommentData(commentID)))
+      .catch(error =>
+        console.log("deleteCommentDataOnDB에서 문제가 생겼습니다.", error)
+      );
+  };
+};
+
 // reducer
 export default handleActions(
   {
@@ -73,6 +91,12 @@ export default handleActions(
     [LOAD_COMMENT_DATA]: (state, action) =>
       produce(state, draft => {
         draft.comment = [...action.payload.data];
+      }),
+    [DELETE_COMMENT_DATA]: (state, action) =>
+      produce(state, draft => {
+        draft.comment = draft.comment.filter(comment => {
+          return comment.commentId !== action.payload.deletedCommentID;
+        });
       })
   },
   initialState
@@ -81,7 +105,8 @@ export default handleActions(
 // action creator export
 const actionCreators = {
   loadCommentDataOnDB,
-  saveCommentDataOnDB
+  saveCommentDataOnDB,
+  deleteCommentDataOnDB
 };
 
 export { actionCreators };
