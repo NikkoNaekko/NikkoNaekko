@@ -362,7 +362,6 @@ export default handleActions(
       }),
     [EDITED_PRODUCT_STAR]: (state, action) =>
       produce(state, draft => {
-        console.log("들어옴");
         draft.selectedItems["productStar"] = action.payload.productStar;
       })
   },

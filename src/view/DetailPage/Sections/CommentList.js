@@ -11,7 +11,7 @@ const CommentList = ({ productId }) => {
   return (
     <div>
       {commentList.map(comment => {
-        return <Comment data={comment} />;
+        return <Comment key={comment.commentId} data={comment} />;
       })}
     </div>
   );

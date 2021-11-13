@@ -8,14 +8,14 @@ const { TextArea } = Input;
 const CommentInput = () => {
   const dispatch = useDispatch();
   const [rating, setRating] = useState(1);
-  const [comment, setComment] = useState("");
+  const [content, setContent] = useState("");
   const uid = useSelector(state => state.user.uid);
   const isLoading = useSelector(state => state.comment.isLoading);
   const preventingNonMemberEvents = () => {
     if (!uid) {
       alert("로그인 후 이용해주세요.");
       document.activeElement.blur();
-      setComment("");
+      setContent("");
       return false;
     }
     return true;
@@ -24,8 +24,8 @@ const CommentInput = () => {
     if (!preventingNonMemberEvents()) {
       return;
     }
-    dispatch(commentAction.saveCommentDataOnDB(rating, comment));
-    setComment("");
+    dispatch(commentAction.saveCommentDataOnDB(rating, content));
+    setContent("");
   };
   const onStarClick = nextValue => {
     if (!preventingNonMemberEvents()) {
@@ -35,7 +35,7 @@ const CommentInput = () => {
   };
 
   const onChangeTextArea = e => {
-    setComment(e.target.value);
+    setContent(e.target.value);
   };
   const onFocusInputArea = e => {
     if (!preventingNonMemberEvents()) {
@@ -47,8 +47,8 @@ const CommentInput = () => {
       return;
     }
     if (e.key === "Enter") {
-      dispatch(commentAction.saveCommentDataOnDB(rating, comment));
-      setComment("");
+      dispatch(commentAction.saveCommentDataOnDB(rating, content));
+      setContent("");
     }
   };
   return (
@@ -71,8 +71,9 @@ const CommentInput = () => {
         />
       </div>
       <TextArea
+      placeholder="상품 하나당 한 개의 댓글만 작성하실 수 있습니다."
         rows={4}
-        value={comment}
+        value={content}
         onChange={onChangeTextArea}
         onFocus={onFocusInputArea}
         onKeyPress={enterSubmitComment}
