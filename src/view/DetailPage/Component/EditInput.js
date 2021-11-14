@@ -22,7 +22,7 @@ const EditInput = ({ commentId, userStar, content }) => {
   };
   const enterSubmitComment = e => {
     if (e.key === "Enter") {
-      setComment("");
+      dispatch(commentAction.editCommentDataOnDB(commentId, rating, comment));
     }
   };
   const cancleEditComment = () => {

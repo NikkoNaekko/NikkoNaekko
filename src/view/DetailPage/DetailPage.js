@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./DetailPage.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as itemsAction } from "../../redux/moduels/items";
+import { actionCreators as commentAction } from "../../redux/moduels/comment";
 import { Carousel } from "antd";
 import TopBar from "../../shared/menu/TopBar";
 import ItemInformation from "./Sections/ItemInformation";
@@ -26,6 +27,7 @@ const DetailPage = props => {
       )
       .then(res => {
         dispatch(itemsAction.loadOneData(res.data.data));
+        dispatch(commentAction.initCommentData(productId));
         setIsLoading(false);
       })
       .catch(error => {
@@ -63,7 +65,7 @@ const DetailPage = props => {
                 <ItemDescription className='Section2' />
               </TabPane>
               <TabPane tab='리뷰' key='2'>
-                <ItemComment productId={productId} />
+                <ItemComment />
               </TabPane>
             </Tabs>
           </div>
