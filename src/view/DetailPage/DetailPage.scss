@@ -1,96 +1,141 @@
-
-.carouselImg{
-    width:100vw;
-    height:300px;
+.carouselImg {
+  width: 100vw;
+  height: 300px;
 }
-// #detailPage{
-//     // overflow-y: hidden;
-//     &::-webkit-scrollbar{
-//         display: none;
-//     }
-// }
 // ----- ItemInformation -----
-.fixedArea {
-    position: sticky;
-    top: 0;
-    overflow: hidden;
-    z-index: 1;
-    background: #fff;
+.stickyArea {
+  position: sticky;
+  top: 0;
+  overflow: hidden;
+  z-index: 1;
+  background: #fff;
 }
-.detailBorder{
-    margin:20px;
-
-    .font{
-        font-size: 20px;
-    }
-    .gray{
-        color:var(--color-font-gray);
-    }
-    .red{
-        color:red;
-    }
-    .detailBorderHorizen{
-        display: flex;
-        justify-content: space-between;
-        .icons{
-            display: flex;
-            .liked{
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                margin-right: 5px;
-            }
-            .purchased{
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-            }
-        }
-        .price{
-        }
-    }
-}
-
-// ----- ItemInformation -----
-@import url('https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap');
-.descriptionBorder{
-    text-align: center;
-    font-family: 'Gowun Batang', serif;
-    line-height:50px; 
-    padding:20px;
+.detailBorder {
+  margin: 20px;
+  .font {
     font-size: 20px;
-    color:var(--color-font-gray);
+  }
+  .gray {
+    color: var(--color-font-gray);
+  }
+  .red {
+    color: red;
+  }
+  .detailBorderHorizen {
+    display: flex;
+    justify-content: space-between;
+    .icons {
+      display: flex;
+      .liked {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-right: 5px;
+      }
+      .purchased {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+    .price {
+    }
+  }
 }
 
+// ----- ItemInformation -----
+@import url("https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap");
+.descriptionBorder {
+  text-align: center;
+  font-family: "Gowun Batang", serif;
+  line-height: 50px;
+  padding: 20px;
+  font-size: 20px;
+  color: var(--color-font-gray);
+}
 
 // ----- PopularProductbanner -----
 
-.banner{
-    position: absolute;
-    top:20px;
-    left:20px;
-    z-index: 1;
+.banner {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 1;
 
-    .font{
-        padding:5px 20px 5px 20px;
-        font-weight: 600;
-        color:white;
-        background-color: rgba(127, 127, 127, 0.65)
+  .font {
+    padding: 5px 20px 5px 20px;
+    font-weight: 600;
+    color: white;
+    background-color: rgba(127, 127, 127, 0.65);
+  }
+  .bold {
+    font-weight: 800;
+  }
+}
+// ----- StarPoint -----
+.starpointBorder {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+.starpoint {
+  font: {
+    size: 40px;
+    family: "Gowun Batang", serif;
+    weight: bold;
+  }
+}
+// ----- Spinner -----
+.spinnerBorder {
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+// ----- CommentInput -----
+.CommentInputBorder {
+  padding: 20px;
+  margin-bottom: 40px;
+  .CommentInput {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    & > span {
+      font-weight: bold;
     }
-    .bold{
-        font-weight: 800;
-    }
+  }
 }
 
-// ----- Spinner -----
-.spinnerBorder{
-    width:100vw;
-    height:100vh;
-    text-align: center;
+// ----- Comment -----
+.commentBorder {
+  margin: 20px;
+  .commentHeader {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-between;
+    .dv-star-rating-non-editable {
+      margin-right: 10px;
+    }
+    .myCommentFont {
+      color: rgb(7, 7, 247);
+    }
+    .commentHeaderRight {
+      display: flex;
+      align-items: center;
+      .commentIcon {
+        font-size: 25px;
+        margin-right: 10px;
+      }
+    }
+  }
+}
+.commentFont {
+  font-size: 18px;
+  font-weight: bold;
 }

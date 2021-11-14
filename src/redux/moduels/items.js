@@ -22,6 +22,7 @@ const RESET_FILTEREDMOOD = "items/RESET_FILTEREDMOOD";
 const INCREASE_LIKED = "INCREASE_LIKED";
 const DECREASE_LIKED = "DECREASE_LIKED";
 const ADD_MOODITEMS = "itmes/ADD_MOODITEMS";
+const EDITED_PRODUCT_STAR = "EDITED_PRODUCT_STAR";
 
 //action creators
 const loading = createAction(LOADING, isLoading => ({ isLoading }));
@@ -47,6 +48,10 @@ const resetFilteredMood = createAction(RESET_FILTEREDMOOD, () => ({}));
 const increase_liked = createAction(INCREASE_LIKED, itemId => ({ itemId }));
 const decrease_liked = createAction(DECREASE_LIKED, itemId => ({ itemId }));
 const addMoodItems = createAction(ADD_MOODITEMS, data => ({ data }));
+const editedProductStar = createAction(
+  EDITED_PRODUCT_STAR,
+  (productStar, productId) => ({ productStar, productId })
+);
 
 //init
 const initialState = {
@@ -357,6 +362,36 @@ export default handleActions(
     [ADD_MOODITEMS]: (state, action) =>
       produce(state, draft => {
         draft.selectedMoodItems = [...action.payload.data];
+      }),
+    [EDITED_PRODUCT_STAR]: (state, action) =>
+      produce(state, draft => {
+        const productId = action.payload.productId;
+        const productStar = action.payload.productStar;
+        draft.selectedItems["productStar"] = productStar;
+        let itemIndex = draft.items.findIndex(
+          item => item.productId === productId
+        );
+        if (itemIndex !== -1) {
+          draft.items[itemIndex].productStar = productStar;
+        }
+        itemIndex = draft.searchedItems.findIndex(
+          item => item.productId === productId
+        );
+        if (itemIndex !== -1) {
+          draft.searchedItems[itemIndex].productStar = productStar;
+        }
+        itemIndex = draft.popluarItems.findIndex(
+          item => item.productId === productId
+        );
+        if (itemIndex !== -1) {
+          draft.popluarItems[itemIndex].productStar = productStar;
+        }
+        itemIndex = draft.likedItems.findIndex(
+          item => item.productId === productId
+        );
+        if (itemIndex !== -1) {
+          draft.likedItems[itemIndex].productStar = productStar;
+        }
       })
   },
   initialState
@@ -382,7 +417,8 @@ const actionCreators = {
   increase_liked,
   decrease_liked,
   loadItemsByCategoryOnDB,
-  addMoodItems
+  addMoodItems,
+  editedProductStar
 };
 
 export { actionCreators };
