@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback } from "react";
 import _ from "lodash";
-import Spinner from "../../../shared/Spinner";
+import Spinner from "./Spinner";
 const InfinityScroll = props => {
   const { children, callNext, is_next, loading } = props;
   const _handleScroll = _.throttle(() => {
@@ -10,7 +10,6 @@ const InfinityScroll = props => {
     const scrollTop =
       (document.documentElement && document.documentElement.scrollTop) ||
       document.body.scrollTop;
-
     if (scrollHeight - innerHeight - scrollTop < 100) {
       callNext();
     }

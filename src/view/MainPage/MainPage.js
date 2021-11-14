@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./MainPage.scss";
 import TopBar from "../../shared/menu/TopBar";
 import BookMark from "./Sections/BookMark";
 import NewProduct from "./Sections/NewProduct";
 import PopularProduct from "./Sections/PopularProduct";
 import Header from "./Header/Header";
-import InfinityScroll from "./Component/InfinityScroll";
+import InfinityScroll from "../../shared/InfinityScroll";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as itemsAction } from "../../redux/moduels/items";
 
@@ -14,10 +14,6 @@ const MainPage = ({ history }) => {
   const isLoading = useSelector(state => state.items.isLoading);
   const paging = useSelector(state => state.items.paging);
   const isLogin = useSelector(state => state.user.isLogin);
-
-  useEffect(() => {
-    dispatch(itemsAction.loadClothesDataOnDB());
-  }, []);
 
   return (
     <>

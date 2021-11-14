@@ -30,13 +30,12 @@ const VersionPage = ({ history }) => {
           <p>회원가입, 로그인 유효성 체크가 강화되었습니다.</p>
         </Timeline.Item>
         <Timeline.Item>
-          <p style={{ fontWeight: "bold" }}>v 1.3 (2021-11-13)</p>
+          <p style={{ fontWeight: "bold" }}>v 1.3 (2021-11-14)</p>
           <p>댓글 기능이 출시되었습니다.</p>
           <p>별점 기능 출시되었습니다.</p>
         </Timeline.Item>
         <Timeline.Item color='gray'>
           <p>반응형 웹뷰 출시 예정...</p>
-          <p>댓글 무한 스크롤 방식 기능 추가 예정...</p>
         </Timeline.Item>
       </Timeline>
     </div>
