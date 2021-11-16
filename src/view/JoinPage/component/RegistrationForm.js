@@ -66,27 +66,6 @@ const RegistrationForm = props => {
       return;
     }
 
-    // if (id === "" && pwd === "" && name === "") {
-    //   window.alert("닉네임, 아이디, 패스워드를 모두 입력해주세요!");
-    //   nameInput.current.focus();
-    //   return;
-    // } else if (name === "") {
-    //   window.alert("아이디를 입력해주세요!");
-    //   nameInput.current.focus();
-    //   return;
-    // } else if (id === "") {
-    //   window.alert("이메일을 입력해주세요!");
-    //   emailInput.current.focus();
-    //   return;
-    // } else if (pwd === "") {
-    //   window.alert("패스워드를 입력해주세요!");
-    //   pwdInput.current.focus();
-    //   return;
-    // } else if (pwd_check === "") {
-    //   window.alert("확인용 패스워드를 입력해주세요!");
-    //   pwdCheckInput.current.focus();
-    //   return;
-    // }
     dispatch(userActions.signUpDB(id, pwd, name));
 
     if (is_Loading === false) {
