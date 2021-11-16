@@ -39,28 +39,54 @@ const RegistrationForm = props => {
   const is_Loading = useSelector(state => state.user.isLoading);
 
   const signUp = () => {
-    if (id === "" && pwd === "" && name === "") {
-      window.alert("닉네임, 아이디, 패스워드를 모두 입력해주세요!");
+    // const nameCheck = /^[a-z]+[a-z0-9]{5,19}$/g;
+    const emailCheck =
+      /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+    // const passwordCheck = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{6,20}$/;
+
+    if (name.length === 0) {
+      window.alert("닉네임을 입력해주세요.");
       nameInput.current.focus();
       return;
-    } else if (name === "") {
-      window.alert("아이디를 입력해주세요!");
+    } else if (name.length > 19) {
+      window.alert("닉네임은 20자 이내로 해야합니다.");
       nameInput.current.focus();
       return;
-    } else if (id === "") {
-      window.alert("이메일을 입력해주세요!");
+    } else if (!emailCheck.test(id)) {
+      window.alert("이메일 형식으로 입력해주세요!");
       emailInput.current.focus();
       return;
-    } else if (pwd === "") {
-      window.alert("패스워드를 입력해주세요!");
+    } else if (pwd.length < 6 || 19 < pwd.length) {
+      window.alert("비밀번호는 6~20자 이내로 입력해주세요!");
       pwdInput.current.focus();
       return;
-    } else if (pwd_check === "") {
-      window.alert("확인용 패스워드를 입력해주세요!");
+    } else if (pwd !== pwd_check) {
+      window.alert("비밀번호와 비밀번호확인 값이 다릅니다!");
       pwdCheckInput.current.focus();
       return;
     }
 
+    // if (id === "" && pwd === "" && name === "") {
+    //   window.alert("닉네임, 아이디, 패스워드를 모두 입력해주세요!");
+    //   nameInput.current.focus();
+    //   return;
+    // } else if (name === "") {
+    //   window.alert("아이디를 입력해주세요!");
+    //   nameInput.current.focus();
+    //   return;
+    // } else if (id === "") {
+    //   window.alert("이메일을 입력해주세요!");
+    //   emailInput.current.focus();
+    //   return;
+    // } else if (pwd === "") {
+    //   window.alert("패스워드를 입력해주세요!");
+    //   pwdInput.current.focus();
+    //   return;
+    // } else if (pwd_check === "") {
+    //   window.alert("확인용 패스워드를 입력해주세요!");
+    //   pwdCheckInput.current.focus();
+    //   return;
+    // }
     dispatch(userActions.signUpDB(id, pwd, name));
 
     if (is_Loading === false) {
@@ -81,7 +107,7 @@ const RegistrationForm = props => {
       scrollToFirstError
     >
       <label htmlFor='name' className='formLabel'>
-        <span style={{ color: "red" }}>*</span> 아이디
+        <span style={{ color: "red" }}>*</span> 닉네임
       </label>
       <Form.Item
         name='name'
@@ -94,7 +120,7 @@ const RegistrationForm = props => {
         ]}
       >
         <Input
-          placeholder='닉네임을 입력해주세요'
+          placeholder='1~20자 이내로 입력해주세요'
           onChange={e => setName(e.target.value)}
           ref={nameInput}
         />
@@ -146,7 +172,7 @@ const RegistrationForm = props => {
         ]}
       >
         <Input.Password
-          placeholder='6자리 이상을 입력해주세요'
+          placeholder='6~20자 이내로 입력해주세요'
           onChange={e => setPwd(e.target.value)}
           ref={pwdInput}
         />

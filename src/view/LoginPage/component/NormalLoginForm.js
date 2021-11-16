@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Form, Input } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as userAction } from "../../../redux/moduels/user";
@@ -9,8 +9,24 @@ import "../../../shared/button/button.scss";
 const NormalLoginForm = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector(state => state.user.isLoading);
+  const emailInput = useRef();
+  const pwdInput = useRef();
 
   const onFinish = values => {
+    const id = values.userId;
+    const pwd = values.password;
+    const emailCheck =
+      /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+
+    if (!emailCheck.test(id)) {
+      window.alert("이메일 형식으로 입력해주세요!");
+      emailInput.current.focus();
+      return;
+    } else if (pwd.length < 6 || 19 < pwd.length) {
+      window.alert("비밀번호는 6~20자 이내로 입력해주세요!");
+      pwdInput.current.focus();
+      return;
+    }
     dispatch(userAction.signIn(values.userId, values.password));
   };
 
@@ -24,7 +40,7 @@ const NormalLoginForm = () => {
       onFinish={onFinish}
     >
       <label htmlFor='name' className='formLabel'>
-        <span style={{ color: "red" }}>*</span>아이디
+        <span style={{ color: "red" }}>*</span>이메일
       </label>
       <Form.Item
         name='userId'
@@ -39,7 +55,7 @@ const NormalLoginForm = () => {
           }
         ]}
       >
-        <Input placeholder='이메일 형식으로 입력해주세요' />
+        <Input ref={emailInput} placeholder='이메일 형식으로 입력해주세요' />
       </Form.Item>
 
       <label htmlFor='name' className='formLabel'>
@@ -67,7 +83,11 @@ const NormalLoginForm = () => {
           })
         ]}
       >
-        <Input type='password' placeholder='6자 이상을 입력해주세요' />
+        <Input
+          ref={pwdInput}
+          type='password'
+          placeholder='6~20자 이내로 입력해주세요'
+        />
       </Form.Item>
       {isLoading ? (
         <button className='btn btn_gray'>
